@@ -267,12 +267,6 @@ Either way, once in use apt-get to install openssh and then generate a key pair:
     ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCzmRiKXb8Aw+IUUX/EGf3+VXq/yOnJLhaXbOPgOWEABvMU9SYniA2FUDo/IWsRbZ3kp3FQgQWyTdEoGuznUwCtuMJsIxcCCLSw5Q5hbreH6fPfjdkrMRIbOX5JBG6bMhXgpq8GQmYy51M+Q5Do/vkGCcQuRynTMMBeGhLcuy4/XP5dt9gCYdY+LKONapSXKgYRs3nD4vvY7lPvTukNMnCzKKdTb0CAOmFb2x9M/ukgwJfr5ep3PSweiS4z55L/HtLDxY/v2jtsEs4YB19p9hY1iV2wMt+uh5kPI3rZhxjVZ6clEFyXyYPWcHSTWSLRM0naRwn8r4cNoSnANq7Al+KX root@96e27e313b9d
     root@96e27e313b9d:/app# exit
 
-And install git:
-
-    root@4652b8aaa32f:/app# apt-get install git
-    Reading package lists... Done
-    [...]
-
 Then back on your Linux VM you can tag the state of this container's image with a name so you can re-start containers using the image:
 
     tp@devel:~$ docker commit -m "Added SSH and keypair" -a "Tom Pinckney" 96e27e313b9d tp33/django:devel
@@ -290,6 +284,8 @@ And then in the future when you wnat to create a new dev instance that's preconf
 If you want to make more substantial changes I recommend creating your
 own Dockerfile and building a new image. This will be more
 reproducible and automated and save you time in the future.
+
+The Dockerfile I used to create tp33/django is at https:/github.com/thomaspinckney3/django-docker
 
 Code layout
 -----------
