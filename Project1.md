@@ -410,21 +410,21 @@ If the DATABASES section is not set up correctly, or if the database
 itself has a problem, you'll get an error here.
 
 Now try running Apache. Your web container has Apacke and mod_wsgi
-installed already. You should be able to run
+installed already. Note, we're running from under /app like the prod containers will and not under your home directory.
+
+You should be able to run
 
     root@399bd9c4a2a5:/app# cd /app
-    root@399bd9c4a2a5:/app# git clone git@github.com:thomaspinckney3/stuff.git
+    root@399bd9c4a2a5:/app# git clone https://github.com:thomaspinckney3/stuff.git
     Cloning into 'stuff'...
-    Warning: Permanently added the RSA host key for IP address '192.30.252.130' to the list of known hosts.
     remote: Counting objects: 8, done.
     remote: Compressing objects: 100% (7/7), done.
     remote: Total 8 (delta 0), reused 8 (delta 0), pack-reused 0
     Receiving objects: 100% (8/8), done.
     Checking connectivity... done.
-    root@399bd9c4a2a5:/app# cd stuff
-    root@399bd9c4a2a5:/app/stuff# mod_wsgi-express start-server stuff/wsgi.py &
+    root@399bd9c4a2a5:/app# mod_wsgi-express start-server --working-directory /app/stuff --url-alias /static stuff/static stuff/stuff/wsgi.py &
     [1] 73
-    root@399bd9c4a2a5:/app/stuff# Server URL         : http://localhost:8000/
+    Server URL         : http://localhost:8000/
     Server Root        : /tmp/mod_wsgi-localhost:8000:0
     Server Conf        : /tmp/mod_wsgi-localhost:8000:0/httpd.conf
     Error Log File     : /tmp/mod_wsgi-localhost:8000:0/error_log (warn)
