@@ -398,7 +398,7 @@ You should be able to run
     remote: Total 8 (delta 0), reused 8 (delta 0), pack-reused 0
     Receiving objects: 100% (8/8), done.
     Checking connectivity... done.
-    root@399bd9c4a2a5:/app# mod_wsgi-express start-server --working-directory /app/stuff/stuff --url-alias /static /app/stuff/stuff/static /app/stuff/stuff/wsgi.py &
+    root@399bd9c4a2a5:/app# mod_wsgi-express start-server --working-directory /app/stuff --url-alias /static /app/stuff/stuff/static /app/stuff/stuff/wsgi.py &
     [1] 73
     Server URL         : http://localhost:8000/
     Server Root        : /tmp/mod_wsgi-localhost:8000:0
