@@ -23,6 +23,8 @@ Syllabus and project assignments will be here in GitHub. Feel free to fork and s
 
 Lecture slides are in Google drive at https://drive.google.com/folderview?id=0BzWAJQVnIIRYfk9JUmwtbUVKS1pqb0k0Q2ZYU3pPZ3gxV2VnVDctVU51VjFYTTVaR25xR3c&usp=sharing
 
+Readings are listed for each week and should be completed BEFORE the week they are assigned so that we can discuss in class.
+
 Course Topics (subject to revision as course progresses)
 ---------------------------------------------------------
 
@@ -34,20 +36,24 @@ Course Topics (subject to revision as course progresses)
   - Overview of Docker and course project
   - Project: set up Docker container with Hello World Python/Django web app
   - Resources: Django Getting Started docs https://docs.djangoproject.com/en/1.8/intro/ and https://docs.docker.com as well as  https://www.udacity.com/course/web-development--cs253 or http://www.codecademy.com/en/tracks/web if needed for HTML and CSS intro
-3. Service based architecture, part I (Friday 9/4 and Monday 9/7)
+2. Requirements and documentation (Friday 9/4)
+  - User stories
+  - Product requirement documents
+  - Design and architecture documents
+  - Project: Write user-stories and other documentation for project.
+3. Service based architecture, part I (Monday 9/7)
   - Loosely coupled systems cooperating via services
   - Errors in the real world: failing gracefully and constantly
   - REST and API design
-  - Project: Sprint 1: build data models and Start&Detail service layer of project
-  - Reading: Service Oriented Architecture at Netflix http://www.slideshare.net/adrianco/high-availability-architecture-at-netflix
-4. Database consistency (Friday 9/11 and Monday 9/14)
-  - Strong vs eventual consistency
-  - Availability vs consistency
+  - Project: Sprint 1: Start building site: create data models and service layer of project
+  - Reading: Service Oriented Architecture at Netflix http://www.slideshare.net/adrianco/high-availability-architecture-at-netflix and http://martinfowler.com/microservices/ . Optional, for more in-depth reading check out http://shop.oreilly.com/product/0636920033158.do
+4. Databases (Friday 9/11 and Monday 9/14)
+  - CAP theorem / Strong vs eventual consistency / Availability vs consistency
   - Common database use cases -- transactional data, logging, caches, etc
   - Sharding and partitioning
   - Case study: Cassandra
   - Project: Finish sprint 1
-  - Reading: Eventual Consistency http://www.allthingsdistributed.com/2008/12/eventually_consistent.html, a counter-argument http://labouseur.com/courses/db/Stonebraker-on-NoSQL-2011.pdf and consistent hashing for sharding http://pdos.csail.mit.edu/papers/chord:sigcomm01/chord_sigcomm.pdf
+  - Reading: CAP theorem http://www.infoq.com/articles/cap-twelve-years-later-how-the-rules-have-changed and Eventual Consistency http://www.allthingsdistributed.com/2008/12/eventually_consistent.html, a counter-argument http://labouseur.com/courses/db/Stonebraker-on-NoSQL-2011.pdf and consistent hashing for sharding http://pdos.csail.mit.edu/papers/chord:sigcomm01/chord_sigcomm.pdf . Optional, Google Spanner http://research.google.com/archive/spanner.html
 5. Service based architecture, part II: Multi-screen development for mobile and desktop (Friday 9/18 and Monday 9/21)
   - Proliferation of channels for consuming apps
   - App and experience logic server side vs client side
@@ -66,65 +72,65 @@ Course Topics (subject to revision as course progresses)
   - Project: Finish Sprint 2
   - Resource: Django security features: https://docs.djangoproject.com/en/1.8/topics/security/
   - Quiz #1 on Monday 9/28
-7. Speed (Friday 10/2 and Friday 10/9 - No class Monday 10/5)
+15. Messaging and queing (Friday 10/2 and Friday 10/9 -- No class Monday 10/5)
+  - Integrating online and offline processing / Sync vs async
+  - Queueing systems
+  - Project: Sprint 3: Use queing to log site events
+  - Reading: Kafka at LinkedIn https://engineering.linkedin.com/kafka/kafka-linkedin-current-and-future and 
+10. Search, Browse and Discovery (Monday 10/12 and Friday 10/16)
+  - Product design strategies for navigating lots of inventory
+  - Basics of information retrieval and search engines
+  - Case study: ElasticSearch for site search backend
+  - Recommendations and browsing as alternatives to search
+  - Project: Finishg Sprint 3
+  - Reading: Incorporating behavioral data in search http://research.microsoft.com/en-us/um/people/sdumais/SIGIR2006-fp345-Ranking-agichtein.pdf 
+7. Speed (Monday 10/19 and Monday 10/26 - No class Friday 10/23)
   - Importance of speed for users
   - What determines page load speed
   - Service orchestration and asynchronous processing
   - Content delivery networks
   - Case study: memcached
-  - Project: Sprint 3: Add speed optimizations, security audit, and unit tests
+  - Project: Start Sprint 4: Adding site search using ElasticSearch
   - Reading: http://radar.oreilly.com/2009/07/velocity-making-your-site-fast.html
   - Resources: Python futures https://docs.python.org/3.4/library/concurrent.futures.html and Django cache APIs https://docs.djangoproject.com/en/1.8/topics/cache/
-8. Testing and DevOps (Monday 10/12 and Friday 10/16)
+8. Testing and DevOps (Friday 10/30 and Monday 11/2)
   - Automated testing for services, web pages and mobile apps
   - Continuous integration and deployment
   - Monitoring and alerting
   - Infrastructure as code
-  - Project: Finish Sprint 3
+  - Project: Finish Sprint 4
   - Reading: Testing lifecycle at LinkedIn https://engineering.linkedin.com/41/testing-lifecycle-linkedin, continuous delivery at Facebook http://www.infoq.com/presentations/Facebook-Release-Process and dated but useful Google talk http://googletesting.blogspot.com/2008/11/clean-code-talks-unit-testing.html
-9. Users and reputation (Monday 10/19 and Monday 10/26 - No class Friday 10/23)
+9. Users and reputation (Friday 11/6 and Monday 11/9)
   - User generated content (UGC): reviews, wiki posts, comments
   - Graph methods for reputation
   - Spam filtering
   - Case study: Amazon reviews
-  - Project: Sprint 4: Add user log in, account sign up, sign in/out etc
+  - Project: Sprint 5: Add speed optimizations, security audit, and unit tests
   - Reading: Analysis of StackOverflow http://www.cs.cmu.edu/~ymovshov/Papers/asonam_2013.pdf
-10. Search, Browse and Discovery (Friday 10/30 and Monday 11/2)
-  - Product design strategies for navigating lots of inventory
-  - Basics of information retrieval and search engines
-  - Case study: ElasticSearch for site search backend
-  - Recommendations and browsing as alternatives to search
-  - Project: Finish Sprint 4
-  - Reading: Incorporating behavioral data in search http://research.microsoft.com/en-us/um/people/sdumais/SIGIR2006-fp345-Ranking-agichtein.pdf 
-11. TBD (Friday 11/6 and Monday 11/9)
-  - Project: Sprint 5: Add Search backend, service and search result page front end
+11. TBD (Friday 11/13 and Monday 11/16)
+  - Project: Finish Sprint 5
   - Quiz #2 on Monday 11/9
-12. Advertising (Friday 11/13 and Monday 11/16)
+12. Advertising (Friday 11/20 and Monday 11/23)
   - Map of advertising ecosystem
   - Display advertising: targeting, trafficking and optimization
   - Search advertising: advertising as machine learning problem
-  - Project: Finish Sprint 5
+  - Project: Sprint 6: Add user log in, account sign up, sign in/out etc
   - Reading: Ad Auctions (sections I and II in particular) http://users.cms.caltech.edu/~adamw/courses/241/lectures/search2.pdf
-13. AB-testing and Analytics (Friday 11/20 and Monday 11/23)
+13. AB-testing and Analytics (Monday 11/30 and Friday 12/4 -- No class Friday 11/27)
   - Understanding the effect of product changes
   - Implementing tracking
   - Conversion funnels
   - AB testing and statistically significant changes
-  - Project: Set up MixPanel tracking or Optimizely AB testing
-  - Reading: AB testing at Spotify http://www.slideshare.net/alisarrafi3/ab-testing-at-spotify?next_slideshow=1 and http://www.slideshare.net/dj4b1n/ab-testing-pitfalls-and-lessons-learned-at-spotify-31935130
-14. Traffic -- SEO, SEM, Social, Paid Marketing, Email (Monday 11/30 -- No class Friday 11/27)
+  - Hadoop / Spark for data analysis
+  - Project: Finish Sprint 6
+  - Reading: AB testing at Spotify http://www.slideshare.net/alisarrafi3/ab-testing-at-spotify?next_slideshow=1 and http://www.slideshare.net/dj4b1n/ab-testing-pitfalls-and-lessons-learned-at-spotify-31935130 . Spark http://www.cs.berkeley.edu/~matei/papers/2010/hotcloud_spark.pdf . Optionally, can read more at https://play.google.com/store/books/details?id=VfVvAAAAQBAJ&source=productsearch&utm_source=HA_Desktop_US&utm_medium=SEM&utm_campaign=PLA&pcampaignid=MKTAD0930BO1&gl=US&gclid=COGFp6bcwMcCFQikNwodIH0IbA&gclsrc=ds
+14. Traffic -- SEO, SEM, Social, Paid Marketing, Email (Monday 12/7)
   - Survey of driving traffic to a site / paid vs organic
   - Overview of SEO
   - Quantitative marketing, attribution models, ROI calculations
   - Case study: BuzzFeed
-  - Project: Continue working on website
+  - Project: Sprint 7: Use Spark to analyze site logs
   - Reading: https://hbr.org/2007/05/viral-marketing-for-the-real-world
-15. Offline and Batch Processing (Friday 12/4 and Monday 12/7)
-  - Integrating online and offline processing / Sync vs async
-  - Queueing systems
-  - Hadoop, Spark and big data processing platforms
-  - Project: Add batch index update to search
-  - Reading: Kafka at LinkedIn https://engineering.linkedin.com/kafka/kafka-linkedin-current-and-future and Spark http://www.cs.berkeley.edu/~matei/papers/2010/hotcloud_spark.pdf
 
 Grading
 -------
