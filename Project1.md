@@ -5,6 +5,8 @@ In this project you will set up a development environment (using
 VirtualBox, Ubuntu Linux, Docker, Python, Django and MySQL) and then
 create a simple Hello World app in Django. Whew!
 
+There's a lot of Linux and system level stuff in this project. It may seem like you don't need to know all of this, but you do :) Don't just type the commands that apear here. Understand what's going on and only use these instructions as a hint.
+
 Linux
 -----
 
@@ -69,48 +71,22 @@ Install everything
 
 - Pull down the Docker containers for Django:
 
-        tp@devel:~$ docker pull tp33/django:1.0
-	1.0: Pulling from tp33/django
-	902b87aaaec9: Pull complete 
-	9a61b6b1315e: Pull complete 
-	4b74dad56938: Pull complete 
-	33c5fd704053: Pull complete 
-	ed4e056b51ba: Pull complete 
-	f30d857791e1: Pull complete 
-	a3182336caf9: Pull complete 
-	f370ade05055: Pull complete 
-	ed1373e85a82: Pull complete 
-	d61406870d62: Pull complete 
-	d8ee2be5edf9: Pull complete 
-	1ca5033075c7: Pull complete 
-	f9d42c108fd8: Pull complete 
-	Digest: sha256:90ff75c9817102fe0f5f5e59ff823bd0ea5ad05df24a87bd6def6c18f194da8a
-	Status: Downloaded newer image for tp33/django:1.0
+		tp@devel:~$ docker pull tp33/django:1.0
+		1.0: Pulling from tp33/django
+		[...]
+		f9d42c108fd8: Pull complete 
+		Digest: sha256:90ff75c9817102fe0f5f5e59ff823bd0ea5ad05df24a87bd6def6c18f194da8a
+		Status: Downloaded newer image for tp33/django:1.0
 
 - And MySQL:
 
-	tp@devel:~$ docker pull mysql:5.7.8
-	5.7.8: Pulling from library/mysql
-	4c8cbfd2973e: Pull complete 
-	60c52dbe9d91: Pull complete 
-	c2b0136be90f: Pull complete 
-	8dc0be95da7a: Pull complete 
-	08a0d08cf060: Pull complete 
-	762c6467fbee: Pull complete 
-	9b1c109333a6: Pull complete 
-	e272c78cf36d: Pull complete 
-	6de3028f378b: Pull complete 
-	f389ef1fff9f: Pull complete 
-	af8a2de3bb6d: Pull complete 
-	21ae3bd638f9: Pull complete 
-	35fca23a87fd: Pull complete 
-	cb500258df5e: Pull complete 
-	aac61fa7ef54: Pull complete 
-	3d251620fb60: Already exists 
-	library/mysql:5.7.8: The image you are pulling has been verified. Important: image verification is a tech preview feature and should not be relied on to provide security.
-	Digest: sha256:22d2c6e4bff13ccb4b3c156bdaa97e4fbf6f15ee0467233714f51540c64ad6b6
-	Status: Downloaded newer image for mysql:5.7.8
-	tp@devel:~$ 
+		tp@devel:~$ docker pull mysql:5.7.8
+		5.7.8: Pulling from library/mysql
+		[...]
+		library/mysql:5.7.8: The image you are pulling has been verified. Important: image verification is a tech preview feature and should not be relied on to provide security.
+		Digest: sha256:22d2c6e4bff13ccb4b3c156bdaa97e4fbf6f15ee0467233714f51540c64ad6b6
+		Status: Downloaded newer image for mysql:5.7.8
+		tp@devel:~$ 
 
 - Test it
 
