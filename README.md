@@ -139,3 +139,8 @@ Grades will be computed approximately as follows:
 25% class participation  
 25% two quizzes  
 50% class project  
+
+Office Hours
+-------------
+
+Mondays 1-2pm in Rice 514. Contact the instructor if you would like to arrange another time to talk. Remember, it's always better to ask questions, bring up problems etc sooner vs later.
