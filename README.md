@@ -48,7 +48,7 @@ Course Topics (subject to revision as course progresses)
   - Errors in the real world: failing gracefully and constantly
   - REST and API design
   - Project: Sprint 1: Start building site: create data models and service layer of project. Due 9/18.
-  - Reading: Service Oriented Architecture at Netflix http://www.slideshare.net/adrianco/high-availability-architecture-at-netflix and http://martinfowler.com/microservices/ . Optional, for more in-depth reading check out http://shop.oreilly.com/product/0636920033158.do
+  - Reading: Service Oriented Architecture at Netflix http://techblog.netflix.com/2012/06/netflix-operations-part-i-going.html , https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/ and http://martinfowler.com/microservices/ . Optional, for more in-depth reading check out http://shop.oreilly.com/product/0636920033158.do
 4. Databases (Friday 9/11 and Monday 9/14)
   - CAP theorem / Strong vs eventual consistency / Availability vs consistency
   - Common database use cases -- transactional data, logging, caches, etc
