@@ -16,6 +16,8 @@ Project Overview
 
 You will work in a team of three to four students to build a working marketplace website. Marketplaces such as Airbnb, Uber, DonorsChoose, eBay, Etsy and Watsi are both highly profitable when they succeed and technically challenging to build. It's up to you to decide what kind of marketplace your team will build. Specific instructions for each project will be posted and linked below thoughtout the semester.
 
+Due dates are listed below for each part of the project. These may be revised as the term goes on based on how everyone is doing. You will be graded as a team (unless unusual conditions warrant giving different grades). Grades will be based on: completeness of solution, correctness of solution, and being on time completing each assignment.
+
 Course materials
 -----------------
 
@@ -34,18 +36,18 @@ Course Topics (subject to revision as course progresses)
   - Overview of data center architecture: load balancers, switches, storage, servers
   - Overview of Model View Controller (MVC) design pattern
   - Overview of Docker and course project
-  - Project: set up Docker container with Hello World Python/Django web app
+  - Project: set up Docker container with Hello World Python/Django web app. Due Friday 9/4.
   - Resources: Django Getting Started docs https://docs.djangoproject.com/en/1.8/intro/ and https://docs.docker.com as well as  https://www.udacity.com/course/web-development--cs253 or http://www.codecademy.com/en/tracks/web if needed for HTML and CSS intro
 2. Requirements and documentation (Friday 9/4)
   - User stories
   - Product requirement documents
   - Design and architecture documents
-  - Project: Write user-stories and other documentation for project.
+  - Project: Write user-stories and other documentation for project. Due Friday 9/11.
 3. Service based architecture, part I (Monday 9/7)
   - Loosely coupled systems cooperating via services
   - Errors in the real world: failing gracefully and constantly
   - REST and API design
-  - Project: Sprint 1: Start building site: create data models and service layer of project
+  - Project: Sprint 1: Start building site: create data models and service layer of project. Due 9/18.
   - Reading: Service Oriented Architecture at Netflix http://www.slideshare.net/adrianco/high-availability-architecture-at-netflix and http://martinfowler.com/microservices/ . Optional, for more in-depth reading check out http://shop.oreilly.com/product/0636920033158.do
 4. Databases (Friday 9/11 and Monday 9/14)
   - CAP theorem / Strong vs eventual consistency / Availability vs consistency
@@ -60,7 +62,7 @@ Course Topics (subject to revision as course progresses)
   - Responsive web design vs building different apps for different devices
   - Consistent experiences on mobile native, mobile web, desktop web, tablet, email etc
   - Service composition
-  - Project: Sprint 2: Build view layer
+  - Project: Sprint 2: Build view layer. Due 10/2.
   - Resources: Bootstrap http://getbootstrap.com/getting-started/ and Django templates https://docs.djangoproject.com/en/1.8/topics/templates/
 6. Security (Friday 9/25 and Monday 9/28)
   - SQL injection and XSS
@@ -75,7 +77,7 @@ Course Topics (subject to revision as course progresses)
 15. Messaging and queing (Friday 10/2 and Friday 10/9 -- No class Monday 10/5)
   - Integrating online and offline processing / Sync vs async
   - Queueing systems
-  - Project: Sprint 3: Use queing to log site events
+  - Project: Sprint 3: Use queing to log site events. Due 10/19.
   - Reading: Kafka at LinkedIn https://engineering.linkedin.com/kafka/kafka-linkedin-current-and-future and 
 10. Search, Browse and Discovery (Monday 10/12 and Friday 10/16)
   - Product design strategies for navigating lots of inventory
@@ -90,7 +92,7 @@ Course Topics (subject to revision as course progresses)
   - Service orchestration and asynchronous processing
   - Content delivery networks
   - Case study: memcached
-  - Project: Start Sprint 4: Adding site search using ElasticSearch
+  - Project: Start Sprint 4: Adding site search using ElasticSearch. Due 11/6.
   - Reading: http://radar.oreilly.com/2009/07/velocity-making-your-site-fast.html
   - Resources: Python futures https://docs.python.org/3.4/library/concurrent.futures.html and Django cache APIs https://docs.djangoproject.com/en/1.8/topics/cache/
 8. Testing and DevOps (Friday 10/30 and Monday 11/2)
@@ -105,7 +107,7 @@ Course Topics (subject to revision as course progresses)
   - Graph methods for reputation
   - Spam filtering
   - Case study: Amazon reviews
-  - Project: Sprint 5: Add speed optimizations, security audit, and unit tests
+  - Project: Sprint 5: Add speed optimizations, security audit, and unit tests. Due 11/20.
   - Reading: Analysis of StackOverflow http://www.cs.cmu.edu/~ymovshov/Papers/asonam_2013.pdf
 11. TBD (Friday 11/13 and Monday 11/16)
   - Project: Finish Sprint 5
@@ -114,7 +116,7 @@ Course Topics (subject to revision as course progresses)
   - Map of advertising ecosystem
   - Display advertising: targeting, trafficking and optimization
   - Search advertising: advertising as machine learning problem
-  - Project: Sprint 6: Add user log in, account sign up, sign in/out etc
+  - Project: Sprint 6: Add user log in, account sign up, sign in/out etc. Due 12/4.
   - Reading: Ad Auctions (sections I and II in particular) http://users.cms.caltech.edu/~adamw/courses/241/lectures/search2.pdf
 13. AB-testing and Analytics (Monday 11/30 and Friday 12/4 -- No class Friday 11/27)
   - Understanding the effect of product changes
@@ -129,7 +131,7 @@ Course Topics (subject to revision as course progresses)
   - Overview of SEO
   - Quantitative marketing, attribution models, ROI calculations
   - Case study: BuzzFeed
-  - Project: Sprint 7: Use Spark to analyze site logs
+  - Extr-credit project: Sprint 7: Use Spark to analyze site logs.
   - Reading: https://hbr.org/2007/05/viral-marketing-for-the-real-world
 
 Grading
