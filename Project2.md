@@ -97,3 +97,17 @@ home/start page/screen, etc. Finally the top tier will be an app that
 consumes the second tier and generates HTML for a browser (or for for
 a native mobile app if you're so inclined).
 
+Iterative design
+----------------
+
+You will not get your services and models exactly right. This is really just
+the first draft. As you continue to build higher layers of your app in future assignments you'll
+come back and change your models and services.
+
+One important way that Django makes this easy is with database migrations. A migration in Django
+is a set of schema changes that are required to move your DB and app from one version to the next.
+
+When you edit your models.py file(s), your DB will not immediately automatically reflect the changes. Instead,
+you'll need to use your Django manage.py to generate a set of SQL commands needed to update your DB to match
+your new models. Then you can apply these commands to make them actually take affect. Django breaks this into two
+stages so that you can check the commands into git on your dev machine and then later apply them to many different db's -- in theory you might have many dev db instances, some testing/qa instances and then prod db instances. See the Django getting started or model documentation for more on migrations and how to use them.
