@@ -43,6 +43,26 @@ This will seem overly confusing and burdensome for a simple
 app. However, for a large app with many teams of people working on it
 it provides isolation between teams and apps.
 
+Pages
+-----
+
+The only required pages for your site are a home page and an item
+detail page. The detail page should show details about whatever it is
+your marketplace is about -- rides, books, tickets. The home page
+should show links to the detail pages -- maybe the newest content, the
+most popular content, etc.
+
+If you have time, you should add other useful pages like a user
+profile page to show info about buyers / sellers. Later on, we'll add
+a search page powered by a real search engine. For now you can add a
+simple / dummy search page if you like that just shows all content in
+your system.
+
+Don't worry too much about the design of your pages for now. Bootstrap
+will provide decent default styling. However, if you want, you can
+think about how to improve the design or make it responsive for
+smaller screens.
+
 Implementation
 --------------
 
@@ -105,11 +125,19 @@ other tiers of your web app.
 If you're not careful and mehthodical, you'll quickly end up with a
 mess. I recommend you do the following:
 
-- develop and test each tier independently, from the bottom up. That
-  means that if you make changes to your low-level API, test it
-  carefully before moving on to changes in the experience services
-  tier. You don't want to change every tier and then try things and
-  not know why things are failing.
+- design your web interface first -- sketch on a piece of paper what
+  info you want to show, where it will be relative to the other
+  content etc.
+
+- start with building the web interface tier first to define what your
+  experience services need to return. Then build the experience
+  service to provide the data your web interface needs.
+
+- develop and test each tier independently. That means that if you
+  make changes to your low-level API, test it carefully before moving
+  on to changes in the experience services tier. You don't want to
+  change every tier and then try things and not know why things are
+  failing.
 
 - make sure to carefully start your containers each time with the
   right --link and --name arguments.
