@@ -52,7 +52,14 @@ your marketplace is about -- rides, books, tickets. The home page
 should show links to the detail pages -- maybe the newest content, the
 most popular content, etc.
 
-If you have time, you should add other useful pages like a user
+Note, these are read-only pages for showing data in the db. To simplify
+this project we're ignoring how users or things in your marketplace are
+created in the first place. You can test your project by manually
+creating rows in the db or use your low-level API to create users and things.
+In later projects we'll add the flows for letting users sign up and add
+things/content to your app.
+
+If you have time in this project, you should add other useful read-only pages like a user
 profile page to show info about buyers / sellers. Later on, we'll add
 a search page powered by a real search engine. For now you can add a
 simple / dummy search page if you like that just shows all content in
