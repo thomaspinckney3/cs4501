@@ -164,8 +164,13 @@ You will extend your Project 3 app with the following:
 
 Django forms are a mechanism to validate user input. You will be
 adding two forms to your project: one for creating users and one for
-creating listings. You will create one Django form for each of these
-use cases in your web frontend.
+creating listings. Your web front end will use one Django form for
+each of these use cases.
+
+You can/should pass each form into the template rendering the page so
+that the form can be rendered by Django rather than you recreating
+the html for each form element. This will help keep your template and
+form in sync since you only need to change the form definition.
 
 ### Password management ###
 
@@ -183,23 +188,14 @@ string as such:
 
     import os
     import base64
-
+    
     authenticator = base64.b64encode(os.urandom(32)).decode('utf-8')
 
 This will generate 256 bits of randomness which is pretty hard for an
-attacker to guess.
-
-And then storing it into a cookie named auth in the web front end:
-
-    resp = login_exp_api (username, password)
-    authenticator = resp['authenticator']
-    response = render(...)
-    response.set_cookie("auth", authenticator)
-
-And reading it back in a future web request:
-
-    auth = request.COOKIES['auth']
-    resp = create_listing_exp_api(auth, ...)
+attacker to guess. It's also pretty unlikely to collide with a previously
+generated authenticator that may be in the db. To be 100% safe however
+you should check that the newly generated authenticator does not
+in fact exist in the db.
 
 As a side note, it's not great form to invent this authenticator
 generating and checking logic but there's no good Django library
@@ -208,13 +204,64 @@ third party libraries. Best practice would be to use a third party to
 take care of coding errors, considering things like timing attacks,
 using sufficient randomness, etc.
 
-### Cookie management ###
+#### Web front end authentication checking skeleton code ####
 
-See the Django documentation for setting, reading and clearing
-cookies. Roughly, you can use `HttpResponse`'s
-`set_cookie` method to set a cookie and
-`HttpRequest`'s `COOKIES` dictionary to look up
-cookies passed in by the browser.
+Here is some pseudo-python illustrating how the web front end might
+implement the login and create_listing views. 
 
+    import exp_srvc_errors  # where I put some error codes the exp srvc can return
+    
+    def login(request):
+        if request.method == 'GET':
+          next = request.GET.get('next') or reverse('home')
+          return render('login.html', ...)
+        f = login_form(request.POST)
+        if not f.is_valid():
+          # bogus form post, send them back to login page and show them an error
+          return render('login.html', ...)
+        username = f.cleaned_data['username']
+        password = f.clearned_data['password']
+        next = f.cleaned_data.get('next') or reverse('home')
+        resp = login_exp_api (username, password)
+        if not resp or not resp['ok']:
+          # couldn't log them in, send them back to login page with error
+          return render('login.html', ...)
+        # logged them in. set their login cookie and redirect to back to wherever they came from
+        authenticator = resp['resp']['authenticator']
+        response = HttpResponseRedirect(next)
+        response.set_cookie("auth", authenticator)
+        return response
+    
+    def create_listing(request):
+        auth = request.COOKIES.get('auth')
+        if not auth:
+          # handle user not logged in while trying to create a listing
+          return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing")
+        if request.method == 'GET':
+          return render("create_listing.html", ...)
+        f = create_listing_form(request.POST)
+        ...
+        resp = create_listing_exp_api(auth, ...)
+        if resp and not resp['ok']:
+            if resp['error'] == exp_srvc_errors.E_UNKNOWN_AUTH:
+                # exp service reports invalid authenticator -- treat like user not logged in
+                return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing")
+         ...
+         return render("create_listing_success.html", ...)
+         
+Note, the pattern of passing a URL argument of 'next' into the login
+page to specify where the user should be redirected upon succesfull login.
+The create_listing view can use this when it finds that the current user is not
+logged in. They can be redirected to the login page with next set to the url
+for the create_listing view. Then when they complete logging in, the login view
+will redirect them back to the create_listing.
 
+Also notice the pattern of each view handling both rendering via GET and POST
+requests. The form for logging in or creating a listing will initially render
+via a GET and then be POST'ed upon submission. The POST handler will either error out
+and return the same rendered form (plus some helpful errors) or will succeed and return
+the user to wherever they're supposed to go next.
 
+As a further side note, you may wish to use Django's session middleware
+in your web front end for storing and retrieving authenticators
+instead of using cookies directly. It's fine if you want to do it this way.
