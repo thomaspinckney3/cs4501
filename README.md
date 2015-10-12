@@ -84,7 +84,7 @@ Course Topics (subject to revision as course progresses)
   - Case study: ElasticSearch for site search backend
   - Recommendations and browsing as alternatives to search
   - Reading: Incorporating behavioral data in search http://research.microsoft.com/en-us/um/people/sdumais/SIGIR2006-fp345-Ranking-agichtein.pdf 
- 8. Users and reputation (Friday 10/16)
+8. Users and reputation (Friday 10/16)
   - User generated content (UGC): reviews, wiki posts, comments
   - Graph methods for reputation
   - Spam filtering
