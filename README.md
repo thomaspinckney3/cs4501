@@ -7,7 +7,7 @@ This course will provide a survey of methods for building large-scale internet w
 Prerequisites
 --------------
 
-CS3240 Advanced Software Development or equivalent experience building Python/Django web applications is required. Understanding issues around persistence, databases, concurrency, networking etc along with Linux experience will be helpful in this class, but is not required.
+CS3240 Advanced Software Development or equivalent experience building non-trivial Python/Django web applications is required. Understanding issues around persistence, databases, concurrency, networking etc along with Linux experience will be extremely helpful in this class.
 
 A course project will be developed using Python, Django, MySQL, and Docker containers. A basic familiarity with HTML and CSS is preferred but not strictly required.
 
@@ -83,6 +83,7 @@ Course Topics (subject to revision as course progresses)
   - Basics of information retrieval and search engines
   - Case study: ElasticSearch for site search backend
   - Recommendations and browsing as alternatives to search
+  - Project: Sprint 3: add user account registration, login/logout and ability to add user generated content, due 10/26
   - Reading: Incorporating behavioral data in search http://research.microsoft.com/en-us/um/people/sdumais/SIGIR2006-fp345-Ranking-agichtein.pdf 
 8. Users and reputation (Friday 10/16)
   - User generated content (UGC): reviews, wiki posts, comments
@@ -96,6 +97,7 @@ Course Topics (subject to revision as course progresses)
   - Service orchestration and asynchronous processing
   - Content delivery networks
   - Case study: memcached
+  - Project: Finish Sprint 3
   - Reading: http://radar.oreilly.com/2009/07/velocity-making-your-site-fast.html
   - Resources: Python futures https://docs.python.org/3.4/library/concurrent.futures.html and Django cache APIs https://docs.djangoproject.com/en/1.8/topics/cache/
 8. Testing and DevOps (Friday 10/30 and Monday 11/2)
