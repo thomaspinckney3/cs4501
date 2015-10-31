@@ -7,7 +7,7 @@ This course will provide a survey of methods for building large-scale internet w
 Prerequisites
 --------------
 
-CS3240 Advanced Software Development or equivalent experience building Python/Django web applications is required. Understanding issues around persistence, databases, concurrency, networking etc along with Linux experience will be helpful in this class, but is not required.
+CS3240 Advanced Software Development or equivalent experience building non-trivial Python/Django web applications is required. Understanding issues around persistence, databases, concurrency, networking etc along with Linux experience will be extremely helpful in this class.
 
 A course project will be developed using Python, Django, MySQL, and Docker containers. A basic familiarity with HTML and CSS is preferred but not strictly required.
 
@@ -74,25 +74,30 @@ Course Topics (subject to revision as course progresses)
   - Project: Finish Sprint 2
   - Resource: Django security features: https://docs.djangoproject.com/en/1.8/topics/security/
   - Quiz #1 on Monday 9/28
-15. Messaging and queing (Friday 10/2 and Friday 10/9 -- No class Monday 10/5)
+15. Messaging and queing (Friday 10/2 -- No class Monday 10/5)
   - Integrating online and offline processing / Sync vs async
   - Queueing systems
-  - Project: Sprint 3: Use queing to log site events. Due 10/19.
   - Reading: Kafka at LinkedIn https://engineering.linkedin.com/kafka/kafka-linkedin-current-and-future and 
-10. Search, Browse and Discovery (Monday 10/12 and Friday 10/16)
+10. Search, Browse and Discovery (Friday 10/9 and Monday 10/12)
   - Product design strategies for navigating lots of inventory
   - Basics of information retrieval and search engines
   - Case study: ElasticSearch for site search backend
   - Recommendations and browsing as alternatives to search
-  - Project: Finishg Sprint 3
+  - Project: Sprint 3: add user account registration, login/logout and ability to add user generated content, due 10/26
   - Reading: Incorporating behavioral data in search http://research.microsoft.com/en-us/um/people/sdumais/SIGIR2006-fp345-Ranking-agichtein.pdf 
+8. Users and reputation (Friday 10/16)
+  - User generated content (UGC): reviews, wiki posts, comments
+  - Graph methods for reputation
+  - Spam filtering
+  - Case study: Amazon reviews
+  - Reading: Analysis of StackOverflow http://www.cs.cmu.edu/~ymovshov/Papers/asonam_2013.pdf
 7. Speed (Monday 10/19 and Monday 10/26 - No class Friday 10/23)
   - Importance of speed for users
   - What determines page load speed
   - Service orchestration and asynchronous processing
   - Content delivery networks
   - Case study: memcached
-  - Project: Start Sprint 4: Adding site search using ElasticSearch. Due 11/6.
+  - Project: Finish Sprint 3
   - Reading: http://radar.oreilly.com/2009/07/velocity-making-your-site-fast.html
   - Resources: Python futures https://docs.python.org/3.4/library/concurrent.futures.html and Django cache APIs https://docs.djangoproject.com/en/1.8/topics/cache/
 8. Testing and DevOps (Friday 10/30 and Monday 11/2)
@@ -100,39 +105,29 @@ Course Topics (subject to revision as course progresses)
   - Continuous integration and deployment
   - Monitoring and alerting
   - Infrastructure as code
-  - Project: Finish Sprint 4
   - Reading: Testing lifecycle at LinkedIn https://engineering.linkedin.com/41/testing-lifecycle-linkedin, continuous delivery at Facebook http://www.infoq.com/presentations/Facebook-Release-Process and dated but useful Google talk http://googletesting.blogspot.com/2008/11/clean-code-talks-unit-testing.html
-9. Users and reputation (Friday 11/6 and Monday 11/9)
-  - User generated content (UGC): reviews, wiki posts, comments
-  - Graph methods for reputation
-  - Spam filtering
-  - Case study: Amazon reviews
-  - Project: Sprint 5: Add speed optimizations, security audit, and unit tests. Due 11/20.
-  - Reading: Analysis of StackOverflow http://www.cs.cmu.edu/~ymovshov/Papers/asonam_2013.pdf
-11. TBD (Friday 11/13 and Monday 11/16)
-  - Project: Finish Sprint 5
-  - Quiz #2 on Monday 11/9
-12. Advertising (Friday 11/20 and Monday 11/23)
+11. TBD (Friday 11/6 and Monday 11/9)
+12. Advertising (Friday 11/13)
   - Map of advertising ecosystem
   - Display advertising: targeting, trafficking and optimization
   - Search advertising: advertising as machine learning problem
   - Project: Sprint 6: Add user log in, account sign up, sign in/out etc. Due 12/4.
   - Reading: Ad Auctions (sections I and II in particular) http://users.cms.caltech.edu/~adamw/courses/241/lectures/search2.pdf
-13. AB-testing and Analytics (Monday 11/30 and Friday 12/4 -- No class Friday 11/27)
+13. AB-testing and Analytics (Monday 11/16 and Friday 11/20)
   - Understanding the effect of product changes
   - Implementing tracking
   - Conversion funnels
   - AB testing and statistically significant changes
   - Hadoop / Spark for data analysis
-  - Project: Finish Sprint 6
   - Reading: AB testing at Spotify http://www.slideshare.net/alisarrafi3/ab-testing-at-spotify?next_slideshow=1 and http://www.slideshare.net/dj4b1n/ab-testing-pitfalls-and-lessons-learned-at-spotify-31935130 . Spark http://www.cs.berkeley.edu/~matei/papers/2010/hotcloud_spark.pdf . Optionally, can read more at https://play.google.com/store/books/details?id=VfVvAAAAQBAJ&source=productsearch&utm_source=HA_Desktop_US&utm_medium=SEM&utm_campaign=PLA&pcampaignid=MKTAD0930BO1&gl=US&gclid=COGFp6bcwMcCFQikNwodIH0IbA&gclsrc=ds
-14. Traffic -- SEO, SEM, Social, Paid Marketing, Email (Monday 12/7)
+14. Traffic -- SEO, SEM, Social, Paid Marketing, Email (Monday 11/23)
   - Survey of driving traffic to a site / paid vs organic
   - Overview of SEO
   - Quantitative marketing, attribution models, ROI calculations
   - Case study: BuzzFeed
-  - Extr-credit project: Sprint 7: Use Spark to analyze site logs.
   - Reading: https://hbr.org/2007/05/viral-marketing-for-the-real-world
+15. TBD (Monday 11/30, Friday 12/4, and Monday 12/7 -- No class Friday 11/27)
+  - Quiz #2 on Friday 12/4
 
 Grading
 -------

@@ -56,15 +56,22 @@ Install everything
 
 - Install VirtualBox from https://www.virtualbox.org
 
-- Download the Ubuntu Server 15.04 ISO to install from
+- Download the Ubuntu Server 15.04 (or newer) ISO to install from
   http://www.ubuntu.com/download/server
 
-- Start VirtualBox, create a new VM (1gig RAM and 8gigs disk is fine),
-  selecting the Ubuntu ISO under Storage for the optical drive.
+- Start VirtualBox, create a new VM (1gig RAM, 12gigs disk and 
+  'bridged' networking), selecting the Ubuntu ISO under Storage for
+  the optical drive.
+
+- If you will be working on campus, you will need to register the
+  network MAC address for your VM with UVa. If you don't, you won't
+  be able to connect to the wireless network. You can
+  find the MAC address under the Settings->Network tab in VirtualBox.
+  Go to https://netreg.itc.virginia.edu to register it.
 
 - Start the VirtualBox VM which should boot form the Ubuntu ISO. Go
   through the install process. Make sure to install the SSH server so
-  you can log into your VM.
+  you can log into your VM. 
 
 - Install Docker following the instructions
   https://docs.docker.com/installation/ubuntulinux/
