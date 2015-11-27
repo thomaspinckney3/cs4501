@@ -351,7 +351,7 @@ your app will use. It's always best to use the least priviledges
 possible so we'll only give this new user access to the tables
 required for this app and no other privlidges.
 
-    mysql> create user 'www'@'%' identified by 'S3ecure';
+    mysql> create user 'www'@'%' identified by 'S3cure';
     Query OK, 0 rows affected (0.01 sec)
 
     mysql> create database cs4501 character set utf8;
