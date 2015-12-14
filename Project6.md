@@ -40,3 +40,18 @@ Chose from the following list of topics:
       sit in front of it, receive connections from browsers, and forward them on to one or the other
       of the web front end instances. 'pen' is a common and relatively simple one and is available 
       as a Docker image at https://hub.docker.com/r/galexrt/pen/ .
+
+Deliverable
+===========
+
+Please turn in via email a write up including:
+
+1. describing what you did
+ 
+2. link to any code in github you wrote for this (especially for caching and unit test work)
+
+3. include any sample output (especially for the load balancer, unit test, performance test examples)
+
+4. include any command lines (such as for running load tests, unit tests or load balancers)
+
+5. for hosting on digital island, include a link to your app or service working there
