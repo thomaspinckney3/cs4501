@@ -38,3 +38,37 @@ Unfortunately, Docker is not yet supported on Mac OS. If you are a Mac user, you
 
 - Install Docker following the instructions
   https://docs.docker.com/installation/ubuntulinux/
+
+Play with Docker
+----------------
+After Docker is installed, we can test it.
+- Pull down the Docker containers for Django:
+		tp@devel:~$ docker pull tp33/django:1.0
+		1.0: Pulling from tp33/django
+		[...]
+		f9d42c108fd8: Pull complete 
+		Digest: sha256:90ff75c9817102fe0f5f5e9ff823bd0ea5ad05df24a87bd6def6c18f194da8a
+		Status: Downloaded newer image for tp33/django:1.0
+
+Docker works in a simiar way to Github. When you type 
+    docker pull tp33/django:1.0
+it pulls the specific container 
+    django
+from user
+    tp33
+with tag
+    1.0
+to your local machine. The container has Django version 1.7.10 installed.
+
+You can then initialize a container.
+    tp@devel:~$ docker run -it --name web tp33/django:1.0
+    root@4b6cb96f80f3:/app# python
+    Python 3.4.3 (default, Aug  9 2015, 11:14:27) 
+    [GCC 4.9.2] on linux
+    Type "help", "copyright", "credits" or "license" for more information.
+    >>> import django
+    >>> django.VERSION
+    (1, 7, 10, 'final', 0)
+    >>> 
+    root@4b6cb96f80f3:/app# exit
+    tp@devel:~$ 
