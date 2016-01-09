@@ -1,5 +1,5 @@
 Overview
-========
+--------
 
 This project is set up to introduce to you a technology called Docker.
 Docker will be used throughout the semester and we hope this project will familiarize you with the technology.
