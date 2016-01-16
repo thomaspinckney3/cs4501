@@ -3,21 +3,21 @@ Overview
 
 This project is set up to introduce to you a technology called Docker.
 Docker will be used throughout the semester and we hope this project will familiarize you with the technology.
-If you intend to take this course, we encourage you to finish (at least look at it) before the school starts.
+If you intend to take this course, we encourage you to finish (at least look at it) before the semester starts.
 This will be helpful for you in terms of the first project where we do some more complicated stuff with Docker.
 
 Docker First Encounter
 ----------------------
-Docker is a system for managing Linux containers. You can read more about them elsewhere(like here http://www.docker.com/what-docker), but containers are like a virtual machine but lighter weight(they share the kernel and memory). You can define what kind of environment you need, install apps, and then easily clone/start as many instances of that container as you like -- on your dev machine or on public hosting providers like Amazon AWS.
+Docker is a system for managing Linux containers. You can read more about them elsewhere(like here http://www.docker.com/what-docker), but containers are like a virtual machine but lighter weight(all containers share the same kernel). You can define what kind of environment you need, install apps, and then easily clone/start as many instances of that container as you like -- on your dev machine or on public hosting providers like Amazon AWS.
 
-You will start to appreciate the beauty of Docker/containers and the idea of Infrastructure as Software more and more as we progress in the semester. For now, you can think of Docker as a solution to managing environment that you software runs in. Docker encapsulates the installed apps(like the specific version of Django), files(the code you wrote for you web app), and Database setup etc so that you can you can esily replicate your software along with its environment on any machine. You can think of Docker as a physical machines but configured in the form of software. With containers, forget about the pain of environment setup. If the code works on my machine, it works on yours too.
+You will start to appreciate the beauty of Docker/containers and the idea of Infrastructure as Software more and more as we progress in the semester. For now, you can think of Docker as a solution to managing environment that you software runs in. Docker encapsulates the installed apps(like the specific version of Django), files(the code you wrote for you web app), and database setup etc so that you can you can esily replicate your software along with its environment on any machine. You can think of Docker as a physical machines but configured in the form of software. With containers, forget about the pain of environment setup. If the code works on my machine, it works on yours too.
 
-In this preliminary project, you will install Docker and make sure it works.That's it. However it is important that you actually do the project.
+In this preliminary project, you will install Docker and make sure it works. That's it. However it is important that you actually do the project.
 
 Install Docker
 --------------
 ### Linux User
-Docker is supported natively on Linux, so good new if you are using some version of Linux like Ubuntu or Debian. Using a native Linux machine will save you so much trouble in terms of networking, memory issue and GUI interface etc throughout the semester. If you don't have a Linux machine, I (Ian Zheng) strongly suggest you installing Linux on your machine to dual boot with you Mac or Window OS.
+Docker is only supported on Linux, so good news if you are using some version of Linux like Ubuntu or Debian. Using a native Linux machine will save you so much trouble in terms of networking, memory issue and GUI interface etc throughout the semester. If you don't have a Linux machine, I (Ian Zheng) strongly suggest you installing Linux on your machine to dual boot with you Mac or Window OS.
 - The installation for Linux is easy. Just follow the instructions@
   https://docs.docker.com/installation/ubuntulinux/
 
@@ -32,12 +32,19 @@ Unfortunately, Docker is not yet supported on Mac OS. If you are a Mac user, you
   'bridged' networking), selecting the Ubuntu ISO under Storage for
   the optical drive.
 
+- If you will be working on campus, you will need to register the network MAC address for your VM with UVa. If you don't, you won't be able to connect to the wireless network. You can find the MAC address under the Settings->Network tab in VirtualBox. Go to https://netreg.itc.virginia.edu to register it. 
+
 - Start the VirtualBox VM which should boot form the Ubuntu ISO. Go
   through the install process. Make sure to install the SSH server so
   you can log into your VM. 
 
 - Install Docker following the instructions
   https://docs.docker.com/installation/ubuntulinux/
+
+- Note, that if you move between runing your VM at home outside the UVa network and the UVa network, you will likely have to reboot your VM each time you switch between networks. This is a simple way to pick up the new IP address and name servers that each network requires.
+
+### Windows users
+We strongly recommend using a Linux machine or a Mac running VirtualBox rather than Windows. Unfortunately, none of the course staff have extensive knowledge of Windows systems and we are unable to provide substantial help on getting VirtualBox and Windows working well together.
 
 Play with Docker
 ----------------
