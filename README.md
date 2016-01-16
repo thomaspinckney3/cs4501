@@ -1,4 +1,4 @@
-# cs4501 Fall 2015
+# cs4501 Spring 2016
 Internet Scale Applications
 ===========================
 
