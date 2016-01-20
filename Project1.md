@@ -173,7 +173,7 @@ restart it later. You can re-start your web container with 'docker
 start web' and then re-attach an interactive session to it with
 'docker attach web'.
 
-If you want to remove a container, use 'docekr rm'. If you want to
+If you want to remove a container, use 'docker rm'. If you want to
 remove an image, use 'docker rmi'.
 
 Development Environment
@@ -204,7 +204,7 @@ new SSH keys, register them with GitHub etc.
 
 Instead, we'll make a new container, based off the tp33/django:1.0
 container with your customizations in them. Then you can use this
-dervivative container for doing development work while still keeping
+derivative container for doing development work while still keeping
 the django:1.0 container pristine for production work. The short
 version of what you'll do is:
 
@@ -440,10 +440,10 @@ telling you what went wrong.
 Hello World
 ===========
 
-For the final part of this project you're going to write a very simple
+Next you're going to write a very simple
 Django app. This assumes you're already familiar with the basics of
 Django development. If not, now is a good time to review the Django
-tutorial and docs. We're using version 1.7.X.
+tutorial and docs. We're using version 1.8.X.
 
 Create a very simple home page for your app. You should add an entry
 to your urls.py that points to a view that you create in a new file
@@ -453,3 +453,90 @@ should be rendered by a Django template.
 Later on in the course we're going to be using the Bootstrap CSS
 library. If you want to get fancy, you can include this CSS to pretty
 up your page a bit.
+
+Docker Compose
+--------------
+
+Finally, install Docker Compose by doing 
+
+    pip install docker-compose
+	
+Create a new directory with
+
+    mkdir Compose
+    cd Compose
+    
+Then go ahead and create a new file, compose-test.yml, with your favorite
+text editor. Docker Compose uses these files, called YAML files, to
+automatically set up or start a group of containers. This is handy, much
+easier than managing each container individually. You can specify a lot of
+different options here, but for now we're merely going to create our
+database container and a few copies of our base image, then link them to
+the db.
+
+You can tell compose to create a new container by giving it a name and an
+image to use.
+
+    isa-mysql:
+        image: mysql:latest
+        
+Now that we've got this, save compose-test.yml. Having Compose create and run
+our container is as simple as running
+
+    docker-compose up
+    
+in our compose directory. But it fails. We need to define some additional
+parameters to make our database initialize correctly. Make the following 
+changes to your YAML file
+
+    isa-mysql:
+       image: mysql:latest
+       environment:
+        MYSQL_DATABASE: cs4501
+        MYSQL_USER: www
+        DATABASE_PASSWORD: l33tp455w0rd
+        MYSQL_ROOT_PASSWORD: r00tp455w0rd
+
+Now if we run compose it will have the necessary variables set. But first
+
+    docker-compose rm
+    
+will clear our previous container attempt. Run it, then return to editing
+your YAML file. We want to add containers for our Django project, much like
+we added our mysql container
+
+    isa-layer1:
+        image: tp33/django:1.2
+        links:
+          -  isa-mysql:db
+
+This creates a new container based off the tp33/django:1.2 image, and links
+it to the mysql container we just created with the name of "db". This is the
+name we'll use when we configure our settings.py file. Go ahead and create a
+couple more containers based off our Django image, so your final YAML file is
+
+    isa-mysql:
+       image: mysql:latest
+       environment:
+        MYSQL_DATABASE: cs4501
+        MYSQL_USER: www
+        DATABASE_PASSWORD: password
+        MYSQL_ROOT_PASSWORD: password
+    isa-models:
+       image: tp33/django:1.2
+       links:
+         - isa-mysql:db
+    isa-exp:
+       image: tp33/django:1.2
+       links:
+         - isa-mysql:db
+    isa-web:
+       image: tp33/django:1.2
+       links:
+         - isa-mysql:db
+         
+You can do a lot more with Docker Compose, including building new images straight
+from a Dockerfile, configuring ports, and defining shared volumes for containers.
+These are all things that may be helpful to you later in the course, so keep your
+compose file updated as you go about your project. There are great examples at
+https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04
