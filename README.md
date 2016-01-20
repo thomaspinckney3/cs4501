@@ -140,6 +140,18 @@ Grades will be computed approximately as follows:
 Office Hours
 -------------
 
-TBD
+The teaching staff for this semester are:
+
+  - Tom Pinckney (lecturer) tp3ks@virginia.edu
+  - David Amin (TA) dma3fq@virginia.edu
+  - Ian Zheng (TA) yz9fy@virginia.edu
+  - Daniel Mace (TA) dfm4ff@virginia.edu
+
+There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
+
+   - Project review, help, and demo hours: Weds 1-2:30 and Sunday 3-4:30 (lead by TAs). Location TBD.
+   - General Q&A Monday 2:30 - 3:30 (led by Tom). Location TBD.
+
+There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com
 
 Remember, it's always better to ask questions, bring up problems etc sooner vs later.
