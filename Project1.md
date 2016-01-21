@@ -73,7 +73,20 @@ Install everything
 
 - Start the VirtualBox VM which should boot form the Ubuntu ISO. Go
   through the install process. Make sure to install the SSH server so
-  you can log into your VM. 
+  you can log into your VM.
+
+- Install the VirtualBox Linux Guest additions which will make many
+  small things in your life better https://www.virtualbox.org/manual/ch04.html
+
+  Mount the VirtualBox Guest Additions install .iso through the Devices ->
+  Insert Guest Additions CD Image option and then install with:
+
+		tp@devl:~$ sudo apt-get install dkms
+		...
+		tp@devl:~$ sudo mount /dev/cdrom /mnt
+		tp@devl:~$ sudo sh /mnt/VBoxLinuxAdditions.run
+		...
+		tp@devl:~$ sudo reboot
 
 - Install Docker following the instructions
   https://docs.docker.com/installation/ubuntulinux/
