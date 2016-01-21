@@ -5,7 +5,9 @@ In this project you will set up a development environment (using
 VirtualBox, Ubuntu Linux, Docker, Python, Django and MySQL) and then
 create a simple Hello World app in Django. Whew!
 
-There's a lot of Linux and system level stuff in this project. It may seem like you don't need to know all of this, but you do :) Don't just type the commands that apear here. Understand what's going on and only use these instructions as a hint.
+There's a lot of Linux and system level stuff in this project. It may seem like you don't need to know all of this, but you do :) Don't just type the commands that apear here. Understand what's going on and only use these instructions as a hint. If you want a
+reference with additional commands, we're going to consistently update this document with common questions.
+https://docs.google.com/a/virginia.edu/document/d/1fCqyJQBS0Qoi0kWcS2B6xKGQHmUQzr-CpqEG1vQ5kak/edit?usp=sharing
 
 Linux
 -----
@@ -78,45 +80,45 @@ Install everything
 
 - Pull down the Docker containers for Django:
 
-		tp@devel:~$ docker pull tp33/django:1.0
-		1.0: Pulling from tp33/django
+		tp@devel:~$ docker pull tp33/django:1.2
+		1.2: Pulling from tp33/django
 		[...]
 		f9d42c108fd8: Pull complete 
 		Digest: sha256:90ff75c9817102fe0f5f5e59ff823bd0ea5ad05df24a87bd6def6c18f194da8a
-		Status: Downloaded newer image for tp33/django:1.0
+		Status: Downloaded newer image for tp33/django:1.2
 
 - And MySQL:
 
-		tp@devel:~$ docker pull mysql:5.7.8
-		5.7.8: Pulling from library/mysql
+		tp@devel:~$ docker pull mysql:5.7.10
+		5.7.10: Pulling from library/mysql
 		[...]
-		library/mysql:5.7.8: The image you are pulling has been verified. Important: image verification is a tech preview feature and should not be relied on to provide security.
+		library/mysql:5.7.10: The image you are pulling has been verified. Important: image verification is a tech preview feature and should not be relied on to provide security.
 		Digest: sha256:22d2c6e4bff13ccb4b3c156bdaa97e4fbf6f15ee0467233714f51540c64ad6b6
-		Status: Downloaded newer image for mysql:5.7.8
+		Status: Downloaded newer image for mysql:5.7.10
 		tp@devel:~$ 
 
 - Test it
 
-        tp@devel:~$ docker run -it --name web tp33/django:1.0
+        tp@devel:~$ docker run -it --name web tp33/django:1.2
     	root@4b6cb96f80f3:/app# python
-    	Python 3.4.3 (default, Aug  9 2015, 11:14:27) 
+    	Python 3.5.1 (default, Aug  9 2015, 11:14:27) 
     	[GCC 4.9.2] on linux
     	Type "help", "copyright", "credits" or "license" for more information.
     	>>> import django
     	>>> django.VERSION
-    	(1, 7, 10, 'final', 0)
+    	(1, 8, 8, 'final', 0)
     	>>> 
     	root@4b6cb96f80f3:/app# exit
     	tp@devel:~$ 
 
 - Initialize the MySQL db's (replace XXX with a password of your choice for the root MySQL user):
 
-        tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='XXX' mysql:5.7.8
+        tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='XXX' mysql:5.7.10
     	79c856338ace5edc9df074e252fb16caedd0ed1b53f64eef613e84301482dd75
     	tp@devel:~$ docker ps -a
     	CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
-    	79c856338ace        mysql:5.7.8         "/entrypoint.sh mysql"   8 seconds ago        Up 8 seconds                    3306/tcp            mysql
-    	4b6cb96f80f3        tp33/django:1.0     "/bin/bash"              About a minute ago   Exited (0) About a minute ago                       web
+    	79c856338ace        mysql:5.7.10         "/entrypoint.sh mysql"   8 seconds ago        Up 8 seconds                    3306/tcp            mysql
+    	4b6cb96f80f3        tp33/django:1.2     "/bin/bash"              About a minute ago   Exited (0) About a minute ago                       web
     	tp@devel:~$ 
   
 - Note the status of your Docker containers. The one named web will be shown as
@@ -145,14 +147,14 @@ container. Let's restart the web container this way:
 
     tp@devel:~$ docker ps -a
     CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
-    f34a25b95ffa        mysql:5.7.8         "/entrypoint.sh mysql"   23 seconds ago      Up 22 seconds               3306/tcp            mysql
-    f1e282544b7b        tp33/django:1.0     "/bin/bash"              44 seconds ago      Exited (0) 41 seconds ago                       web
+    f34a25b95ffa        mysql:5.7.10         "/entrypoint.sh mysql"   23 seconds ago      Up 22 seconds               3306/tcp            mysql
+    f1e282544b7b        tp33/django:1.2     "/bin/bash"              44 seconds ago      Exited (0) 41 seconds ago                       web
     tp@devel:~$ docker rm web
     web
     tp@devel:~$ docker ps -a
     CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS               NAMES
-    f34a25b95ffa        mysql:5.7.8         "/entrypoint.sh mysql"   About a minute ago   Up About a minute   3306/tcp            mysql
-    tp@devel:~$ docker run -it --name web --link mysql:db tp33/django:1.0
+    f34a25b95ffa        mysql:5.7.10         "/entrypoint.sh mysql"   About a minute ago   Up About a minute   3306/tcp            mysql
+    tp@devel:~$ docker run -it --name web --link mysql:db tp33/django:1.2
     root@1c359b81b84f:/app# ping db
     PING db (172.17.0.5): 56 data bytes
     64 bytes from 172.17.0.5: icmp_seq=0 ttl=64 time=0.110 ms
@@ -164,7 +166,7 @@ container. Let's restart the web container this way:
     exit
     tp@devel:~$ 
 
-This tells Docker to create a new container from the tp33/django:1.0
+This tells Docker to create a new container from the tp33/django:1.2
 image and create a hosts entry named db that references the IP address
 used by the mysql container.
 
@@ -173,7 +175,7 @@ restart it later. You can re-start your web container with 'docker
 start web' and then re-attach an interactive session to it with
 'docker attach web'.
 
-If you want to remove a container, use 'docekr rm'. If you want to
+If you want to remove a container, use 'docker rm'. If you want to
 remove an image, use 'docker rmi'.
 
 Development Environment
@@ -197,18 +199,18 @@ Apache/Django) and a MySQL container. It's highly recommended that you
 NOT make any changes to either container. Both are set up for
 production use and should be kept as minimal as possible.
 
-However, you will find that using the django/1.0 container tedious for
+However, you will find that using the django/1.2 container tedious for
 your development environment. For example, there is no SSH installed
 and everytime you restart it you will have to re-install SSH, generate
 new SSH keys, register them with GitHub etc.
 
-Instead, we'll make a new container, based off the tp33/django:1.0
+Instead, we'll make a new container, based off the tp33/django:1.2
 container with your customizations in them. Then you can use this
-dervivative container for doing development work while still keeping
-the django:1.0 container pristine for production work. The short
+derivative container for doing development work while still keeping
+the django:1.2 container pristine for production work. The short
 version of what you'll do is:
 
-- connect to the web instance of django/1.0 you started earlier
+- connect to the web instance of django/1.2 you started earlier
 - make some changes like installing ssh
 - commit / tag the resulting container image so you can easily go back to it
 
@@ -257,8 +259,8 @@ Then back on your Linux VM you can tag the state of this container's image with 
     tp@devel:~$ docker images
     REPOSITORY          TAG                 IMAGE ID            CREATED             VIRTUAL SIZE
     tp33/django         devel               19c85f570abd        18 seconds ago      472.4 MB
-    tp33/django         1.0                 f9d42c108fd8        29 hours ago        454.6 MB
-    mysql               5.7.8               3d251620fb60        11 days ago         321.5 MB
+    tp33/django         1.2                 f9d42c108fd8        29 hours ago        454.6 MB
+    mysql               5.7.10              3d251620fb60        11 days ago         321.5 MB
 
 And then in the future when you wnat to create a new dev instance that's preconfigured with SSH all you need to do is:
 
@@ -315,7 +317,7 @@ GitHub so you can push/pull changes without typing your password each
 time.
 
 In the future, when you want to deploy a test or production container
-you can just use 'docker run' to start an instance of tp33/django:1.0,
+you can just use 'docker run' to start an instance of tp33/django:1.2,
 checkout your code from GitHub, and you're good to go.
 
 Setting up MySQL
@@ -328,12 +330,12 @@ got. You'll just need to start a NEW container running that image and
 use it to connect to the first MySQL container image you're already
 running.
 
-    tp@devel:~$ docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.8 bash
+    tp@devel:~$ docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.10 bash
     # mysql -uroot -p'!Secure' -h db
     mysql: [Warning] Using a password on the command line interface can be insecure.
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 2
-    Server version: 5.7.8-rc MySQL Community Server (GPL)
+    Server version: 5.7.10-rc MySQL Community Server (GPL)
 
     Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
 
@@ -440,10 +442,10 @@ telling you what went wrong.
 Hello World
 ===========
 
-For the final part of this project you're going to write a very simple
+Next you're going to write a very simple
 Django app. This assumes you're already familiar with the basics of
 Django development. If not, now is a good time to review the Django
-tutorial and docs. We're using version 1.7.X.
+tutorial and docs. We're using version 1.8.X.
 
 Create a very simple home page for your app. You should add an entry
 to your urls.py that points to a view that you create in a new file
@@ -453,3 +455,90 @@ should be rendered by a Django template.
 Later on in the course we're going to be using the Bootstrap CSS
 library. If you want to get fancy, you can include this CSS to pretty
 up your page a bit.
+
+Docker Compose
+--------------
+
+Finally, install Docker Compose by doing 
+
+    pip install docker-compose
+	
+Create a new directory with
+
+    mkdir Compose
+    cd Compose
+    
+Then go ahead and create a new file, docker-compose.yml, with your favorite
+text editor. Docker Compose uses these files, called YAML files, to
+automatically set up or start a group of containers. This is handy, much
+easier than managing each container individually. You can specify a lot of
+different options here, but for now we're merely going to create our
+database container and a few copies of our base image, then link them to
+the db.
+
+You can tell compose to create a new container by giving it a name and an
+image to use.
+
+    isa-mysql:
+        image: mysql:5.7.10
+        
+Now that we've got this, save compose-test.yml. Having Compose create and run
+our container is as simple as running
+
+    docker-compose up
+    
+in our compose directory. But it fails. We need to define some additional
+parameters to make our database initialize correctly. Make the following 
+changes to your YAML file
+
+    isa-mysql:
+       image: mysql:5.7.10
+       environment:
+        MYSQL_DATABASE: cs4501
+        MYSQL_USER: www
+        DATABASE_PASSWORD: l33tp455w0rd
+        MYSQL_ROOT_PASSWORD: r00tp455w0rd
+
+Now if we run compose it will have the necessary variables set. But first
+
+    docker-compose rm
+    
+will clear our previous container attempt. Run it, then return to editing
+your YAML file. We want to add containers for our Django project, much like
+we added our mysql container
+
+    isa-layer1:
+        image: tp33/django:1.2
+        links:
+          -  isa-mysql:db
+
+This creates a new container based off the tp33/django:1.2 image, and links
+it to the mysql container we just created with the name of "db". This is the
+name we'll use when we configure our settings.py file. Go ahead and create a
+couple more containers based off our Django image, so your final YAML file is
+
+    isa-mysql:
+       image: mysql:5.7.10
+       environment:
+        MYSQL_DATABASE: cs4501
+        MYSQL_USER: www
+        DATABASE_PASSWORD: password
+        MYSQL_ROOT_PASSWORD: password
+    isa-models:
+       image: tp33/django:1.2
+       links:
+         - isa-mysql:db
+    isa-exp:
+       image: tp33/django:1.2
+       links:
+         - isa-mysql:db
+    isa-web:
+       image: tp33/django:1.2
+       links:
+         - isa-mysql:db
+         
+You can do a lot more with Docker Compose, including building new images straight
+from a Dockerfile, configuring ports, and defining shared volumes for containers.
+These are all things that may be helpful to you later in the course, so keep your
+compose file updated as you go about your project. There are great examples at
+https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04
