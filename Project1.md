@@ -223,6 +223,7 @@ Otherwise you'll need to create a new container via 'docker run...'.
 
 Either way, once in use apt-get to install openssh and then generate a key pair:
 
+    root@96e27e313b9d:/app# apt-get update
     root@96e27e313b9d:/app# apt-get install openssh-client
     Reading package lists... Done
     [...]
@@ -463,7 +464,12 @@ Finally, install Docker Compose by doing
 
     pip install docker-compose
 	
-Create a new directory with
+If you have troubles installing (docker compose makes use of a large number
+of libraries that could conflict with versions you have installed) you can
+run Compose as a container. There are instructions in the link below, but
+you'll need to use your home directory, not /usr/local/bin as the example does
+
+When you've got Compose installed, create a new directory with
 
     mkdir Compose
     cd Compose
