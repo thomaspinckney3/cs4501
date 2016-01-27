@@ -488,7 +488,7 @@ image to use.
     isa-mysql:
         image: mysql:5.7.10
         
-Now that we've got this, save compose-test.yml. Having Compose create and run
+Now that we've got this, save docker-compose.yml. Having Compose create and run
 our container is as simple as running
 
     docker-compose up
