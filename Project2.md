@@ -13,7 +13,7 @@ The Django documentation is going to be invaluable and essential for
 completing this work. I'm not going to provide step-by-step
 instructions for how to build a Django app. I'm assuming you've done
 it before and are using the tutorials etc on the Django site. We're
-using Django 1.7 which is not the latest version on the Django
+using Django 1.8.8 which is not the latest version on the Django
 website. Make sure you're looking at the correct version!
 
 A note on code layout. I prefer to have my projects layed out like
@@ -78,7 +78,7 @@ Generally, there are a few guidelines to consider:
 Services
 --------
 
-Each API will have it's own url for accessing it. These are listed in
+Each API will have its own url for accessing it. These are listed in
 your project's urls.py file. Each one will specify the view that is to
 be invoked to handle that url.
 
@@ -88,13 +88,13 @@ documentation for how to do this and for how to properly format a json
 response from your view.
 
 Remember, this is a four-tier app we're building. The DB is the fourth
-/ bottom tier. This layer of servivces you're building now is the
+/ bottom tier. This layer of services you're building now is the
 third tier. It should focus on providing access to creating, looking
 up, and updating your models. The second tier, when you build it
 later, will consume the third tier services and put them together to
 form high level functions in your app like providing search, or a
 home/start page/screen, etc. Finally the top tier will be an app that
-consumes the second tier and generates HTML for a browser (or for for
+consumes the second tier and generates HTML for a browser (or for
 a native mobile app if you're so inclined).
 
 Iterative design
