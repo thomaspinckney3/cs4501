@@ -414,7 +414,7 @@ installed already. Note, we're running from under /app like the prod containers 
 You should be able to run
 
     root@399bd9c4a2a5:/app# cd /app
-    root@399bd9c4a2a5:/app# git clone https://github.com:thomaspinckney3/stuff.git
+    root@399bd9c4a2a5:/app# git clone https://github.com/thomaspinckney3/stuff.git
     Cloning into 'stuff'...
     remote: Counting objects: 8, done.
     remote: Compressing objects: 100% (7/7), done.
