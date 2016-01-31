@@ -19,15 +19,20 @@ website. Make sure you're looking at the correct version!
 A note on code layout. I prefer to have my projects layed out like
 this:
 
-stuff/
-	manage.py
+
 	stuff/
-		views.py
-		models.py
-		migrations/
-		settings.py
-		wsgi.py
-		templates/
+	├── manage.py
+	└── stuff
+	    ├── __init__.py
+	    ├── main.py
+	    ├── models.py
+	    ├── settings.py
+	    ├── templates
+	    │   └── start.html
+	    ├── urls.py
+	    └── wsgi.py
+
+
 
 This is different the defualt Django layout that is created if run
 'startproject' and then 'startapp'. I basically skip the 'startapp'
