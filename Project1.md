@@ -561,3 +561,8 @@ from a Dockerfile, configuring ports, and defining shared volumes for containers
 These are all things that may be helpful to you later in the course, so keep your
 compose file updated as you go about your project. There are great examples at
 https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04
+
+What to turn in
+---------------
+
+Turn in screenshots of 'docker ps' showing your running containers along with a screenshot of your "Hellow World" output from curl.
