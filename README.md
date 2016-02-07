@@ -148,8 +148,8 @@ The teaching staff for this semester are:
 
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
 
-   - Project review, help, and demo hours: Weds 1-2:30 and Sunday 3-4:30 (lead by TAs). Location TBD.
-   - General Q&A Monday 2:30 - 3:30 (led by Tom). Location TBD.
+   - Project review, help, and demo hours: Weds 1-2:30 Rice 514 and Sunday 3-4:30 Rice 340 (lead by TAs).
+   - General Q&A Monday 2:30 - 3:30 (led by Tom) Rice 425.
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com
 
