@@ -98,12 +98,31 @@ Services
 
 Each API will have its own url for accessing it. These are listed in
 your project's urls.py file. Each one will specify the view that is to
-be invoked to handle that url.
+be invoked to handle that url. They will look something like this:
+
+    /api/v1/users/43 - GET to return info about user 43, POST to update the user's info.
+    /api/v1/things/23 - GET to return info about thing 23, POST to update it
+    /api/v1/things/create - POST to create a new thing
 
 You'll then create a Django view for each url. The view may handle
 both GET and POST requests. You'll need to consult the Django
 documentation for how to do this and for how to properly format a json
 response from your view.
+
+The APIs should return JSON results. The POST methods should take either form-encoded
+sets of key-value parameters (preferred) or JSON encoded values. For example, a result
+from looking up a user might look like:
+
+    {
+     'ok':     True,
+     'result':
+     {
+      'username':    'tpinckney',
+      'first_name':  'Tom',
+      'last_name':   'Pinckney',
+      'date_created': 'Feb 12 2016'
+     }
+    }
 
 Remember, this is a four-tier app we're building. The DB is the fourth
 / bottom tier. This layer of services you're building now is the
