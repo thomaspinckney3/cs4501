@@ -73,32 +73,45 @@ smaller screens.
 Implementation
 --------------
 
-### Container Linking ###
-
-THIS SECTION IS OUT OF DATE DUE TO USING DOCKER COMPOSE THIS SEMESTER.
-YOU WILL STILL HAVE FOUR CONTAINERS RUNNING, HOWEVER YOU WILL
-START THEM WITH DOCKER COMPOSE INSTEAD OF INDIVIDUAL DOCKER RUN
-COMMANDS. THE CONCEPTS IN THIS SECTION ARE OTHERWISE STILL APPLICABLE.
+### Container Linking (Updated for Docker Compose)  ###
 
 You will have four Docker containers running -- one for each layer in
 your app: one instance of the MySQL container and three instances of
-your Django container.
+your Django container. In terms of grading, since you can assume we 
+have a MySQL container running, you only need to start up three containers
+in the docker-compose.yml, all of which link to the MySQL container.
 
 Docker assigns a unique IP address to every container running. We'll
 use container linking to make sure each container knows the IP address
-of the other containers to talk to. This is accomplished via adding
-the --link command line to the docker run command:
+of the other containers to talk to. In addition, we want to link to a container
+that is not created by the compose. This is accomplished via adding
+the `external_links` option to the docker compose file:
 
-    docker run -it --name model --link mysql:db tp33k/django:1.0
+   ```YAML
+   isa-models:
+      image: tp33/django:1.2
+      external_links:
+         mysql:db
+   ```
+   
+Notify the difference between `external_links` and `links`. We use `links` to link to a
+container created by the docker-compose.yml. On the other hand, `external_links` is used to 
+link to a container outside Compose.
 
-That command will create a hostname called 'db' and make sure it's
+That option will create a hostname called 'db' and make sure it's
 always pointing to the IP address for the container named
-'mysql'. Thus, your app in this container can always connect to the
+'mysql' in 'isa-models'. Thus, your app in this container can always connect to the
 host 'db' instead of having to know which IP address your MySQL
 container is actually running as. This is how you set up your
 project's settings.py so far.
 
-Similarly, you'll run another container for your experience service
+For your reference, following is the docker run version. You don't need to do that since same thing is 
+achieved through docker compose.
+
+    docker run -it --name model --link mysql:db tp33k/django:1.0
+
+
+Similarly, you'll add another container for your experience service
 and link it to your low-level API:
 
     docker run --it --name exp --link model:model-api tp33k/django:1.0
