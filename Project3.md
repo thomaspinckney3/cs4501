@@ -12,8 +12,8 @@ As a reminder, we are building a four-tier web app:
 
    - HTML front end
    - Experience service APIs
-   - Low level / Model APIs
-   - Database
+   - Entity / Model APIs (started in Project 2)
+   - Database (started in Project 2)
 
 Each layer will run in it's own container and communicate via the
 network with the other layers.
@@ -22,10 +22,10 @@ An example request will be processed like:
 
    - A request from a user's browser will go to the HTML front end.
    - The front-end will call thge experience service to get the data needed and render the data as HTML.
-   - The experience service will call one or more of the low-level APIs to get it's data and return it.
-   - The low-level APIs will call the database to read data and update models.
+   - The experience service will call one or more of the entity APIs to get it's data and return it.
+   - The entity APIs will call the database to read data and update models.
 
-The experience service app will invoke the low-level APIs via HTTP and
+The experience service app will invoke the entity APIs via HTTP and
 receive JSON responses. Similarly, it will provide HTTP/JSON APIs up
 to the HTML front-end app. Note, an end-user only ever access the HTML
 front-end app. All the other parts are hidden and not publicly
@@ -35,7 +35,7 @@ The key point of this is the strict isolation between levels. The only
 way the HTML front-end communicates with the rest of your app is
 through the expereince service level. In turn, the only way your
 experience service level interacts with the database is through the
-low-level API. This is directly analagous to the data abstraction and
+entity API. This is directly analagous to the data abstraction and
 modularity that you learn about applying in an individual program, but
 here it is applied to a system of programs.
 
@@ -46,7 +46,7 @@ it provides isolation between teams and apps.
 Pages
 -----
 
-The only required pages for your site are a home page and an item
+The only required pages for this project are a home page and an item
 detail page. The detail page should show details about whatever it is
 your marketplace is about -- rides, books, tickets. The home page
 should show links to the detail pages -- maybe the newest content, the
@@ -55,7 +55,7 @@ most popular content, etc.
 Note, these are read-only pages for showing data in the db. To simplify
 this project we're ignoring how users or things in your marketplace are
 created in the first place. You can test your project by manually
-creating rows in the db or use your low-level API to create users and things.
+creating rows in the db or use your entity API to create users and things.
 In later projects we'll add the flows for letting users sign up and add
 things/content to your app.
 
@@ -74,6 +74,11 @@ Implementation
 --------------
 
 ### Container Linking ###
+
+THIS SECTION IS OUT OF DATE DUE TO USING DOCKER COMPOSE THIS SEMESTER.
+YOU WILL STILL HAVE FOUR CONTAINERS RUNNING, HOWEVER YOU WILL
+START THEM WITH DOCKER COMPOSE INSTEAD OF INDIVIDUAL DOCKER RUN
+COMMANDS. THE CONCEPTS IN THIS SECTION ARE OTHERWISE STILL APPLICABLE.
 
 You will have four Docker containers running -- one for each layer in
 your app: one instance of the MySQL container and three instances of
@@ -147,9 +152,10 @@ styling the HTML.
 ### Code layout ###
 
 You should be thinking of your app as three separate sub-apps: the
-low-level / model API, the experience service API and the HTML
+entity API, the experience service API and the HTML
 front-end. The best way to do this is to create _three separate Django
-apps_.
+apps_, each in their own directories of one git repository. Note, however,
+that only the entity / model API app will be configured to talk to the DB.
 
 Using multiple apps will allow you to have three separate settings.py
 files. This will be imporant because you'll want to do things
@@ -173,13 +179,10 @@ mess. I recommend you do the following:
   service to provide the data your web interface needs.
 
 - develop and test each tier independently. That means that if you
-  make changes to your low-level API, test it carefully before moving
+  make changes to your entity API, test it carefully before moving
   on to changes in the experience services tier. You don't want to
   change every tier and then try things and not know why things are
   failing.
-
-- make sure to carefully start your containers each time with the
-  right --link and --name arguments.
 
 - start early because if you wait until a few days before the
   assignment is due you will fail to finish it.
