@@ -85,7 +85,7 @@ Docker assigns a unique IP address to every container running. We'll
 use container linking to make sure each container knows the IP address
 of the other containers to talk to. In addition, we want to link to a container
 that is not created by the compose. This is accomplished via adding
-the `external_links` option to the docker compose file:
+the `external_links` or `links` option to the docker compose file:
 
    ```YAML
    models:
@@ -96,12 +96,13 @@ the `external_links` option to the docker compose file:
    
 Notice the difference between `external_links` and `links`. We use `links` to link to a
 container created by the docker-compose.yml. On the other hand, `external_links` is used to 
-link to a container outside Compose.
+link to a container outside Compose. In this case, since we are linking to a container outside
+Compose, we use `external_links`.
 
-That option will create a hostname called 'db' and make sure it's
+That option will create a hostname called `db` and make sure it's
 always pointing to the IP address for the container named
-'mysql' in 'isa-models'. Thus, your app in this container can always connect to the
-host 'db' instead of having to know which IP address your MySQL
+`mysql` in `models` container. Thus, your app in this container can always connect to the
+host `db` instead of having to know which IP address your MySQL
 container is actually running as. This is how you set up your
 project's settings.py so far.
 
@@ -115,7 +116,8 @@ and link it to your low-level API (notice the change from `external_links` to `l
          - models:models-api
    ```
 
-Then the app running in this container can make HTTP requests to the
+In this case we are linking to a container created by docker compose, so
+we use `links`. Then the app running in this container can make HTTP requests to the
 host model-api in order to conncect to your model-api container.
 
 And finally, your third container for running the HTML front-end will
@@ -143,8 +145,8 @@ I do a few other things to ease my development:
    
    exposes the port 8000 in the container (which is the `mod_wsgi-express` default port) 
    to port 8001 on the host machine. In this way you can access your models layer by listen to 
-   ```localhost:8001``` using a browser in the host machine.
-- I mount the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately (update the last modified time on wsgi.py in the top of your Django app to tell Apache to reaload your app -- can do this via 'touch wsgi.py'). This is accomplished by docker compose ```volumes``` option:
+   `http://localhost:8001` using a browser in the host machine.
+- I mount the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately (update the last modified time on wsgi.py in the top of your Django app to tell Apache to reaload your app -- can do this via 'touch wsgi.py'). This is accomplished by docker compose `volumes` option:
    ```YAML
    models:
       image: tp33/django:1.2
@@ -157,7 +159,7 @@ I do a few other things to ease my development:
    ```
 mounts the file directories inside `<your_file_path>` onto the `/app` directory in the container.
 
-- Docker containers exit when their main process finishes. Tp prevent containers from immediate exit, I tell each container to run mod_wsgi-express on startup. If I want to interactively log into the container I later run 'docker exec -it name /bin/bash' where name is the container name I want to start a shell in. This is accomplished by docker compose `command` option:
+- Docker containers exit when their main process finishes. To prevent containers from immediate exit, I tell each container to run mod_wsgi-express on startup. If I want to interactively log into the container I later run 'docker exec -it name /bin/bash' where name is the container name I want to start a shell in. This is accomplished by docker compose `command` option:
    ```YAML
    models:
       image: tp33/django:1.2
@@ -172,7 +174,7 @@ mounts the file directories inside `<your_file_path>` onto the `/app` directory 
 
 Putting that all together into the docker-compose.yml will start my three containers for me (I manually start the mysql container).
 
-You will have something like that, but you will have to modify the code accordingly to match you configuration:
+A sample docker-compose.yml (you will have to modify the code accordingly to match you configuration):
 
    ```YAML
    models:
@@ -229,11 +231,11 @@ styling the HTML.
 
 You should be thinking of your app as three separate sub-apps: the
 entity API, the experience service API and the HTML
-front-end. The best way to do this is to create _three separate Django
-apps_, each in their own directories of one git repository. Note, however,
+front-end. The best way to do this is to create three separate Django
+projects, each in their own directories of one git repository. Note, however,
 that only the entity / model API app will be configured to talk to the DB.
 
-Using multiple apps will allow you to have three separate settings.py
+Using multiple projects will allow you to have three separate settings.py
 files. This will be imporant because you'll want to do things
 differently in your HTML front-end since it's the part the public will
 be able to access and it's the part that's serving HTML as opposed to
