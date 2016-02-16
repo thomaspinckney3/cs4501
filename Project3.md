@@ -87,12 +87,12 @@ of the other containers to talk to. In addition, we want to link to a container
 that is not created by the compose. This is accomplished via adding
 the `external_links` or `links` option to the docker compose file:
 
-   ```YAML
-   models:
-      image: tp33/django:1.2
-      external_links:
-         - mysql:db
-   ```
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+```
    
 Notice the difference between `external_links` and `links`. We use `links` to link to a
 container created by the docker-compose.yml. On the other hand, `external_links` is used to 
@@ -109,12 +109,12 @@ project's settings.py so far.
 Similarly, you'll add another container for your experience service
 and link it to your low-level API (notice the change from `external_links` to `links`):
 
-   ```YAML
-   exp:
-      image: tp33/django:1.2
-      links:
-         - models:models-api
-   ```
+```YAML
+exp:
+   image: tp33/django:1.2
+   links:
+      - models:models-api
+```
 
 In this case we are linking to a container created by docker compose, so
 we use `links`. Then the app running in this container can make HTTP requests to the
@@ -123,90 +123,92 @@ host model-api in order to conncect to your model-api container.
 And finally, your third container for running the HTML front-end will
 link to the experience service container:
 
-   ```YAML
-   exp:
-      image: tp33/django:1.2
-      links:
-         - exp:exp-api
-   ```
+```YAML
+exp:
+   image: tp33/django:1.2
+   links:
+      - exp:exp-api
+```
 
 I do a few other things to ease my development:
 
 - I expose each container's port 8000 into my Linux VM with each container exposed as a different port. This is accomplished via adding docker compose `ports` option, for example:
 
-   ```YAML
-   models:
-      image: tp33/django:1.2
-      external_links:
-         - mysql:db
-      ports:
-         - "8001:8000"
-   ```
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+```
    
    exposes the port 8000 in the container (which is the `mod_wsgi-express` default port) 
    to port 8001 on the host machine. In this way you can access your models layer by listen to 
    `http://localhost:8001` using a browser in the host machine.
 - I mount the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately (update the last modified time on wsgi.py in the top of your Django app to tell Apache to reaload your app -- can do this via 'touch wsgi.py'). This is accomplished by docker compose `volumes` option:
-   ```YAML
-   models:
-      image: tp33/django:1.2
-      external_links:
-         - mysql:db
-      ports:
-         - "8001:8000"
-      volumes:
-         - <your_file_path>:/app
-   ```
+
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+   volumes:
+      - <your_file_path>:/app
+```
+
 mounts the file directories inside `<your_file_path>` onto the `/app` directory in the container.
 
 - Docker containers exit when their main process finishes. To prevent containers from immediate exit, I tell each container to run mod_wsgi-express on startup. If I want to interactively log into the container I later run 'docker exec -it name /bin/bash' where name is the container name I want to start a shell in. This is accomplished by docker compose `command` option:
-   ```YAML
-   models:
-      image: tp33/django:1.2
-      external_links:
-         - mysql:db
-      ports:
-         - "8001:8000"
-      volumes:
-         - <your_file_path>:/app
-      command: "mod_wsgi-express start-server --reload-on-changes <project_name>/wsgi.py"
-   ```
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+   volumes:
+      - <your_file_path>:/app
+   command: "mod_wsgi-express start-server --reload-on-changes <project_name>/wsgi.py"
+```
 
 Putting that all together into the docker-compose.yml will start my three containers for me (I manually start the mysql container).
 
 A sample docker-compose.yml (you will have to modify the code accordingly to match you configuration):
 
-   ```YAML
-   models:
-      image: tp33/django:1.2
-      external_links:
-         - mysql:db
-      ports:
-         - "8001:8000"
-      volumes:
-         - /home/tp/stuff-models:/app
-      command: "mod_wsgi-express start-server --reload-on-changes stuff/wsgi.py/wsgi.py"
-      
-   exp:
-      image: tp33/django:1.2
-      links:
-         - models:models-api
-      ports:
-         - "8002:8000"
-      volumes:
-         - /home/tp/stuff-exp:/app
-      command: "mod_wsgi-express start-server --reload-on-changes stuff/wsgi.py/wsgi.py"
-      
-   web:
-      image: tp33/django:1.2
-      links:
-         - exp:exp-api
-      ports:
-         - "8000:8000"
-      volumes:
-         - /home/tp/stuff-web:/app
-      command: "mod_wsgi-express start-server --reload-on-changes stuff/wsgi.py/wsgi.py"
-   ```
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+   volumes:
+      - /home/tp/stuff-models:/app
+   command: "mod_wsgi-express start-server --reload-on-changes stuff/wsgi.py/wsgi.py"
+   
+exp:
+   image: tp33/django:1.2
+   links:
+      - models:models-api
+   ports:
+      - "8002:8000"
+   volumes:
+      - /home/tp/stuff-exp:/app
+   command: "mod_wsgi-express start-server --reload-on-changes stuff/wsgi.py/wsgi.py"
+   
+web:
+   image: tp33/django:1.2
+   links:
+      - exp:exp-api
+   ports:
+      - "8000:8000"
+   volumes:
+      - /home/tp/stuff-web:/app
+   command: "mod_wsgi-express start-server --reload-on-changes stuff/wsgi.py/wsgi.py"
+```
    
 This results in my running container set looking like:
 
