@@ -93,6 +93,16 @@ Generally, there are a few guidelines to consider:
   fact that they tend to be large. For now, I'd just ignore doing
   anything with pictures.
 
+Docker 
+--------
+The sample docker-compose file you should have contains 4 containers - isa-mysql, isa-models, isa-exp, and isa-web. The mysql container should already be created properly. For project 2, you should update isa-models.  
+
+For project 2, try and create a quick and simple pipeline for working with Docker. An objective for project 2 is to show you that setting up to run code is just as important as writing the code. Some of the key concepts you may want to look into are
+* docker-compose 
+* docker volumes
+* docker port forwarding 
+* modwsgi --reload-on-change flag
+
 Services
 --------
 
