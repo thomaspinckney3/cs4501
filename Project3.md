@@ -187,7 +187,7 @@ models:
       - "8001:8000"
    volumes:
       - /home/tp/stuff-models:/app
-   command: "mod_wsgi-express start-server --reload-on-changes stuff/wsgi.py/wsgi.py"
+   command: "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
    
 exp:
    image: tp33/django:1.2
@@ -197,7 +197,7 @@ exp:
       - "8002:8000"
    volumes:
       - /home/tp/stuff-exp:/app
-   command: "mod_wsgi-express start-server --reload-on-changes stuff/wsgi.py/wsgi.py"
+   command: "mod_wsgi-express start-server --reload-on-changes stuff-exp/wsgi.py"
    
 web:
    image: tp33/django:1.2
@@ -207,7 +207,7 @@ web:
       - "8000:8000"
    volumes:
       - /home/tp/stuff-web:/app
-   command: "mod_wsgi-express start-server --reload-on-changes stuff/wsgi.py/wsgi.py"
+   command: "mod_wsgi-express start-server --reload-on-changes stuff-web/wsgi.py"
 ```
    
 This results in my running container set looking like:
