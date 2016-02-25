@@ -21,7 +21,7 @@ network with the other layers.
 An example request will be processed like:
 
    - A request from a user's browser will go to the HTML front end.
-   - The front-end will call thge experience service to get the data needed and render the data as HTML.
+   - The front-end will call the experience service to get the data needed and render the data as HTML.
    - The experience service will call one or more of the entity APIs to get it's data and return it.
    - The entity APIs will call the database to read data and update models.
 
