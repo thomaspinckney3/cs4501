@@ -136,6 +136,8 @@ Grades will be computed approximately as follows:
 30% two quizzes  
 60% class project  
 
+More detailed project grading guidelines can be found at https://docs.google.com/document/d/1nZrh3uvwQFh3wf3mE8kuH8LL12j5WbLh42-j6AJwr38/edit?usp=sharing
+
 Office Hours
 -------------
 
