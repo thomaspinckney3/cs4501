@@ -268,3 +268,14 @@ the user to wherever they're supposed to go next.
 As a further side note, you may wish to use Django's session middleware
 in your web front end for storing and retrieving authenticators
 instead of using cookies directly. It's fine if you want to do it this way.
+
+What to turn in
+----------------
+
+Please turn in:
+
+  - Tag your code with "project4" when you are done
+  - Email your group's assinged TA and the course instructor letting them know you are done
+  - Create data fixtures so that course staff can start your project with necesary database tables filled in with test data
+  - Verify that your docker compose .yml file is correct and references an "external_link" MySQL container
+ 
