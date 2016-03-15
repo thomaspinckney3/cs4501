@@ -88,8 +88,20 @@ You will be adding three new containers to your application:
 
 You can download and run the new Kafka and ES containers like:
 
-    run -d --name kafka --env ADVERTISED_HOST=kafka --env ADVERTISED_PORT=9092 --hostname="kafka" spotify/kafka
-    run -d -p 9200:9200 --name es elasticsearch:2.0 -Des.network.host=es
+    kafka:
+        image: spotify/kafka
+        container_name: kafka
+        environment:
+         ADVERTISED_HOST: kafka
+         ADVERTISED_PORT: 9092
+        hostname: kafka
+        
+    es:
+        image: elasticsearch:2.0
+        container_name: es
+        command: elasticsearch -Des.network.host=es
+        ports:
+         - "9200:9200"
 
 These images may take a few minutes to download as you're pulling down different Java versions for each, dependent apps like Zookeeper, and the main ES and Kafka apps themselves. Still, a lot easier than building and installing all the tools and depencies from source!
 
