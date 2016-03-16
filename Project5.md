@@ -88,21 +88,21 @@ You will be adding three new containers to your application:
 
 You can download and run the new Kafka and ES containers like:
 
-   ```YAML
-   kafka:
-        image: spotify/kafka
-        container_name: kafka
-        environment:
-         ADVERTISED_HOST: kafka
-         ADVERTISED_PORT: 9092
-        hostname: kafka
-        
-   es:
-        image: elasticsearch:2.0
-        container_name: es
-        ports:
-         - "9200:9200"
-   ```
+```YAML
+kafka:
+   image: spotify/kafka
+   container_name: kafka
+   environment:
+      ADVERTISED_HOST: kafka
+      ADVERTISED_PORT: 9092
+   hostname: kafka
+   
+es:
+   image: elasticsearch:2.0
+   container_name: es
+   ports:
+      - "9200:9200"
+```
    
 These images may take a few minutes to download as you're pulling down different Java versions for each, dependent apps like Zookeeper, and the main ES and Kafka apps themselves. Still, a lot easier than building and installing all the tools and depencies from source!
 
@@ -118,13 +118,14 @@ And let's start a container to run your search indexer:
 The image takes a few secondes to download. Notice how easy it is to modify a environment and distribute it to everyone.
 
 If you run out of space on your Linux machine, you can delete docker image on disk:
+
 ```
 docker rmi <hash of the image>
 ```
 
 And in that container you can try some simple tests of ES:
    
-```PYTHON
+```
 root@d806ea9af85a:/app#  python
 Python 3.5.0 (default, Oct 29 2015, 07:33:09) 
 [GCC 4.9.2] on linux
@@ -147,7 +148,8 @@ Then we call `es.indices.refresh()` on listing_index. Until this is done, ES has
 Finally, there's an example of calling `es.search()` to query the listing_index for documents that match the query 'macbook air'. We're also specifying that we only want the top 10 results returned. The matches, if any, are returned in the response's `['hits']['hits']` array. Note that the 'id' of each hit matches the id we passed in when indexing the document. We're using the DB assigned primary key id when indexing and so this allows our experience code to quickly look up the corresponding listing from the db by it's primary key at query time.
 
 And test out adding messages to a Kafka queue via 'KafkaProducer':
-```PYTHON
+
+```
 >>> from kafka import KafkaProducer, KafkaClient
 >>> import json
 >>> producer = KafkaProducer(bootstrap_servers='kafka:9092')
@@ -160,7 +162,7 @@ We're queing up a message via producer.send which takes a message (in this case 
 
 And test our receiving messages from Kafka (To see messages sent, you need to start another `tp33/django:1.3` container connecting to Kafka, and run the following script in that container):
    
-```PYTHON
+```
 >>> from kafka import KafkaConsumer
 >>> consumer = KafkaConsumer('new-listings-topic', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])
 >>> for message in consumer:
