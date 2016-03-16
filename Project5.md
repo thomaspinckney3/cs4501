@@ -10,13 +10,14 @@ Architecture
 ------------
 
 There are three components to this project:
+0. Implement functionalities to create object in the frontend.
+1. Adding newly created listings to a Kafka queue
+2. A search indexer that takes new listings out of Kafka and indexing them into Elastic Search (ES)
+3. Building a search result page (SRP) that queries ES
 
-   - Adding newly created listings to a Kafka queue
-   - A search indexer that takes new listings out of Kafka and
-     indexing them into Elastic Search (ES)
-   - Building a search result page (SRP) that queries ES
+The new SRP will be powered by its own new experience service API, ElasticSearch.
 
-The new SRP will be powered by its own new experience service API.
+
 
 This project will also introduce the first part of your system that
 runs code outside of the context of a web request. Step two above,
@@ -30,7 +31,7 @@ by LinkedIn. We'll be running a Docker image of it built by Spotify
 since it combines all the necesary pieces into one easy-to-use
 container.
 
-You will be adding things to a Kafka queue (or as Kafak calls them,
+You will be adding things to a Kafka queue (or as Kafka calls them,
 topics) in your new listing experience service. Whenever a user
 creates a new listing, you'll post the relevent information (title, id
 in the db, etc) into the Kafka topic.
@@ -84,36 +85,36 @@ You will be adding three new containers to your application:
 
    - ElasticSearch based on the 'elasticsearch:2.0' image on Dockerhub
    - Kafka based on the 'spotify/kafka' image on Dockerhub
-   - The backend search indexer based on my tp33/django:1.1 image on Dockerhub
-
-You will need to update the image you're using for your models
-api, experience service api, and web front end api to the 1.1 version
-of my tp33/django container.
-
-I've updated it to update the versions of
-a few things (such as from Python 3.4 to Python 3.5) and added the Python Kafka and ES
-client libraries. Since it's only your experience service app that is
-talking to Kafka and ES, you could only upgrade your experience
-service container to 1.1. However, it's easier to just run the same
-version everywhere.
+   - The backend search indexer based on my tp33/django:1.2 image on Dockerhub
 
 You can download and run the new Kafka and ES containers like:
 
-    run -d --name kafka --env ADVERTISED_HOST=kafka --env ADVERTISED_PORT=9092 spotify/kafka
-    run -d -p 9200:9200 --name es elasticsearch:2.0 -Des.network.host=es
+    kafka:
+        image: spotify/kafka
+        container_name: kafka
+        environment:
+         ADVERTISED_HOST: kafka
+         ADVERTISED_PORT: 9092
+        hostname: kafka
+        
+    es:
+        image: elasticsearch:2.0
+        container_name: es
+        ports:
+         - "9200:9200"
 
 These images may take a few minutes to download as you're pulling down different Java versions for each, dependent apps like Zookeeper, and the main ES and Kafka apps themselves. Still, a lot easier than building and installing all the tools and depencies from source!
 
-Make sure the keep the container names as I used here unless you want
+Make sure to keep the container names as I used here unless you want
 to figure out the nuances of Kafka and it's dependent Zookeeper
 configuration :)
 
 And let's start a container to run your search indexer:
 
-    docker run -it --name batch --link kafka:kafka --link es:es tp33/django:1.1
+    docker run -it --name batch --link kafka:kafka --link es:es tp33/django:1.2
     root@d806ea9af85a:/app#
 
-At this point Docker should have downloaded the new 1.1 verison of the container with all the new software in it. Notice how easy it is to build a new environment and distribute it to everyone.
+At this point Docker should have downloaded the 1.2 verison of the container. Notice how easy it is to build a new environment and distribute it to everyone.
 
 And in that container you can try some simple tests of ES:
 
@@ -137,32 +138,26 @@ Then we call `es.indices.refresh()` on listing_index. Until this is done, ES has
 
 Finally, there's an example of calling `es.search()` to query the listing_index for documents that match the query 'macbook air'. We're also specifying that we only want the top 10 results returned. The matches, if any, are returned in the response's `['hits']['hits']` array. Note that the 'id' of each hit matches the id we passed in when indexing the document. We're using the DB assigned primary key id when indexing and so this allows our experience code to quickly look up the corresponding listing from the db by it's primary key at query time.
 
-And test out adding messages to a Kafka queue via a 'SimpleProducer':
-
-    >>> from kafka import SimpleProducer, KafkaClient
+And test out adding messages to a Kafka queue via 'KafkaProducer':
+   ```PYTHON
+    >>> from kafka import KafkaProducer, KafkaClient
     >>> import json
-    >>> kafka = KafkaClient('kafka:9092')
-    >>> producer = SimpleProducer(kafka)
+    >>> producer = KafkaProducer(bootstrap_servers='kafka:9092')
     >>> some_new_listing = {'title': 'Used MacbookAir 13"', 'description': 'This is a used Macbook Air in great condition', 'id':42}
-    >>> producer.send_messages(b'new-listings-topic', json.dumps(some_new_listing).encode('utf-8'))
-    [ProduceResponse(topic=b'new-listings-topic', partition=0, error=0, offset=0)]
+    >>> producer.send('new-listings-topic', json.dumps(some_new_listing).encode('utf-8'))
+    <kafka.producer.future.FutureRecordMetadata object at 0x7f9df5a71780>
+   ```
+   
+We're queing up a message via producer.send which takes a message (in this case a JSON doument in bytes) and a topic name (in this case 'new-listings-topic'). The KafkaProducer is in asynchronous mode by default. The returned value shows that the message was queued up asynchronously (The message may NOT be in the queue yet when the value returns).
 
-We're queing up a message via producer.send_messages which takes a message (in this case a JSON doument) and a topic name (in this case 'new-listings-topic'). The returned value shows that the message was queued up succesfully at offset 0 into the queue. Further messages will appeneded at increasing offsets.
-
-And test our receiving messages from Kafka:
+And test our receiving messages from Kafka (To see messages sent, you need to start another container connecting to Kafka, and run the following script in that container):
 
     >>> from kafka import KafkaConsumer
     >>> consumer = KafkaConsumer('new-listings-topic', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])
     >>> for message in consumer:
-    >>>    new_listing = json.loads(message.value)
+    >>>    new_listing = json.loads((message.value).decode('utf-8'))
 
-Here we're showing an example of a consumer reading messages from the 'new-listings-topic' topic. The consumer is part of the 'listings-indexer' consumer group. Each topic can have multiple groups of consumer reading messages. Each message will be delivered exactly one to SOME member of each group. That is, if there are three clients consuming messages from this topic and all are part of the same group, only one of the three clients will get any given message. This functionality is built to support scaling up the number of consumers. For example, if you had millions of new listings being created per day you might want more than one consumer reading the new listing messages and adding them to ES. However, you'd want to make sure that each new listing was only added to ES once.
-
-Note, that Kafka is a little picky on starting up. Sometimes you have
-to try connceting, sending a message or receiving a message twice for
-it to create the topic properly. This is only the case with a new topic. After the topic
-has been created and messages sent/received on it, things should work
-fine.
+Here we're showing an example of a consumer reading messages from the 'new-listings-topic' topic. The consumer is part of the 'listings-indexer' consumer group. Each topic can have multiple groups of consumer reading messages. Each message will be delivered exactly once to SOME member of each group. That is, if there are three clients consuming messages from this topic and all are part of the same group, only one of the three clients will get any given message. This functionality is built to support scaling up the number of consumers. For example, if you had millions of new listings being created per day you might want more than one consumer reading the new listing messages and adding them to ES. However, you'd want to make sure that each new listing was only added to ES once.
 
 The other thing to be aware of is that by default, the first
 time a consumer connects it will only receive messages sent AFTER that
