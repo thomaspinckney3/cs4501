@@ -30,7 +30,7 @@ by LinkedIn. We'll be running a Docker image of it built by Spotify
 since it combines all the necesary pieces into one easy-to-use
 container.
 
-You will be adding things to a Kafka queue (or as Kafak calls them,
+You will be adding things to a Kafka queue (or as Kafka calls them,
 topics) in your new listing experience service. Whenever a user
 creates a new listing, you'll post the relevent information (title, id
 in the db, etc) into the Kafka topic.
@@ -84,23 +84,24 @@ You will be adding three new containers to your application:
 
    - ElasticSearch based on the 'elasticsearch:2.0' image on Dockerhub
    - Kafka based on the 'spotify/kafka' image on Dockerhub
-   - The backend search indexer based on my tp33/django:1.1 image on Dockerhub
-
-You will need to update the image you're using for your models
-api, experience service api, and web front end api to the 1.1 version
-of my tp33/django container.
-
-I've updated it to update the versions of
-a few things (such as from Python 3.4 to Python 3.5) and added the Python Kafka and ES
-client libraries. Since it's only your experience service app that is
-talking to Kafka and ES, you could only upgrade your experience
-service container to 1.1. However, it's easier to just run the same
-version everywhere.
+   - The backend search indexer based on my tp33/django:1.2 image on Dockerhub
 
 You can download and run the new Kafka and ES containers like:
 
-    run -d --name kafka --env ADVERTISED_HOST=kafka --env ADVERTISED_PORT=9092 spotify/kafka
-    run -d -p 9200:9200 --name es elasticsearch:2.0 -Des.network.host=es
+    kafka:
+        image: spotify/kafka
+        container_name: kafka
+        environment:
+         ADVERTISED_HOST: kafka
+         ADVERTISED_PORT: 9092
+        hostname: kafka
+        
+    es:
+        image: elasticsearch:2.0
+        container_name: es
+        command: elasticsearch -Des.network.host=es
+        ports:
+         - "9200:9200"
 
 These images may take a few minutes to download as you're pulling down different Java versions for each, dependent apps like Zookeeper, and the main ES and Kafka apps themselves. Still, a lot easier than building and installing all the tools and depencies from source!
 
@@ -110,10 +111,10 @@ configuration :)
 
 And let's start a container to run your search indexer:
 
-    docker run -it --name batch --link kafka:kafka --link es:es tp33/django:1.1
+    docker run -it --name batch --link kafka:kafka --link es:es tp33/django:1.2
     root@d806ea9af85a:/app#
 
-At this point Docker should have downloaded the new 1.1 verison of the container with all the new software in it. Notice how easy it is to build a new environment and distribute it to everyone.
+At this point Docker should have downloaded the 1.2 verison of the container. Notice how easy it is to build a new environment and distribute it to everyone.
 
 And in that container you can try some simple tests of ES:
 
@@ -147,19 +148,19 @@ And test out adding messages to a Kafka queue via a 'SimpleProducer':
     >>> producer.send_messages(b'new-listings-topic', json.dumps(some_new_listing).encode('utf-8'))
     [ProduceResponse(topic=b'new-listings-topic', partition=0, error=0, offset=0)]
 
-We're queing up a message via producer.send_messages which takes a message (in this case a JSON doument) and a topic name (in this case 'new-listings-topic'). The returned value shows that the message was queued up succesfully at offset 0 into the queue. Further messages will appeneded at increasing offsets.
+We're queing up a message via producer.send_messages which takes a message (in this case a JSON doument) and a topic name (in this case 'new-listings-topic'). The returned value shows that the message was queued up succesfully at offset 0 into the queue. Further messages will appeneded at increasing offsets. You may receiver a "LeaderNotAvailable" error the first time you run send_messages for a given topic. This is normal, and should go away on the next try (once the topic is created). If it persists, you might have a more significant error.
 
 And test our receiving messages from Kafka:
 
     >>> from kafka import KafkaConsumer
     >>> consumer = KafkaConsumer('new-listings-topic', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])
     >>> for message in consumer:
-    >>>    new_listing = json.loads(message.value)
+    >>>    new_listing = json.loads((message.value).decode('utf-8'))
 
-Here we're showing an example of a consumer reading messages from the 'new-listings-topic' topic. The consumer is part of the 'listings-indexer' consumer group. Each topic can have multiple groups of consumer reading messages. Each message will be delivered exactly one to SOME member of each group. That is, if there are three clients consuming messages from this topic and all are part of the same group, only one of the three clients will get any given message. This functionality is built to support scaling up the number of consumers. For example, if you had millions of new listings being created per day you might want more than one consumer reading the new listing messages and adding them to ES. However, you'd want to make sure that each new listing was only added to ES once.
+Here we're showing an example of a consumer reading messages from the 'new-listings-topic' topic. The consumer is part of the 'listings-indexer' consumer group. Each topic can have multiple groups of consumer reading messages. Each message will be delivered exactly once to SOME member of each group. That is, if there are three clients consuming messages from this topic and all are part of the same group, only one of the three clients will get any given message. This functionality is built to support scaling up the number of consumers. For example, if you had millions of new listings being created per day you might want more than one consumer reading the new listing messages and adding them to ES. However, you'd want to make sure that each new listing was only added to ES once. You can create a new django container and run this script there too to see this behavior in action.
 
 Note, that Kafka is a little picky on starting up. Sometimes you have
-to try connceting, sending a message or receiving a message twice for
+to try connecting, sending a message or receiving a message twice for
 it to create the topic properly. This is only the case with a new topic. After the topic
 has been created and messages sent/received on it, things should work
 fine.
