@@ -150,7 +150,7 @@ Finally, there's an example of calling `es.search()` to query the listing_index 
 And test out adding messages to a Kafka queue via 'KafkaProducer':
 
 ```
->>> from kafka import KafkaProducer, KafkaClient
+>>> from kafka import KafkaProducer
 >>> import json
 >>> producer = KafkaProducer(bootstrap_servers='kafka:9092')
 >>> some_new_listing = {'title': 'Used MacbookAir 13"', 'description': 'This is a used Macbook Air in great condition', 'id':42}
