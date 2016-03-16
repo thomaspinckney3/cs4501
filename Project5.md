@@ -166,7 +166,7 @@ And test our receiving messages from Kafka (To see messages sent, you need to st
 >>> from kafka import KafkaConsumer
 >>> consumer = KafkaConsumer('new-listings-topic', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])
 >>> for message in consumer:
->>>    new_listing = json.loads((message.value).decode('utf-8'))
+>>> new_listing = json.loads((message.value).decode('utf-8'))
 ```
 
 Here we're showing an example of a consumer reading messages from the 'new-listings-topic' topic. The consumer is part of the 'listings-indexer' consumer group. Each topic can have multiple groups of consumer reading messages. Each message will be delivered exactly once to SOME member of each group. That is, if there are three clients consuming messages from this topic and all are part of the same group, only one of the three clients will get any given message. This functionality is built to support scaling up the number of consumers. For example, if you had millions of new listings being created per day you might want more than one consumer reading the new listing messages and adding them to ES. However, you'd want to make sure that each new listing was only added to ES once.
