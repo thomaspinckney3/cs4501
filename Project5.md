@@ -84,7 +84,7 @@ You will be adding three new containers to your application:
 
    - ElasticSearch based on the 'elasticsearch:2.0' image on Dockerhub
    - Kafka based on the 'spotify/kafka' image on Dockerhub
-   - The backend search indexer based on my new tp33/django:1.3 image on Dockerhub (kafka-python upgraded)
+   - The backend search indexer based on my new tp33/django-docker:latest image on Dockerhub (kafka-python upgraded)
 
 You can download and run the new Kafka and ES containers like:
 
@@ -112,7 +112,7 @@ configuration :)
 
 And let's start a container to run your search indexer:
 
-    docker run -it --name batch --link kafka:kafka --link es:es tp33/django:1.3
+    docker run -it --name batch --link kafka:kafka --link es:es tp33/django-docker:latest
     root@d806ea9af85a:/app#
 
 The image takes a few secondes to download. Notice how easy it is to modify a environment and distribute it to everyone.
@@ -160,13 +160,15 @@ And test out adding messages to a Kafka queue via 'KafkaProducer':
    
 We're queing up a message via producer.send which takes a message (in this case a JSON doument in bytes) and a topic name (in this case 'new-listings-topic'). The KafkaProducer is in asynchronous mode by default. The returned value shows that the message was queued up asynchronously (The message may NOT be in the queue yet when the value returns).
 
-And test our receiving messages from Kafka (To see messages sent, you need to start another `tp33/django:1.3` container connecting to Kafka, and run the following script in that container):
+And test our receiving messages from Kafka (To see messages sent, you need to start another `tp33/django-docker:latest` container connecting to Kafka, and run the following script in that container):
    
 ```
 >>> from kafka import KafkaConsumer
 >>> consumer = KafkaConsumer('new-listings-topic', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])
 >>> for message in consumer:
->>> new_listing = json.loads((message.value).decode('utf-8'))
+...     new_listing = json.loads((message.value).decode('utf-8'))
+...     print(new_listing)
+
 ```
 
 Here we're showing an example of a consumer reading messages from the 'new-listings-topic' topic. The consumer is part of the 'listings-indexer' consumer group. Each topic can have multiple groups of consumer reading messages. Each message will be delivered exactly once to SOME member of each group. That is, if there are three clients consuming messages from this topic and all are part of the same group, only one of the three clients will get any given message. This functionality is built to support scaling up the number of consumers. For example, if you had millions of new listings being created per day you might want more than one consumer reading the new listing messages and adding them to ES. However, you'd want to make sure that each new listing was only added to ES once.
