@@ -31,6 +31,14 @@ to the HTML front-end app. Note, an end-user only ever access the HTML
 front-end app. All the other parts are hidden and not publicly
 accessible for security reasons.
 
+Recall that there are several reasons for creating an experience service level:
+
+   - Creating a single service call to power each page/screen reduces how many
+   service calls a mobile client has to make
+   - Moving all the business logic for each screen or page to the expereicen
+   service ensures that different mobile and web front-ends have a consistent
+   experience for users.
+
 The key point of this is the strict isolation between levels. The only
 way the HTML front-end communicates with the rest of your app is
 through the expereince service level. In turn, the only way your
@@ -38,6 +46,12 @@ experience service level interacts with the database is through the
 entity API. This is directly analagous to the data abstraction and
 modularity that you learn about applying in an individual program, but
 here it is applied to a system of programs.
+
+You should assume that the web front-end and the experience service tiers
+are accessible to the world but the entity and database tiers are internal/behind
+a firewall. That is, anyone may call your web front-end or experience service but
+only your experience service can call your entity and database tiers. This is 
+important to think through when it comes to ensuring the security of your application.
 
 This will seem overly confusing and burdensome for a simple
 app. However, for a large app with many teams of people working on it
@@ -73,7 +87,7 @@ smaller screens.
 Implementation
 --------------
 
-### Container Linking (Updated for Docker Compose)  ###
+### Container Linking  ###
 
 You will have four Docker containers running -- one for each layer in
 your app: one instance of the MySQL container and three instances of
@@ -276,6 +290,8 @@ mess. I recommend you do the following:
   to see what broke things as opposed to having to go through a huge
   set of changes all in one commit.
 
+- use Django Fixtures to reproducibly load test data into your databases.
+
 ### Calling HTTP/JSON APIs in Python ###
 
     import urllib.request
@@ -297,3 +313,9 @@ mess. I recommend you do the following:
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     resp = json.loads(resp_json)
     print(resp)
+
+### What to turn in ###
+
+Create a tag in your GitHub and email your TA the tag. Make sure you've tested your code thoroughly and haven't forgotten to comit anything. Also make sure to test from a clean / empty / new database so that you're not accidentally depending on anything already in your system.
+
+You are required to turn in a docker-compose.yml and a set of fixtures that allow your TA to easily run/test your system. Your docker-compose.yml should assume, like in the prior assignment, that there's a mysql container already running and it should be referenced via an external_link. Your fixtures should contain sample test data for viewing the listing page.
