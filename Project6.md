@@ -20,7 +20,7 @@ Chose from the following list of topics:
     
       Write unit tests for your models or experience services.Django has extensive support for writing unit tests
       including running tests against a new 'test' database so that your main database isn't changed
-      by the test runs. You can load initial data into your test database using Django's 'fixtures'.
+      by the test runs.
     
 4. Integration tests
     
