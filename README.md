@@ -36,19 +36,18 @@ Course Topics (subject to revision as course progresses)
   - Overview of data center architecture: load balancers, switches, storage, servers
   - Overview of Model View Controller (MVC) design pattern
   - Overview of Docker and course project
-  - Project: set up Docker container with Hello World Python/Django web app. Due Weds 1/27. https://github.com/thomaspinckney3/cs4501/blob/master/Project1.md
+  - Project: set up Docker container with Hello World Python/Django web app. Due Monday 2/1. https://github.com/thomaspinckney3/cs4501/blob/master/Project1.md
   - Resources: Django Getting Started docs https://docs.djangoproject.com/en/1.8/intro/ and https://docs.docker.com as well as  https://www.udacity.com/course/web-development--cs253 or http://www.codecademy.com/en/tracks/web if needed for HTML and CSS intro
 2. Requirements and documentation (Weds 1/27)
   - User stories
   - Product requirement documents
   - Design and architecture documents
-  - Project: Write user-stories and other documentation for project. Due Monday 2/1.
 3. Service based architecture, part I (Monday 2/1)
   - Loosely coupled systems cooperating via services
   - Errors in the real world: failing gracefully and constantly
   - REST and API design
   - Reading: Service Oriented Architecture at Netflix http://techblog.netflix.com/2012/06/netflix-operations-part-i-going.html , https://www.nginx.com/blog/microservices-at-netflix-architectural-best-practices/ and http://martinfowler.com/microservices/ . Optional, for more in-depth reading check out http://shop.oreilly.com/product/0636920033158.do
-  - Project: Start building site: create data models and service layer of project. Due Monday 2/15. https://github.com/thomaspinckney3/cs4501/blob/master/Project2.md
+  - Project: Start building site: write user stores, create data models and service layer of project. Due Monday 2/15. https://github.com/thomaspinckney3/cs4501/blob/master/Project2.md
 4. Databases (Monday 2/8 and Weds 2/10 - No class Weds 2/3)
   - CAP theorem / Strong vs eventual consistency / Availability vs consistency
   - Common database use cases -- transactional data, logging, caches, etc
@@ -137,9 +136,23 @@ Grades will be computed approximately as follows:
 30% two quizzes  
 60% class project  
 
+More detailed project grading guidelines can be found at https://docs.google.com/document/d/1nZrh3uvwQFh3wf3mE8kuH8LL12j5WbLh42-j6AJwr38/edit?usp=sharing
+
 Office Hours
 -------------
 
-TBD
+The teaching staff for this semester are:
+
+  - Tom Pinckney (lecturer) tp3ks@virginia.edu
+  - David Amin (TA) dma3fq@virginia.edu
+  - Ian Zheng (TA) yz9fy@virginia.edu
+  - Daniel Mace (TA) dfm4ff@virginia.edu
+
+There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
+
+   - Project review, help, and demo hours: Weds 1-2:30 Rice 514 and Sunday 3-4:30 Rice 340 (lead by TAs).
+   - General Q&A Monday 2:30 - 3:30 (led by Tom) Rice 425.
+
+There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com
 
 Remember, it's always better to ask questions, bring up problems etc sooner vs later.

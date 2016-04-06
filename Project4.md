@@ -187,10 +187,13 @@ Creating the random authenticators can be done by generating a random
 string as such:
 
     import os
-    import base64
+    import hmac
     
-    authenticator = base64.b64encode(os.urandom(32)).decode('utf-8')
-
+    # import django settings file
+    import settings
+    
+    authenticator = hmac.new (key = settings.SECRET_KEY.encode('utf-8'), msg = os.urandom(32), digestmod = 'sha256').hexdigest()
+    
 This will generate 256 bits of randomness which is pretty hard for an
 attacker to guess. It's also pretty unlikely to collide with a previously
 generated authenticator that may be in the db. To be 100% safe however
@@ -202,7 +205,7 @@ generating and checking logic but there's no good Django library
 available and in the name of simplicity I'm trying to avoid using more
 third party libraries. Best practice would be to use a third party to
 take care of coding errors, considering things like timing attacks,
-using sufficient randomness, etc.
+using sufficient randomness, speed etc.
 
 #### Web front end authentication checking skeleton code ####
 
@@ -265,3 +268,14 @@ the user to wherever they're supposed to go next.
 As a further side note, you may wish to use Django's session middleware
 in your web front end for storing and retrieving authenticators
 instead of using cookies directly. It's fine if you want to do it this way.
+
+What to turn in
+----------------
+
+Please turn in:
+
+  - Tag your code with "project4" when you are done
+  - Email your group's assinged TA and the course instructor letting them know you are done
+  - Create data fixtures so that course staff can start your project with necesary database tables filled in with test data
+  - Verify that your docker compose .yml file is correct and references an "external_link" MySQL container
+ 

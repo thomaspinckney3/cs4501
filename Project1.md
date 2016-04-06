@@ -73,7 +73,20 @@ Install everything
 
 - Start the VirtualBox VM which should boot form the Ubuntu ISO. Go
   through the install process. Make sure to install the SSH server so
-  you can log into your VM. 
+  you can log into your VM.
+
+- Install the VirtualBox Linux Guest additions which will make many
+  small things in your life better https://www.virtualbox.org/manual/ch04.html
+
+  Mount the VirtualBox Guest Additions install .iso through the Devices ->
+  Insert Guest Additions CD Image option and then install with:
+
+		tp@devl:~$ sudo apt-get install dkms
+		...
+		tp@devl:~$ sudo mount /dev/cdrom /mnt
+		tp@devl:~$ sudo sh /mnt/VBoxLinuxAdditions.run
+		...
+		tp@devl:~$ sudo reboot
 
 - Install Docker following the instructions
   https://docs.docker.com/installation/ubuntulinux/
@@ -401,7 +414,7 @@ installed already. Note, we're running from under /app like the prod containers 
 You should be able to run
 
     root@399bd9c4a2a5:/app# cd /app
-    root@399bd9c4a2a5:/app# git clone https://github.com:thomaspinckney3/stuff.git
+    root@399bd9c4a2a5:/app# git clone https://github.com/thomaspinckney3/stuff.git
     Cloning into 'stuff'...
     remote: Counting objects: 8, done.
     remote: Compressing objects: 100% (7/7), done.
@@ -548,3 +561,8 @@ from a Dockerfile, configuring ports, and defining shared volumes for containers
 These are all things that may be helpful to you later in the course, so keep your
 compose file updated as you go about your project. There are great examples at
 https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04
+
+What to turn in
+---------------
+
+Turn in screenshots of 'docker ps' showing your running containers along with a screenshot of your "Hellow World" output from curl.

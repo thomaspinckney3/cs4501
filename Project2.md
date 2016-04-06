@@ -6,6 +6,20 @@ and then build a first version of services for accessing those
 models. There are two weeks assigned for completing this work, but if
 you wait until the second week you will likely not finish on time.
 
+Documentation
+-------------
+
+Before starting to write any code, start with developing a set of user stories
+and then draw the relationships between your models. You should plan on
+writing about ten user stories. Turn them in as part of your project.
+
+You should also think about what your data models will be and how they
+will relate to each other. For example, if you're building an application
+for students to hire turors, you might have models for users, tutors, tutees,
+reviews etc. Users might have a relationships to tutors and tutees (can a user
+tutor one subject and receive help in another?). You can also start to spec out
+what fields will be in each model (eg first name, email address etc).
+
 Django
 ------
 
@@ -19,15 +33,20 @@ website. Make sure you're looking at the correct version!
 A note on code layout. I prefer to have my projects layed out like
 this:
 
-stuff/
-	manage.py
+
 	stuff/
-		views.py
-		models.py
-		migrations/
-		settings.py
-		wsgi.py
-		templates/
+	├── manage.py
+	└── stuff
+	    ├── __init__.py
+	    ├── main.py
+	    ├── models.py
+	    ├── settings.py
+	    ├── templates
+	    │   └── start.html
+	    ├── urls.py
+	    └── wsgi.py
+
+
 
 This is different the defualt Django layout that is created if run
 'startproject' and then 'startapp'. I basically skip the 'startapp'
@@ -69,23 +88,51 @@ Generally, there are a few guidelines to consider:
   references. This is known as a "one-to-one" relation.
 
   Users and Picture models are generally handled specially in
-  Django. Django supplies its own User model for you with a lot of
-  built in common features. For now you can just ignore this unless
-  you're feeling adventerous. We'll come back to it later in the
-  course. Pictures are complicated by the fact that they tend to be
-  large. For now, I'd just ignore doing anything with pictures.
+  Django. However, as we'll discuss in later classes, we're not
+  going to use the Django User class. Pictures are complicated by the
+  fact that they tend to be large. For now, I'd just ignore doing
+  anything with pictures.
+
+Docker 
+--------
+The sample docker-compose file you should have contains 4 containers - isa-mysql, isa-models, isa-exp, and isa-web. The mysql container should already be created properly. For project 2, you should update isa-models.  
+
+For project 2, try and create a quick and simple pipeline for working with Docker. An objective for project 2 is to show you that setting up to run code is just as important as writing the code. Some of the key concepts you may want to look into are
+* docker-compose 
+* docker volumes
+* docker port forwarding 
+* modwsgi --reload-on-change flag
 
 Services
 --------
 
 Each API will have its own url for accessing it. These are listed in
 your project's urls.py file. Each one will specify the view that is to
-be invoked to handle that url.
+be invoked to handle that url. They will look something like this:
+
+    /api/v1/users/43 - GET to return info about user 43, POST to update the user's info.
+    /api/v1/things/23 - GET to return info about thing 23, POST to update it
+    /api/v1/things/create - POST to create a new thing
 
 You'll then create a Django view for each url. The view may handle
 both GET and POST requests. You'll need to consult the Django
 documentation for how to do this and for how to properly format a json
 response from your view.
+
+The APIs should return JSON results. The POST methods should take either form-encoded
+sets of key-value parameters (preferred) or JSON encoded values. For example, a result
+from looking up a user might look like:
+
+    {
+     'ok':     True,
+     'result':
+     {
+      'username':    'tpinckney',
+      'first_name':  'Tom',
+      'last_name':   'Pinckney',
+      'date_created': 'Feb 12 2016'
+     }
+    }
 
 Remember, this is a four-tier app we're building. The DB is the fourth
 / bottom tier. This layer of services you're building now is the
@@ -111,3 +158,13 @@ When you edit your models.py file(s), your DB will not immediately automatically
 you'll need to use your Django manage.py to generate a set of SQL commands needed to update your DB to match
 your new models. Then you can apply these commands to make them actually take affect. Django breaks this into two
 stages so that you can check the commands into git on your dev machine and then later apply them to many different db's -- in theory you might have many dev db instances, some testing/qa instances and then prod db instances. See the Django getting started or model documentation for more on migrations and how to use them.
+
+What to turn in
+---------------
+
+The teaching staff should be able to run your app entirely by using docker compose. You'll send
+us the link to your github. We'll checkout the code, run docker-compose up and expect things to run. We
+will have a MySQL database container called 'mysql' configured with a 'www' user that can access a
+'cs4501' database as described in Project 1.
+
+Your github should also have a text file with your user stores and model design doc in it.

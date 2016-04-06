@@ -6,14 +6,14 @@ Chose from the following list of topics:
 
 1. Hosting on DigitalOcean
     
-      Email me for an invite if you haven't already received one.
+      Email me for an invite if you you'd like to do this.
     
-2. Caching with Memcached
+2. Caching with Redis
     
-      Install the Python memcached client https://pypi.python.org/pypi/python-memcached with pip and
-      start a memcached docker image such as https://hub.docker.com/_/memcached/ .
+      Install the Python Redis client https://pypi.python.org/pypi/redis with pip and
+      start a Redis docker image such as https://hub.docker.com/_/redis/ .
       
-      Use Django's caching interfaces to configure whole page caching for your app. Think about how and when
+      You can't use Django's caching interfaces to configure whole page caching with Redis without using additonal packages. Instead just directly call the Redis python client to store pages and later look them up. Think about how and when
       to invalidate the cache'd content (after a certain amount of time? when the DB changes? something else?).
     
 3. Unit tests
@@ -47,6 +47,8 @@ Deliverable
 Please turn in via email a write up including:
 
 1. describing what you did
+
+2. updated docker-compose.yml if you are running any new or changed containers
  
 2. link to any code in github you wrote for this (especially for caching and unit test work)
 

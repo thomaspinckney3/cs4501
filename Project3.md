@@ -12,8 +12,8 @@ As a reminder, we are building a four-tier web app:
 
    - HTML front end
    - Experience service APIs
-   - Low level / Model APIs
-   - Database
+   - Entity / Model APIs (started in Project 2)
+   - Database (started in Project 2)
 
 Each layer will run in it's own container and communicate via the
 network with the other layers.
@@ -21,23 +21,37 @@ network with the other layers.
 An example request will be processed like:
 
    - A request from a user's browser will go to the HTML front end.
-   - The front-end will call thge experience service to get the data needed and render the data as HTML.
-   - The experience service will call one or more of the low-level APIs to get it's data and return it.
-   - The low-level APIs will call the database to read data and update models.
+   - The front-end will call the experience service to get the data needed and render the data as HTML.
+   - The experience service will call one or more of the entity APIs to get it's data and return it.
+   - The entity APIs will call the database to read data and update models.
 
-The experience service app will invoke the low-level APIs via HTTP and
+The experience service app will invoke the entity APIs via HTTP and
 receive JSON responses. Similarly, it will provide HTTP/JSON APIs up
 to the HTML front-end app. Note, an end-user only ever access the HTML
 front-end app. All the other parts are hidden and not publicly
 accessible for security reasons.
 
+Recall that there are several reasons for creating an experience service level:
+
+   - Creating a single service call to power each page/screen reduces how many
+   service calls a mobile client has to make
+   - Moving all the business logic for each screen or page to the expereicen
+   service ensures that different mobile and web front-ends have a consistent
+   experience for users.
+
 The key point of this is the strict isolation between levels. The only
 way the HTML front-end communicates with the rest of your app is
 through the expereince service level. In turn, the only way your
 experience service level interacts with the database is through the
-low-level API. This is directly analagous to the data abstraction and
+entity API. This is directly analagous to the data abstraction and
 modularity that you learn about applying in an individual program, but
 here it is applied to a system of programs.
+
+You should assume that the web front-end and the experience service tiers
+are accessible to the world but the entity and database tiers are internal/behind
+a firewall. That is, anyone may call your web front-end or experience service but
+only your experience service can call your entity and database tiers. This is 
+important to think through when it comes to ensuring the security of your application.
 
 This will seem overly confusing and burdensome for a simple
 app. However, for a large app with many teams of people working on it
@@ -46,7 +60,7 @@ it provides isolation between teams and apps.
 Pages
 -----
 
-The only required pages for your site are a home page and an item
+The only required pages for this project are a home page and an item
 detail page. The detail page should show details about whatever it is
 your marketplace is about -- rides, books, tickets. The home page
 should show links to the detail pages -- maybe the newest content, the
@@ -55,7 +69,7 @@ most popular content, etc.
 Note, these are read-only pages for showing data in the db. To simplify
 this project we're ignoring how users or things in your marketplace are
 created in the first place. You can test your project by manually
-creating rows in the db or use your low-level API to create users and things.
+creating rows in the db or use your entity API to create users and things.
 In later projects we'll add the flows for letting users sign up and add
 things/content to your app.
 
@@ -73,65 +87,150 @@ smaller screens.
 Implementation
 --------------
 
-### Container Linking ###
+### Container Linking  ###
 
 You will have four Docker containers running -- one for each layer in
 your app: one instance of the MySQL container and three instances of
-your Django container.
+your Django container. In terms of grading, since you can assume we 
+have a MySQL container `mysql` running, you only need to start up three containers
+in the docker-compose.yml, all of which link to the MySQL container.
 
 Docker assigns a unique IP address to every container running. We'll
 use container linking to make sure each container knows the IP address
-of the other containers to talk to. This is accomplished via adding
-the --link command line to the docker run command:
+of the other containers to talk to. In addition, we want to link to a container
+that is not created by the compose. This is accomplished via adding
+the `external_links` or `links` option to the docker compose file:
 
-    docker run -it --name model --link mysql:db tp33k/django:1.0
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+```
+   
+Notice the difference between `external_links` and `links`. We use `links` to link to a
+container created by the docker-compose.yml. On the other hand, `external_links` is used to 
+link to a container outside Compose. In this case, since we are linking to a container outside
+Compose, we use `external_links`.
 
-That command will create a hostname called 'db' and make sure it's
+That option will create a hostname called `db` and make sure it's
 always pointing to the IP address for the container named
-'mysql'. Thus, your app in this container can always connect to the
-host 'db' instead of having to know which IP address your MySQL
+`mysql` in `models` container. Thus, your app in this container can always connect to the
+host `db` instead of having to know which IP address your MySQL
 container is actually running as. This is how you set up your
 project's settings.py so far.
 
-Similarly, you'll run another container for your experience service
-and link it to your low-level API:
+Similarly, you'll add another container for your experience service
+and link it to your low-level API (notice the change from `external_links` to `links`):
 
-    docker run --it --name exp --link model:model-api tp33k/django:1.0
+```YAML
+exp:
+   image: tp33/django:1.2
+   links:
+      - models:models-api
+```
 
-Then the app running in this container can make HTTP requests to the
+In this case we are linking to a container created by docker compose, so
+we use `links`. Then the app running in this container can make HTTP requests to the
 host model-api in order to conncect to your model-api container.
 
 And finally, your third container for running the HTML front-end will
 link to the experience service container:
 
-    docker run --it --name web --link exp:exp-api tp33k/django:1.0
+```YAML
+exp:
+   image: tp33/django:1.2
+   links:
+      - exp:exp-api
+```
 
 I do a few other things to ease my development:
 
-- I expose each container's port 8000 into my Linux VM with each container exposed as a different port. I use docker run's -p argument to do this.
-- I mount (via docker run -v arg) the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately (update the last modified time on wsgi.py in the top of your Django app to tell Apache to reaload your app -- can do this via 'touch wsgi.py').
-- I tell each container to run mod_wsgi-express on startup. If I want to interactively log into the container I later run 'docker exec -it name /bin/bash' where name is the container name I want to start a shell in.
+- I expose each container's port 8000 into my Linux VM with each container exposed as a different port. This is accomplished via adding docker compose `ports` option, for example:
 
-Putting that all together into a shell script that will start my containers for me:
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+```
+   
+   exposes the port 8000 in the container (which is the `mod_wsgi-express` default port) 
+   to port 8001 on the host machine. In this way you can access your models layer by listen to 
+   `http://localhost:8001` using a browser in the host machine.
+- I mount the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately (update the last modified time on wsgi.py in the top of your Django app to tell Apache to reaload your app -- can do this via 'touch wsgi.py'). This is accomplished by docker compose `volumes` option:
 
-    tp@devel:~$ cat start-app.sh
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+   volumes:
+      - <your_file_path>:/app
+```
 
-    #!/bin/sh
+mounts the file directories inside `<your_file_path>` onto the `/app` directory in the container.
 
-    docker run -d --name models -p 8001:8000 -v /home/tp/stuff-models:/app --link mysql:db tp33/django:1.0 mod_wsgi-express start-server stuff/wsgi.py
-    docker run -d --name exp -p 8002:8000 -v /home/tp/stuff-exp:/app --link models:models-api tp33/django:1.0 mod_wsgi-express start-server stuff/wsgi.py
-    docker run -d --name web -p 8000:8000 -v /home/tp/stuff-web:/app --link exp:exp-api tp33/django:1.0 mod_wsgi-express start-server stuff/wsgi.py
-    tp@devel:~$ 
+- Docker containers exit when their main process finishes. To prevent containers from immediate exit, I tell each container to run mod_wsgi-express on startup. If I want to interactively log into the container I later run 'docker exec -it name /bin/bash' where name is the container name I want to start a shell in. This is accomplished by docker compose `command` option:
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+   volumes:
+      - <your_file_path>:/app
+   command: "mod_wsgi-express start-server --reload-on-changes <project_name>/wsgi.py"
+```
 
-(I manually start the mysql container)
+Putting that all together into the docker-compose.yml will start my three containers for me (I manually start the mysql container).
 
+A sample docker-compose.yml (you will have to modify the code accordingly to match you configuration):
+
+```YAML
+models:
+   image: tp33/django:1.2
+   external_links:
+      - mysql:db
+   ports:
+      - "8001:8000"
+   volumes:
+      - /home/tp/stuff-models:/app
+   command: "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
+   
+exp:
+   image: tp33/django:1.2
+   links:
+      - models:models-api
+   ports:
+      - "8002:8000"
+   volumes:
+      - /home/tp/stuff-exp:/app
+   command: "mod_wsgi-express start-server --reload-on-changes stuff-exp/wsgi.py"
+   
+web:
+   image: tp33/django:1.2
+   links:
+      - exp:exp-api
+   ports:
+      - "8000:8000"
+   volumes:
+      - /home/tp/stuff-web:/app
+   command: "mod_wsgi-express start-server --reload-on-changes stuff-web/wsgi.py"
+```
+   
 This results in my running container set looking like:
 
     tp@devel:~$ docker ps
     CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                    NAMES
-    5d4da12058de        tp33/django:1.0     "mod_wsgi-express sta"   About a minute ago   Up About a minute 0.0.0.0:8000->8000/tcp   web
-    e9f08748b67f        tp33/django:1.0     "mod_wsgi-express sta"   About a minute ago   Up About a minute 0.0.0.0:8002->8000/tcp   exp
-    5ef6412cc321        tp33/django:1.0     "mod_wsgi-express sta"   About a minute ago   Up About a minute   0.0.0.0:8001->8000/tcp   models
+    5d4da12058de        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute 0.0.0.0:8000->8000/tcp   web
+    e9f08748b67f        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute 0.0.0.0:8002->8000/tcp   exp
+    5ef6412cc321        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute   0.0.0.0:8001->8000/tcp   models
     5b18a2deae1a        mysql:5.7.8         "/entrypoint.sh mysql"   4 weeks ago          Up 40 minutes       3306/tcp                 mysql
 
 - My low level API is running in a contianer called 'models' and is listening on port 8000 (which is exposed as port 8001 on my linux VM).
@@ -147,11 +246,12 @@ styling the HTML.
 ### Code layout ###
 
 You should be thinking of your app as three separate sub-apps: the
-low-level / model API, the experience service API and the HTML
-front-end. The best way to do this is to create _three separate Django
-apps_.
+entity API, the experience service API and the HTML
+front-end. The best way to do this is to create three separate Django
+projects, each in their own directories of one git repository. Note, however,
+that only the entity / model API app will be configured to talk to the DB.
 
-Using multiple apps will allow you to have three separate settings.py
+Using multiple projects will allow you to have three separate settings.py
 files. This will be imporant because you'll want to do things
 differently in your HTML front-end since it's the part the public will
 be able to access and it's the part that's serving HTML as opposed to
@@ -173,13 +273,10 @@ mess. I recommend you do the following:
   service to provide the data your web interface needs.
 
 - develop and test each tier independently. That means that if you
-  make changes to your low-level API, test it carefully before moving
+  make changes to your entity API, test it carefully before moving
   on to changes in the experience services tier. You don't want to
   change every tier and then try things and not know why things are
   failing.
-
-- make sure to carefully start your containers each time with the
-  right --link and --name arguments.
 
 - start early because if you wait until a few days before the
   assignment is due you will fail to finish it.
@@ -192,6 +289,8 @@ mess. I recommend you do the following:
   something doesn't work, it's easier to go through the small changes
   to see what broke things as opposed to having to go through a huge
   set of changes all in one commit.
+
+- use Django Fixtures to reproducibly load test data into your databases.
 
 ### Calling HTTP/JSON APIs in Python ###
 
@@ -214,3 +313,9 @@ mess. I recommend you do the following:
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
     resp = json.loads(resp_json)
     print(resp)
+
+### What to turn in ###
+
+Create a tag in your GitHub and email your TA the tag. Make sure you've tested your code thoroughly and haven't forgotten to comit anything. Also make sure to test from a clean / empty / new database so that you're not accidentally depending on anything already in your system.
+
+You are required to turn in a docker-compose.yml and a set of fixtures that allow your TA to easily run/test your system. Your docker-compose.yml should assume, like in the prior assignment, that there's a mysql container already running and it should be referenced via an external_link. Your fixtures should contain sample test data for viewing the listing page.
