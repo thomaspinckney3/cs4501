@@ -109,7 +109,6 @@ Course Topics (subject to revision as course progresses)
   - Map of advertising ecosystem
   - Display advertising: targeting, trafficking and optimization
   - Search advertising: advertising as machine learning problem
-  - Project: Sprint 6: Add user log in, account sign up, sign in/out etc. Due 12/4.
   - Reading: Ad Auctions (sections I and II in particular) http://users.cms.caltech.edu/~adamw/courses/241/lectures/search2.pdf
 13. AB-testing and Analytics (Monday 4/18 and Weds 4/20)
   - Understanding the effect of product changes
