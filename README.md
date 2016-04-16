@@ -117,7 +117,7 @@ Course Topics (subject to revision as course progresses)
   - AB testing and statistically significant changes
   - Hadoop / Spark for data analysis
   - Reading: AB testing at Spotify http://www.slideshare.net/alisarrafi3/ab-testing-at-spotify?next_slideshow=1 and http://www.slideshare.net/dj4b1n/ab-testing-pitfalls-and-lessons-learned-at-spotify-31935130 . Spark http://www.cs.berkeley.edu/~matei/papers/2010/hotcloud_spark.pdf . Optionally, can read more at https://play.google.com/store/books/details?id=VfVvAAAAQBAJ&source=productsearch&utm_source=HA_Desktop_US&utm_medium=SEM&utm_campaign=PLA&pcampaignid=MKTAD0930BO1&gl=US&gclid=COGFp6bcwMcCFQikNwodIH0IbA&gclsrc=ds
-  - Project: Hadoop. Due 5/2.
+  - Project: Hadoop. Due 5/2. https://github.com/thomaspinckney3/cs4501/blob/master/Project7.md
 14. Traffic -- SEO, SEM, Social, Paid Marketing, Email (Monday 4/25)
   - Survey of driving traffic to a site / paid vs organic
   - Overview of SEO
