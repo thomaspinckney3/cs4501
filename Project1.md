@@ -2,7 +2,7 @@ Overview
 =========
 
 In this project you will set up a development environment (using
-VirtualBox, Ubuntu Linux, Docker, Python, Django and MySQL) and then
+Docker(Linux/Mac/Windows), Python, Django and MySQL) and then
 create a simple Hello World app in Django. Whew!
 
 There's a lot of Linux and system level stuff in this project. It may seem like you don't need to know all of this, but you do :) Don't just type the commands that apear here. Understand what's going on and only use these instructions as a hint. If you want a
@@ -17,13 +17,6 @@ knowledge. You'll be doing basic things like install new software,
 running SSH, looking at Apache log files, etc. While you don't need to
 be a shell scripting god you should also be able to get the gist of a
 script if need be.
-
-VirtualBox
-----------
-
-If you're using a Mac or Windows machine, you'll need to install
-VirtualBox and Ubuntu Linux in a VM. You can't do the projects
-natively on anything other than Linux due to the use of Docker.
 
 Containers
 ----------
@@ -56,40 +49,11 @@ http://dev.mysql.com/doc/refman/5.7/en/index.html
 Install everything
 ===================
 
-- Install VirtualBox from https://www.virtualbox.org
-
-- Download the Ubuntu Server 15.04 (or newer) ISO to install from
-  http://www.ubuntu.com/download/server
-
-- Start VirtualBox, create a new VM (1gig RAM, 12gigs disk and 
-  'bridged' networking), selecting the Ubuntu ISO under Storage for
-  the optical drive.
-
-- If you will be working on campus, you will need to register the
-  network MAC address for your VM with UVa. If you don't, you won't
-  be able to connect to the wireless network. You can
-  find the MAC address under the Settings->Network tab in VirtualBox.
-  Go to https://netreg.itc.virginia.edu to register it.
-
-- Start the VirtualBox VM which should boot form the Ubuntu ISO. Go
-  through the install process. Make sure to install the SSH server so
-  you can log into your VM.
-
-- Install the VirtualBox Linux Guest additions which will make many
-  small things in your life better https://www.virtualbox.org/manual/ch04.html
-
-  Mount the VirtualBox Guest Additions install .iso through the Devices ->
-  Insert Guest Additions CD Image option and then install with:
-
-		tp@devl:~$ sudo apt-get install dkms
-		...
-		tp@devl:~$ sudo mount /dev/cdrom /mnt
-		tp@devl:~$ sudo sh /mnt/VBoxLinuxAdditions.run
-		...
-		tp@devl:~$ sudo reboot
-
 - Install Docker following the instructions
-  https://docs.docker.com/installation/ubuntulinux/
+  Ubuntu: https://docs.docker.com/installation/ubuntulinux/
+  Mac: https://docs.docker.com/docker-for-mac/
+  Windows: https://docs.docker.com/docker-for-windows/
+  More OS options available: https://docs.docker.com/engine/installation/
 
 - Pull down the Docker containers for Django:
 
@@ -126,7 +90,7 @@ Install everything
 
 - Initialize the MySQL db's (replace XXX with a password of your choice for the root MySQL user):
 
-        tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='XXX' mysql:5.7.10
+        tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='<mysql root password here>' mysql:5.7.10
     	79c856338ace5edc9df074e252fb16caedd0ed1b53f64eef613e84301482dd75
     	tp@devel:~$ docker ps -a
     	CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
@@ -345,7 +309,7 @@ use it to connect to the first MySQL container image you're already
 running.
 
     tp@devel:~$ docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.10 bash
-    # mysql -uroot -p'!Secure' -h db
+    # mysql -uroot -p'<mysql root password here>' -h db
     mysql: [Warning] Using a password on the command line interface can be insecure.
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 2
@@ -439,6 +403,8 @@ And test it out:
 
     root@399bd9c4a2a5:/app/stuff# curl http://localhost:8000/
 
+Or just go to the browser
+
 and get back the stock Django "It worked" page. If you get
 any other sort of response then something's not right.
 
@@ -470,10 +436,10 @@ Later on in the course we're going to be using the Bootstrap CSS
 library. If you want to get fancy, you can include this CSS to pretty
 up your page a bit.
 
-Docker Compose
---------------
+Docker Compose(Optional)
+------------------------
 
-Finally, install Docker Compose by doing 
+Finally, install Docker Compose (if not installed) by doing 
 
     pip install docker-compose
 	
