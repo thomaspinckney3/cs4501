@@ -76,59 +76,59 @@ Install everything
 ===================
 
 - Install Docker following the instructions
-  	  Ubuntu: https://docs.docker.com/installation/ubuntulinux/
-	  Mac: https://docs.docker.com/docker-for-mac/
-	  Windows: https://docs.docker.com/docker-for-windows/
-	  More OS options available: https://docs.docker.com/engine/installation/
+  	  - Ubuntu: https://docs.docker.com/installation/ubuntulinux/
+	  - Mac: https://docs.docker.com/docker-for-mac/
+	  - Windows: https://docs.docker.com/docker-for-windows/
+	  - More OS options available: https://docs.docker.com/engine/installation/
 
 - Pull down the Docker containers for Django:
 
-	tp@devel:~$ docker pull tp33/django
-	latest: Pulling from tp33/django
-	[...]
-	f9d42c108fd8: Pull complete 
-	Digest: sha256:90ff75c9817102fe0f5f5e59ff823bd0ea5ad05df24a87bd6def6c18f194da8a
-	Status: Downloaded newer image for tp33/django:latest
+        tp@devel:~$ docker pull tp33/django
+        latest: Pulling from tp33/django
+        [...]
+        f9d42c108fd8: Pull complete 
+        Digest: sha256:90ff75c9817102fe0f5f5e59ff823bd0ea5ad05df24a87bd6def6c18f194da8a
+        Status: Downloaded newer image for tp33/django:latest
 
 - And MySQL:
 
-	tp@devel:~$ docker pull mysql:5.7.14
-	5.7.14: Pulling from library/mysql
-	[...]
-	library/mysql:5.7.14: The image you are pulling has been verified. Important: image verification is a tech preview feature and should not be relied on to provide security.
-	Digest: sha256:22d2c6e4bff13ccb4b3c156bdaa97e4fbf6f15ee0467233714f51540c64ad6b6
-	Status: Downloaded newer image for mysql:5.7.14
-	tp@devel:~$ 
+        tp@devel:~$ docker pull mysql:5.7.14
+        5.7.14: Pulling from library/mysql
+        [...]
+        library/mysql:5.7.14: The image you are pulling has been verified. Important: image verification is a tech preview feature and should not be relied on to provide security.
+        Digest: sha256:22d2c6e4bff13ccb4b3c156bdaa97e4fbf6f15ee0467233714f51540c64ad6b6
+        Status: Downloaded newer image for mysql:5.7.14
+        tp@devel:~$ 
 
 - Test it
 
         tp@devel:~$ mkdir -p ~/cs4501/app
         tp@devel:~$ docker run -it --name web -v ~/cs4501/app:/app tp33/django
     	root@4b6cb96f80f3:/app# python
-	Python 3.5.1 (default, Aug 17 2016, 09:30:08)
-    	[GCC 4.9.2] on linux
-    	Type "help", "copyright", "credits" or "license" for more information.
-    	>>> import django
-    	>>> django.VERSION
-    	(1, 8, 14, 'final', 0)
-    	>>> 
-    	root@4b6cb96f80f3:/app# exit
-    	tp@devel:~$ 
+        Python 3.5.1 (default, Aug 17 2016, 09:30:08)
+        [GCC 4.9.2] on linux
+        Type "help", "copyright", "credits" or "license" for more information.
+        >>> import django
+        >>> django.VERSION
+        (1, 8, 14, 'final', 0)
+        >>> 
+        root@4b6cb96f80f3:/app# exit
+        tp@devel:~$ 
 
 - Initialize the MySQL db's (NOTE - you MUST use the password specified here):
 
-  	tp@devel:~$ mkdir ~/cs4501/db
+        tp@devel:~$ mkdir ~/cs4501/db
         tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.14
-    	79c856338ace5edc9df074e252fb16caedd0ed1b53f64eef613e84301482dd75
+        79c856338ace5edc9df074e252fb16caedd0ed1b53f64eef613e84301482dd75
   
 - Note the status of your Docker containers. The one named web will be shown as
   exited while the one named mysql will be running.
 
-    	tp@devel:~$ docker ps -a
-    	CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
-    	79c856338ace        mysql:5.7.14         "/entrypoint.sh mysql"   8 seconds ago        Up 8 seconds                    3306/tcp            mysql
-    	4b6cb96f80f3        tp33/django		 "/bin/bash"              About a minute ago   Exited (0) About a minute ago                       web
-    	tp@devel:~$ 
+        tp@devel:~$ docker ps -a
+        CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
+        79c856338ace        mysql:5.7.14         "/entrypoint.sh mysql"   8 seconds ago        Up 8 seconds                    3306/tcp            mysql
+        4b6cb96f80f3        tp33/django		 "/bin/bash"              About a minute ago   Exited (0) About a minute ago                       web
+        tp@devel:~$ 
 
 Congratulations -- you now have two containers running, one for
 running Django web apps and the other for running MySQL.
