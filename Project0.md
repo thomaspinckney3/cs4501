@@ -39,10 +39,10 @@ Some useful options (for now):
 
 Note that any commands specified after `<IMAGE>` will be interpreted as command to be executed inside the container when it is created.
 
-###`docker start CONTAINER_NAME`
+###`docker start <CONTAINER_NAME>`
 This is used to start a stopped container.
 
-###`docker stop CONTAINER_NAME`
+###`docker stop <CONTAINER_NAME>`
 This is used to stop a running container.
 
 Final Comment
