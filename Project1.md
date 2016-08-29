@@ -65,7 +65,7 @@ MySQL
 
 The database used in this class will be MySQL. It's a very common SQL
 database. You can read more at
-http://dev.mysql.com/doc/refman/5.7/en/index.html
+http://dev.mysql.com/doc/refman/5.7/en/index.html.
 
 You will not need detailed knowledge of SQL for this class, but you
 should be familiar with the concepts involved of tables, queries,
@@ -75,7 +75,7 @@ updates, etc.
 Install everything
 ===================
 
-- Install Docker following the instructions
+- Install Docker following the instructions:
   	  - Ubuntu: https://docs.docker.com/installation/ubuntulinux/
 	  - Mac: https://docs.docker.com/docker-for-mac/
 	  - Windows: https://docs.docker.com/docker-for-windows/
@@ -100,7 +100,7 @@ Install everything
         Status: Downloaded newer image for mysql:5.7.14
         tp@devel:~$
 
-- Test it
+- Test it:
 
         tp@devel:~$ mkdir -p ~/cs4501/app
         tp@devel:~$ docker run -it --name web -v ~/cs4501/app:/app tp33/django
@@ -115,13 +115,13 @@ Install everything
         root@4b6cb96f80f3:/app# exit
         tp@devel:~$
 
-- Initialize the MySQL db's (NOTE - you MUST use the password specified here):
+- Initialize the MySQL `db` docker image (NOTE: you MUST use the password specified here):
 
         tp@devel:~$ mkdir ~/cs4501/db
         tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.14
         79c856338ace5edc9df074e252fb16caedd0ed1b53f64eef613e84301482dd75
 
-- Note the status of your Docker containers. The one named web will be shown as
+- Note the status of your Docker containers. The one named `web` will be shown as
   exited while the one named `mysql` will be running.
 
         tp@devel:~$ docker ps -a
@@ -176,7 +176,7 @@ required for this app and no other privileges.
 
     mysql> ^DBye
 
-(hit Ctrl-D at the mysql> prompt to exit the MySQL shell).
+(hit Ctrl-D at the `mysql>` prompt to exit the MySQL shell).
 
 This will create a new MySQL user named `www` and a new databse named
 `cs4501` (replace foo with the name of your project). www's password is
