@@ -6,7 +6,7 @@ Docker, Python, Django and MySQL) and then create a simple Hello World
 app in Django. Whew!
 
 There's a lot of Linux and system level stuff in this project. It may
-seem like you don't need to know all of this, but you do :) Don't just
+seem like you don't need to know all of this, but you do. :) Don't just
 type the commands that apear here. Understand what's going on and only
 use these instructions as a hint.
 
@@ -38,7 +38,7 @@ many instances of that container as you like -- on your dev machine or
 on public hosting providers like Amazon AWS.
 
 You'll be using two containers initially -- one that contains an
-Apache/Django installation and another that contains MySQL. 
+Apache/Django installation and another that contains MySQL.
 
 The system for containers we're using requires Linux. If you're
 already running Linux on your laptop then you will likely need to just
@@ -56,7 +56,7 @@ Django
 ------
 
 You should already be familiar with Python and Django. If not, go read more
-here https://docs.djangoproject.com/en/1.8/ . We highly recommend that you
+here https://docs.djangoproject.com/en/1.8/. We highly recommend that you
 work through the example application in the Django tutorial if this is your
 first experience with Django.
 
@@ -69,7 +69,7 @@ http://dev.mysql.com/doc/refman/5.7/en/index.html
 
 You will not need detailed knowledge of SQL for this class, but you
 should be familiar with the concepts involved of tables, queries,
-updates etc.
+updates, etc.
 
 
 Install everything
@@ -86,7 +86,7 @@ Install everything
         tp@devel:~$ docker pull tp33/django
         latest: Pulling from tp33/django
         [...]
-        f9d42c108fd8: Pull complete 
+        f9d42c108fd8: Pull complete
         Digest: sha256:90ff75c9817102fe0f5f5e59ff823bd0ea5ad05df24a87bd6def6c18f194da8a
         Status: Downloaded newer image for tp33/django:latest
 
@@ -98,7 +98,7 @@ Install everything
         library/mysql:5.7.14: The image you are pulling has been verified. Important: image verification is a tech preview feature and should not be relied on to provide security.
         Digest: sha256:22d2c6e4bff13ccb4b3c156bdaa97e4fbf6f15ee0467233714f51540c64ad6b6
         Status: Downloaded newer image for mysql:5.7.14
-        tp@devel:~$ 
+        tp@devel:~$
 
 - Test it
 
@@ -111,16 +111,16 @@ Install everything
         >>> import django
         >>> django.VERSION
         (1, 8, 14, 'final', 0)
-        >>> 
+        >>>
         root@4b6cb96f80f3:/app# exit
-        tp@devel:~$ 
+        tp@devel:~$
 
 - Initialize the MySQL db's (NOTE - you MUST use the password specified here):
 
         tp@devel:~$ mkdir ~/cs4501/db
         tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.14
         79c856338ace5edc9df074e252fb16caedd0ed1b53f64eef613e84301482dd75
-  
+
 - Note the status of your Docker containers. The one named web will be shown as
   exited while the one named mysql will be running.
 
@@ -128,7 +128,7 @@ Install everything
         CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
         79c856338ace        mysql:5.7.14         "/entrypoint.sh mysql"   8 seconds ago        Up 8 seconds                    3306/tcp            mysql
         4b6cb96f80f3        tp33/django		 "/bin/bash"              About a minute ago   Exited (0) About a minute ago                       web
-        tp@devel:~$ 
+        tp@devel:~$
 
 Congratulations -- you now have two containers running, one for
 running Django web apps and the other for running MySQL.
@@ -158,12 +158,12 @@ running.
 
     Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
 
-    mysql> 
+    mysql>
 
 You're logged in as root now and should create a non-root user that
-your app will use. It's always best to use the least priviledges
+your app will use. It's always best to use the least privileges
 possible so we'll only give this new user access to the tables
-required for this app and no other privlidges.
+required for this app and no other privileges.
 
     mysql> create user 'www'@'%' identified by '$3cureUS';
     Query OK, 0 rows affected (0.01 sec)
@@ -178,9 +178,9 @@ required for this app and no other privlidges.
 
 (hit Ctrl-D at the mysql> prompt to exit the MySQL shell).
 
-This will create a new MySQL user named www and a new databse named
-cs4501 (replace foo with the name of your project). www's password is
-'$3cureUS'. Finally, this gives www access to all tables in cs4501.
+This will create a new MySQL user named `www` and a new databse named
+`cs4501` (replace foo with the name of your project). www's password is
+`$3cureUS`. Finally, this gives `www` access to all tables in `cs4501`.
 
 You can keep this container around for easy access to the MySQL
 command line.
@@ -221,7 +221,7 @@ container. Let's restart the web container this way:
     round-trip min/avg/max/stddev = 0.110/0.131/0.152/0.000 ms
     root@1c359b81b84f:/app# exit
     exit
-    tp@devel:~$ 
+    tp@devel:~$
 
 This tells Docker to create a new container from the tp33/django
 image and create a hosts entry named db that references the IP address
@@ -268,7 +268,7 @@ You'll use GitHub for version control. If you don't have a GitHub
 account already, go create one. There's good online help for using
 GitHub and Git.
 
-Dev process 
+Dev process
 -------------
 
 Generally, you will be editing your code in the host directory
@@ -321,7 +321,7 @@ Again, note, you're creating / editting your code outside the
 container in the host but running inside the container under /app.
 
 Inside your web container:
-    
+
     root@4ee80653d2be:/app# django-admin startproject foo
 
 (but replace 'foo' with the name of your project)
