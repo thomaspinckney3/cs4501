@@ -58,6 +58,56 @@ but I think it's a reasonable short-cut for a class project. The risk
 with this is that it could expose security vulnerabilities so you
 wouldn't want to really put it into production.
 
+Docker Compose
+--------------
+
+One other thing to introduce before we start coding is Docker Compose.
+Compose is a tool for defining and running multi-container Docker applications and the topology. 
+With Compose, you use a Compose file to configure your application’s services.
+Recall how we start web, mysql containers one by one in the previous project. This
+approach works fine when we have only two containers and the configuration is simple, but
+is certainly not scalable. Using Docker Compose, we will be able to stand up our containers
+using a single command. Here is a tutorial about how Docker Compose work:
+
+First, install Docker Compose by doing
+
+```
+$ curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+$ chmod +x /usr/local/bin/docker-compose
+```
+
+When you've got Compose installed, create a new directory with
+
+	mkdir Compose
+	cd Compose
+
+Then go ahead and create a new file, docker-compose.yml, with your favorite text editor. Docker Compose uses these files, called YAML files, to automatically set up or start a group of containers. This is handy, much easier than managing each container individually. You can specify a lot of different options here, but for now we're merely going to create our entity layer and then link it to our mysql database. You need to make sure the mysql container we created from last time is started.
+
+You can tell compose to create a new container by giving it a name and an image to use.
+
+	isa-data:
+	    image: tp33/django:1.3
+	    external_links:
+	      -  isa-mysql:db
+	    volumes:
+	      - <your_file_path>:/app
+
+Notice the difference between external_links and links. We use links to link to a container created by the docker-compose.yml. On the other hand, external_links is used to link to a container outside Compose. In this case, since we are linking to a container outside Compose, we use external_links. Volumes is like the -v tag we use when executing docker run. It mounts the app directory in the container onto the <your_file_path> directory on the host machine(your mac/PC). By specifing that, you can code in your text editor/IDE on your host machine and any change you make will be picked up by the container.
+
+Now that we've got this, save docker-compose.yml. Having Compose create and run our container is as simple as running
+
+	docker-compose up
+
+in our compose directory.
+
+	docker=compose rm
+
+will clear rm all the instance specified by the docker-compose file.
+
+This creates a new container based off the tp33/django:1.3 image, and links it to the mysql container with the hostname of "db". This is the name we'll use when we configure our settings.py file.
+
+You can do a lot more with Docker Compose, including building new images straight from a Dockerfile, configuring ports, and defining shared volumes for containers. These are all things that may be helpful to you later in the course, so keep your compose file updated as you go about your project. There are great examples at https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04
+
 Models
 ------
 
