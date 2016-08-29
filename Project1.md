@@ -56,7 +56,7 @@ Django
 ------
 
 You should already be familiar with Python and Django. If not, go read more
-here https://docs.djangoproject.com/en/1.8/. We highly recommend that you
+here: https://docs.djangoproject.com/en/1.8/. We highly recommend that you
 work through the example application in the Django tutorial if this is your
 first experience with Django.
 
@@ -122,7 +122,7 @@ Install everything
         79c856338ace5edc9df074e252fb16caedd0ed1b53f64eef613e84301482dd75
 
 - Note the status of your Docker containers. The one named web will be shown as
-  exited while the one named mysql will be running.
+  exited while the one named `mysql` will be running.
 
         tp@devel:~$ docker ps -a
         CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
@@ -188,17 +188,17 @@ command line.
 Working with containers
 -----------------------
 
-Run 'docker ps -a' and you'll see that you have two containers (the
-ones you started above when testing your install) named web and
-mysql. These are your dev environment containers. You'll do your
-coding and initial testing in these containers. Run 'docker rm web' to
+Run `docker ps -a` and you'll see that you have two containers (the
+ones you started above when testing your install) named `web` and
+`mysql`. These are your dev environment containers. You'll do your
+coding and initial testing in these containers. Run `docker rm web` to
 clean up the (stopped) web container you started earlier when testing
-your install. Go ahead and stop your mysql container with 'docker stop
-mysql'.
+your install. Go ahead and stop your mysql container with `docker stop
+mysql`.
 
 Docker provides a simple way for containers to talk to each other via
 private networks. When you start a container you can tell Docker to
-create an /etc/hosts entry for another running container. We'll do
+create an `/etc/hosts` entry for another running container. We'll do
 this so that the web container can easily connect to the mysql
 container. Let's restart the web container this way:
 
