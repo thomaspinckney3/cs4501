@@ -360,11 +360,15 @@ Trying it all out
 -----------------
 
 If everything is working correctly, you can now go back to your web
-container and try out some Django commands. Remember, 'stuff' is the
-name of my Django project but yours will be different below
+container and try out some Django commands. 
 
-    root@4ee80653d2be:~/app# cd stuff
-    root@4ee80653d2be:~/app/stuff# python manage.py migrate
+Attach to your web container
+
+    tp@devel:~$ docker exec -it web bash
+Then apply database migrations:
+
+    root@4ee80653d2be:~/app# cd foo
+    root@4ee80653d2be:~/app/foo# python manage.py migrate
     Operations to perform:
     Apply all migrations: contenttypes, sessions, auth, admin
     Running migrations:
@@ -372,7 +376,7 @@ name of my Django project but yours will be different below
     Applying auth.0001_initial... OK
     Applying admin.0001_initial... OK
     Applying sessions.0001_initial... OK
-    root@4ee80653d2be:~/app/stuff#
+    root@4ee80653d2be:~/app/foo#
 
 If the DATABASES section is not set up correctly, or if the database
 itself has a problem, you'll get an error here.
@@ -383,7 +387,7 @@ will need to replace that with your project's name.
 
 Inside your web container:
 
-    root@399bd9c4a2a5:/app# mod_wsgi-express start-server --working-directory /app/stuff /app/stuff/stuff/wsgi.py &
+    root@399bd9c4a2a5:/app# mod_wsgi-express start-server --working-directory /app/foo /app/foo/foo/wsgi.py &
     [1] 73
     Server URL         : http://localhost:8000/
     Server Root        : /tmp/mod_wsgi-localhost:8000:0
@@ -399,7 +403,7 @@ Inside your web container:
 
 And test it out:
 
-    root@399bd9c4a2a5:/app/stuff# curl http://localhost:8000/
+    root@399bd9c4a2a5:/app/foo# curl http://localhost:8000/
 
 You should get back the stock Django "It worked" page. If you get any
 other sort of response then something's not right.
