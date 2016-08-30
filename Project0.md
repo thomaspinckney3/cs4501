@@ -37,7 +37,7 @@ This command is used to see the status of containers you created. If you follow 
 ```
 
 ###docker run IMAGE
-This command is used to create and run a container. (Like we just did in the instruction.)
+This command is used to create and run a container (like we just did in the instruction).
 
 Some useful options (for now):
 - --name: specify the name of the container. The container will be named by a hash if no name is specified.
