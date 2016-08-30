@@ -65,7 +65,7 @@ approach works fine when we have only two containers and the configuration is si
 is certainly not scalable. Using Docker Compose, we will be able to stand up our containers
 using a single command. Here is a tutorial about how Docker Compose works:
 
-First, install Docker Compose by doing
+First, install Docker Compose if you haven't already done so. You can check if you have docker-compose on you machine by typing docker-compose in your terminal.
 
 	$ curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 	$ chmod +x /usr/local/bin/docker-compose
@@ -76,19 +76,19 @@ When you've got Compose installed, create a new directory with
 	mkdir Compose
 	cd Compose
 
-Then go ahead and create a new file, docker-compose.yml, with your favorite text editor. Docker Compose uses these files, called YAML files, to automatically set up or start a group of containers. This is handy, much easier than managing each container individually. You can specify a lot of different options here, but for now we're merely going to create our entity layer and then link it to our mysql database. You need to make sure the mysql container we created from last time is started.
+Then go ahead and create a new file, docker-compose.yml, in the project root directory. Docker Compose uses these files, called YAML files, to automatically set up or start a group of containers. This is handy, much easier than managing each container individually. You can specify a lot of different options here, but for now we're merely going to create our entity layer and then link it to our mysql database. You need to make sure the mysql container we created from last time is started.
 
 You can tell compose to create a new container by giving it a name and an image to use.
 
 	models:
-	    image: tp33/django:1.3
+	    image: tp33/django
 	    external_links:
 	      -  mysql:db
 	    volumes:
-	      - <your_file_path>:/app
+	      - <project_root_dir>:/app
 	    ports:
 	      - "8001:8000"
-	    command: bash -c "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
+	    command: bash -c "mod_wsgi-express start-server --reload-on-changes <your_project_name>/wsgi.py"
 
 Notice the difference between external_links and links. We use links to link to a container created by the docker-compose.yml. On the other hand, external_links is used to link to a container outside Compose. In this case, since we are linking to a container outside Compose, we use external_links. 
 
@@ -108,7 +108,7 @@ in our compose directory.
 
 will remove all the instance specified by the docker-compose file.
 
-This creates a new container based off the tp33/django:1.3 image, and links it to the mysql container with the hostname of "db". This is the name we'll use when we configure our settings.py file.
+This creates a new container based off the tp33/django image, and links it to the mysql container with the hostname of "db". This is the name we'll use when we configure our settings.py file.
 
 You can do a lot more with Docker Compose, including building new images straight from a Dockerfile, configuring ports, and defining shared volumes for containers. These are all things that may be helpful to you later in the course, so keep your compose file updated as you go about your project. There are great examples at https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04
 
@@ -211,11 +211,11 @@ stages so that you can check the commands into git on your dev machine and then 
 
 Fixtures
 --------
-Final thing before we call it a day, you need to add fixtures so that we are provided with initial data when grading your project.
+Final thing before we call it a day, you need to add fixtures so that testing (and grading on our side) becomes a lot easier.
 
-Here's a quick explanation on how to use fixtures to preload data or export your db:
+Here's a quick introduction of fixture and a tutorial on how to use fixtures to preload data or export your db:
 
-General Steps for creating fixtures:
+General steps for creating fixtures:
 
 Dump existing db data using 
 
