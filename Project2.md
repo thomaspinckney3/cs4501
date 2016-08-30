@@ -9,7 +9,7 @@ you wait until the second week you will likely not finish on time.
 Database Design
 -------------
 
-You should also think about what your data models will be and how they
+You should think about what your data models will be and how they
 will relate to each other. For example, if you're building an application
 for students to hire turors, you might have models for users, tutors, tutees,
 reviews etc. Users might have a relationships to tutors and tutees (can a user
@@ -26,7 +26,7 @@ it before and are using the tutorials etc on the Django site. We're
 using Django 1.8.8 which is not the latest version on the Django
 website. Make sure you're looking at the correct version!
 
-A note on code layout. I prefer to have my projects layed out like
+A note on code layout. I prefer to have my projects laid out like
 this:
 
 
@@ -58,19 +58,18 @@ Docker Compose
 --------------
 
 One other thing to introduce before we start coding is Docker Compose.
-Compose is a tool for defining and running multi-container Docker applications and the topology. 
+Compose is a tool for defining the topology and running multi-container Docker applications. 
 With Compose, you use a Compose file to configure your application’s services.
 Recall how we start web, mysql containers one by one in the previous project. This
 approach works fine when we have only two containers and the configuration is simple, but
 is certainly not scalable. Using Docker Compose, we will be able to stand up our containers
-using a single command. Here is a tutorial about how Docker Compose work:
+using a single command. Here is a tutorial about how Docker Compose works:
 
 First, install Docker Compose by doing
 
-```
-$ curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
-$ chmod +x /usr/local/bin/docker-compose
-```
+	$ curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+	$ chmod +x /usr/local/bin/docker-compose
+
 
 When you've got Compose installed, create a new directory with
 
@@ -89,10 +88,13 @@ You can tell compose to create a new container by giving it a name and an image 
 	      - <your_file_path>:/app
 	    ports:
 	      - "8001:8000"
+	    command: "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
 
 Notice the difference between external_links and links. We use links to link to a container created by the docker-compose.yml. On the other hand, external_links is used to link to a container outside Compose. In this case, since we are linking to a container outside Compose, we use external_links. 
 
 Volumes is like the -v tag we use when executing docker run. It mounts the app directory in the container onto the <your_file_path> directory on the host machine(your mac/PC). By specifing that, you can code in your text editor/IDE on your host machine and any change you make will be picked up by the container.
+
+Ports expose the port in your container to the port on your host machine. In this case, we are exposing port 8000 in the container to port 8001 on your host machine. By exposing the ports, you can access you Django app in the browser by going to localhost:8001 if you use a native Docker app or <your_docker_ip>:8001 if you use Docker Machine/Toolbox.
 
 Now that we've got this, save docker-compose.yml. Having Compose create and run our container is as simple as running
 
@@ -230,7 +232,7 @@ https://docs.djangoproject.com/en/1.9/howto/initial-data/
 
 Initial data should now be in db!
 
-To incorporate fixtures into your project submissions, create a fixture before pushing to github and add “python manage.py loaddata” command to your docker-compose file to load the data before starting your server.
+To incorporate fixtures into your project submissions, add some data to your database and create a fixture before pushing to github and add “python manage.py loaddata” command to your docker-compose file to load the data before starting your server.
 
 What to turn in
 ---------------
