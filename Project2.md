@@ -6,14 +6,10 @@ and then build a first version of services for accessing those
 models. There are two weeks assigned for completing this work, but if
 you wait until the second week you will likely not finish on time.
 
-Documentation
+Database Design
 -------------
 
-Before starting to write any code, start with developing a set of user stories
-and then draw the relationships between your models. You should plan on
-writing about ten user stories. Turn them in as part of your project.
-
-You should also think about what your data models will be and how they
+You should think about what your data models will be and how they
 will relate to each other. For example, if you're building an application
 for students to hire turors, you might have models for users, tutors, tutees,
 reviews etc. Users might have a relationships to tutors and tutees (can a user
@@ -30,7 +26,7 @@ it before and are using the tutorials etc on the Django site. We're
 using Django 1.8.8 which is not the latest version on the Django
 website. Make sure you're looking at the correct version!
 
-A note on code layout. I prefer to have my projects layed out like
+A note on code layout. I prefer to have my projects laid out like
 this:
 
 
@@ -58,13 +54,68 @@ but I think it's a reasonable short-cut for a class project. The risk
 with this is that it could expose security vulnerabilities so you
 wouldn't want to really put it into production.
 
+Docker Compose
+--------------
+
+One other thing to introduce before we start coding is Docker Compose.
+Compose is a tool for defining the topology and running multi-container Docker applications. 
+With Compose, you use a Compose file to configure your application’s services.
+Recall how we start web, mysql containers one by one in the previous project. This
+approach works fine when we have only two containers and the configuration is simple, but
+is certainly not scalable. Using Docker Compose, we will be able to stand up our containers
+using a single command. Here is a tutorial about how Docker Compose works:
+
+First, install Docker Compose if you haven't already done so. You can check if you have docker-compose on you machine by typing docker-compose in your terminal.
+
+	$ curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+	$ chmod +x /usr/local/bin/docker-compose
+
+
+When you've got Compose installed, create a new directory with
+
+	mkdir Compose
+	cd Compose
+
+Then go ahead and create a new file, docker-compose.yml, in the project root directory. Docker Compose uses these files, called YAML files, to automatically set up or start a group of containers. This is handy, much easier than managing each container individually. You can specify a lot of different options here, but for now we're merely going to create our entity layer and then link it to our mysql database. You need to make sure the mysql container we created from last time is started.
+
+You can tell compose to create a new container by giving it a name and an image to use.
+
+	models:
+	    image: tp33/django
+	    external_links:
+	      -  mysql:db
+	    volumes:
+	      - <project_root_dir>:/app
+	    ports:
+	      - "8001:8000"
+	    command: bash -c "mod_wsgi-express start-server --reload-on-changes <your_project_name>/wsgi.py"
+
+Notice the difference between external_links and links. We use links to link to a container created by the docker-compose.yml. On the other hand, external_links is used to link to a container outside Compose. In this case, since we are linking to a container outside Compose, we use external_links. 
+
+Volumes is like the -v tag we use when executing docker run. It mounts the app directory in the container onto the <your_file_path> directory on the host machine(your mac/PC). By specifing that, you can code in your text editor/IDE on your host machine and any change you make will be picked up by the container.
+
+Ports expose the port in your container to the port on your host machine. In this case, we are exposing port 8000 in the container to port 8001 on your host machine. By exposing the ports, you can access you Django app in the browser by going to localhost:8001 if you use a native Docker app or <your_docker_ip>:8001 if you use Docker Machine/Toolbox.
+
+Command specifies the command that will be run when the container starts up. In this case it will start the mod_wsgi server.
+
+Now that we've got this, save docker-compose.yml. Having Compose create and run our container is as simple as running
+
+	docker-compose up
+
+in our compose directory.
+
+	docker-compose rm
+
+will remove all the instance specified by the docker-compose file.
+
+This creates a new container based off the tp33/django image, and links it to the mysql container with the hostname of "db". This is the name we'll use when we configure our settings.py file.
+
+You can do a lot more with Docker Compose, including building new images straight from a Dockerfile, configuring ports, and defining shared volumes for containers. These are all things that may be helpful to you later in the course, so keep your compose file updated as you go about your project. There are great examples at https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04
+
 Models
 ------
 
-The first step is to create your Django models for your project. You
-should already have designed the models in your prior homework. If you
-haven't, now is the time to think through what the models are and what
-fields will be required in each.
+The first step is to create your Django models for your project.
 
 Generally, there are a few guidelines to consider:
 
@@ -95,7 +146,6 @@ Generally, there are a few guidelines to consider:
 
 Docker 
 --------
-The sample docker-compose file you should have contains 4 containers - isa-mysql, isa-models, isa-exp, and isa-web. The mysql container should already be created properly. For project 2, you should update isa-models.  
 
 For project 2, try and create a quick and simple pipeline for working with Docker. An objective for project 2 is to show you that setting up to run code is just as important as writing the code. Some of the key concepts you may want to look into are
 * docker-compose 
@@ -159,12 +209,34 @@ you'll need to use your Django manage.py to generate a set of SQL commands neede
 your new models. Then you can apply these commands to make them actually take affect. Django breaks this into two
 stages so that you can check the commands into git on your dev machine and then later apply them to many different db's -- in theory you might have many dev db instances, some testing/qa instances and then prod db instances. See the Django getting started or model documentation for more on migrations and how to use them.
 
+Fixtures
+--------
+Final thing before we call it a day, you need to add fixtures so that testing (and grading on our side) becomes a lot easier.
+
+Here's a quick introduction of fixture and a tutorial on how to use fixtures to preload data or export your db:
+
+General steps for creating fixtures:
+
+Dump existing db data using 
+
+	python manage.py dumpdata > db.json
+
+See Django documentation for the various options for dumpdata: https://docs.djangoproject.com/en/1.9/ref/django-admin/#dumpdata
+
+The command saves the output of dumpdata to db.json.
+
+To use your fixture:
+Run command 
+	python manage.py loaddata db.json
+
+See Django documentation for the various options for loaddata:
+https://docs.djangoproject.com/en/1.9/howto/initial-data/
+
+Initial data should now be in db!
+
+To incorporate fixtures into your project submissions, add some data to your database and create a fixture before pushing to github and add “python manage.py loaddata” command to your docker-compose command to load the data before starting your server.
+
 What to turn in
 ---------------
 
-The teaching staff should be able to run your app entirely by using docker compose. You'll send
-us the link to your github. We'll checkout the code, run docker-compose up and expect things to run. We
-will have a MySQL database container called 'mysql' configured with a 'www' user that can access a
-'cs4501' database as described in Project 1.
-
-Your github should also have a text file with your user stores and model design doc in it.
+The teaching staff should be able to run your app entirely by using docker-compose up. You can assume we have a clean mysql database called 'cs4501' with user 'www' with password '$3cureUS' (as we configured in project1). You'll send us the link to your github tag. We'll checkout the code, run docker-compose up and expect things to run.
