@@ -88,13 +88,15 @@ You can tell compose to create a new container by giving it a name and an image 
 	      - <your_file_path>:/app
 	    ports:
 	      - "8001:8000"
-	    command: "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
+	    command: bash -c "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
 
 Notice the difference between external_links and links. We use links to link to a container created by the docker-compose.yml. On the other hand, external_links is used to link to a container outside Compose. In this case, since we are linking to a container outside Compose, we use external_links. 
 
 Volumes is like the -v tag we use when executing docker run. It mounts the app directory in the container onto the <your_file_path> directory on the host machine(your mac/PC). By specifing that, you can code in your text editor/IDE on your host machine and any change you make will be picked up by the container.
 
 Ports expose the port in your container to the port on your host machine. In this case, we are exposing port 8000 in the container to port 8001 on your host machine. By exposing the ports, you can access you Django app in the browser by going to localhost:8001 if you use a native Docker app or <your_docker_ip>:8001 if you use Docker Machine/Toolbox.
+
+Command specifies the command that will be run when the container starts up. In this case it will start the mod_wsgi server.
 
 Now that we've got this, save docker-compose.yml. Having Compose create and run our container is as simple as running
 
@@ -232,7 +234,7 @@ https://docs.djangoproject.com/en/1.9/howto/initial-data/
 
 Initial data should now be in db!
 
-To incorporate fixtures into your project submissions, add some data to your database and create a fixture before pushing to github and add “python manage.py loaddata” command to your docker-compose file to load the data before starting your server.
+To incorporate fixtures into your project submissions, add some data to your database and create a fixture before pushing to github and add “python manage.py loaddata” command to your docker-compose command to load the data before starting your server.
 
 What to turn in
 ---------------
