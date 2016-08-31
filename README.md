@@ -2,12 +2,12 @@
 Internet Scale Applications
 ===========================
 
-This course will provide a survey of methods for building large-scale internet websites and mobile apps. The intent is to build upon prior classes by explaining how theory meets practice. Topics covered will include scaling, security, large team software engineering, etc. There will be a series of cumulative course projects resulting in students building a working marketplace website. Weekly readings from industry and academic sources will complement the weekly lecture. 
+This course will provide a survey of methods for building large-scale internet websites and mobile apps. The intent is to build upon prior classes by explaining how theory meets practice. Topics covered will include scaling, security, large team software engineering, etc. There will be a series of cumulative course projects resulting in students building a working marketplace website. Weekly readings from industry and academic sources will complement the weekly lecture.
 
 Prerequisites
 --------------
 
-CS3240 Advanced Software Development or equivalent experience building non-trivial Python/Django web applications is required. Understanding issues around persistence, databases, concurrency, networking etc along with Linux experience will be extremely helpful in this class.
+CS3240 (Advanced Software Development) or equivalent experience building non-trivial Python/Django web applications is required. Understanding issues around persistence, databases, concurrency, networking etc along with Linux experience will be extremely helpful in this class.
 
 A course project will be developed using Python, Django, MySQL, and Docker containers. A basic familiarity with HTML and CSS is preferred but not strictly required.
 
@@ -23,7 +23,7 @@ Course materials
 
 Syllabus and project assignments will be here in GitHub. Feel free to fork and send PRs with corrections, additions or any other changes you think would help fellow/future students.
 
-Lecture slides are in Google drive at https://drive.google.com/folderview?id=0BzWAJQVnIIRYfk9JUmwtbUVKS1pqb0k0Q2ZYU3pPZ3gxV2VnVDctVU51VjFYTTVaR25xR3c&usp=sharing Note that prior semester's slides can be found here for future lectures, but they may be out of date / subject to update this semester. Generally, the further out a lecture is the more likely that the slides have not been reworked for this semester.
+Lecture slides are in Google drive at https://drive.google.com/folderview?id=0BzWAJQVnIIRYfk9JUmwtbUVKS1pqb0k0Q2ZYU3pPZ3gxV2VnVDctVU51VjFYTTVaR25xR3c&usp=sharing. Note that prior semester's slides can be found here for future lectures, but they may be out of date / subject to update this semester. Generally, the further out a lecture is the more likely that the slides have not been reworked for this semester.
 
 Readings are listed for each week and should be completed BEFORE the week they are assigned so that we can discuss in class.
 
@@ -36,7 +36,7 @@ Course Topics (subject to revision as course progresses)
   - Overview of data center architecture: load balancers, switches, storage, servers
   - Overview of Model View Controller (MVC) design pattern
   - Overview of Docker and course project
-  - Project: set up Docker container with Hello World Python/Django web app. Due Tuesday 9/6. https://github.com/thomaspinckney3/cs4501/blob/master/Project1.md
+  - Project: set up Docker container with Hello World Python/Django web app. Due Tuesday 9/6 (email your screenshot to tp3ks@virginia.edu). https://github.com/thomaspinckney3/cs4501/blob/master/Project1.md
   - Resources: Django Getting Started docs https://docs.djangoproject.com/en/1.8/intro/ and https://docs.docker.com as well as  https://www.udacity.com/course/web-development--cs253 or http://www.codecademy.com/en/tracks/web if needed for HTML and CSS intro
 2. Requirements and documentation (Tues 8/30)
   - User stories
@@ -73,13 +73,13 @@ Course Topics (subject to revision as course progresses)
 15. Messaging and queing (Tuesday 9/27 and Thursday 9/29)
   - Integrating online and offline processing / Sync vs async
   - Queueing systems
-  - Reading: Kafka at LinkedIn https://engineering.linkedin.com/kafka/kafka-linkedin-current-and-future and 
+  - Reading: Kafka at LinkedIn https://engineering.linkedin.com/kafka/kafka-linkedin-current-and-future and
   - Quiz #1 on Thursday 9/29
 10. Search (Thursday 10/6 and Tuesday 10/11 - No class Tuesday 10/4)
   - Basics of information retrieval and search engines
   - Case study: ElasticSearch for site search backend
   - Recommendations and browsing as alternatives to search
-  - Reading: Incorporating behavioral data in search http://research.microsoft.com/en-us/um/people/sdumais/SIGIR2006-fp345-Ranking-agichtein.pdf 
+  - Reading: Incorporating behavioral data in search http://research.microsoft.com/en-us/um/people/sdumais/SIGIR2006-fp345-Ranking-agichtein.pdf
   - Project: user accounts and user generated content. Due Tuesday 10/18. https://github.com/thomaspinckney3/cs4501/blob/master/Project4.md
 8. Users and reputation (Thursday 10/13)
   - User generated content (UGC): reviews, wiki posts, comments
@@ -131,10 +131,10 @@ Course Topics (subject to revision as course progresses)
 Grading
 -------
 
-Grades will be computed approximately as follows:  
+Grades will be computed approximately as follows:
 10% class participation (based on discussion in class)
-30% two quizzes  
-60% class project  
+30% two quizzes
+60% class project
 
 More detailed project grading guidelines can be found at https://docs.google.com/document/d/1nZrh3uvwQFh3wf3mE8kuH8LL12j5WbLh42-j6AJwr38/edit?usp=sharing
 
@@ -143,9 +143,9 @@ Office Hours
 
 The teaching staff for this semester are:
 
-  - Tom Pinckney (lecturer) tp3ks@virginia.edu
-  - Ian Zheng (TA) yz9fy@virginia.edu
-  - Leandra Irvine (TA) lli5ba@virginia.edu
+  - Tom Pinckney (lecturer): tp3ks@virginia.edu
+  - Ian Zheng (TA): yz9fy@virginia.edu
+  - Leandra Irvine (TA): lli5ba@virginia.edu
 
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
 
@@ -158,6 +158,6 @@ There will be one set of office hours for project questions and demos and anothe
     
   - General Q&A (led by Tom): TBD
 
-There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com
+There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
-Remember, it's always better to ask questions, bring up problems etc sooner vs later.
+Remember, it's always better to ask questions, bring up problems, etc. sooner versus later.
