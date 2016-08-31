@@ -206,24 +206,46 @@ stages so that you can check the commands into git on your dev machine and then 
 
 Fixtures
 --------
-Final thing before we call it a day, you need to add fixtures so that testing (and grading on our side) becomes a lot easier.
+Final thing before we call it a day, you need to add fixtures. You can think of fixtures as initial data provided to an empty database. It’s sometimes (eg. when testing, grading) useful to pre-populate your database with hard-coded data when you’re first setting up an app so that you can use the app directly. To avoid hard-coding test data everytime you have a clean database, we use Django fixtures which does the work for you automatically.
 
 Here's a quick introduction of fixture and a tutorial on how to use fixtures to preload data or export your db:
 
 General steps for creating fixtures:
 
-Dump existing db data using 
+Dump existing db data to db.json (JSON file name does not matter) using 
 
 	python manage.py dumpdata > db.json
 
 See Django documentation for the various options for dumpdata: https://docs.djangoproject.com/en/1.9/ref/django-admin/#dumpdata
 
-The command saves the output of dumpdata to db.json.
+This is an example fixture. You can see it is basically Django model instances serialized into JSON format.
 
-To use your fixture for a clean database instance:
+	[
+	  {
+	    "model": "myapp.person",
+	    "pk": 1,
+	    "fields": {
+	      "first_name": "John",
+	      "last_name": "Lennon"
+	    }
+	  },
+	  {
+	    "model": "myapp.person",
+	    "pk": 2,
+	    "fields": {
+	      "first_name": "Paul",
+	      "last_name": "McCartney"
+	    }
+	  }
+	]
+
+To use your fixture to pre-populate a **clean** database instance:
+
 Run command 
 	
 	python manage.py loaddata db.json
+	
+The command will deserialize the models instances and loaded them into your database.
 
 See Django documentation for the various options for loaddata:
 https://docs.djangoproject.com/en/1.9/howto/initial-data/
