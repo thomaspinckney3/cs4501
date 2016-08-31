@@ -151,8 +151,10 @@ There will be one set of office hours for project questions and demos and anothe
 
   - Project review, help, and demo hours (led by TAs): 
     - Leandra:  
-      - Monday: 6:30pm to 7:30pm Rice 340  
-      - Wednesday: 2:00pm to 3:00pm Rice 436  
+      - Monday: 6:30pm to 7:30pm in Rice 340  
+      - Wednesday: 2:00pm to 3:00pm in Rice 436  
+    - Ian:
+      - Sunday: 1:00pm to 3:00pm in Rice 340
   - General Q&A (led by Tom): TBD
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com
