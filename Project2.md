@@ -246,7 +246,7 @@ more on migrations and how to use them.
 Fixtures
 --------
 Final thing before we call it a day, you need to add fixtures. You can think of
-fixtures as initial data provided to an empty database. It’s sometimes (eg. when
+fixtures as initial data provided to an empty database. It’s sometimes (e.g. when
 testing, grading) useful to pre-populate your database with hard-coded data when
 you’re first setting up an app so that you can use the app directly. To avoid
 hard-coding test data everytime you have a clean database, we use Django
