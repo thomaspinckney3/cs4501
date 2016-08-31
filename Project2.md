@@ -71,12 +71,7 @@ First, install Docker Compose if you haven't already done so. You can check if y
 	$ chmod +x /usr/local/bin/docker-compose
 
 
-When you've got Compose installed, create a new directory with
-
-	mkdir Compose
-	cd Compose
-
-Then go ahead and create a new file, docker-compose.yml, in the project root directory. Docker Compose uses these files, called YAML files, to automatically set up or start a group of containers. This is handy, much easier than managing each container individually. You can specify a lot of different options here, but for now we're merely going to create our entity layer and then link it to our mysql database. You need to make sure the mysql container we created from last time is started.
+When you've got Compose installed, go ahead and create a new file, docker-compose.yml, in the project root directory (you need to name the file exactly as docker-compose.yml). Docker Compose uses these files, called YAML files, to automatically set up or start a group of containers. This is handy, much easier than managing each container individually. You can specify a lot of different options here, but for now we're merely going to create our entity layer and then link it to our mysql database. You need to make sure the mysql container we created from last time is started.
 
 You can tell compose to create a new container by giving it a name and an image to use.
 
@@ -90,19 +85,19 @@ You can tell compose to create a new container by giving it a name and an image 
 	      - "8001:8000"
 	    command: bash -c "mod_wsgi-express start-server --reload-on-changes <your_project_name>/wsgi.py"
 
-Notice the difference between external_links and links. We use links to link to a container created by the docker-compose.yml. On the other hand, external_links is used to link to a container outside Compose. In this case, since we are linking to a container outside Compose, we use external_links. 
+Notice the difference between external_links and links. We use links to link to a container created by the docker-compose.yml. On the other hand, external_links is used to link to a container not created by Compose. In this case, since we are linking to a container "mysql" we created manually, we use external_links. By specifying "mysql:db" we can refer to the "mysql" container in our "models" container simply by "db" instead of refer to it by its IP Address.
 
-Volumes is like the -v tag we use when executing docker run. It mounts the app directory in the container onto the <your_file_path> directory on the host machine(your mac/PC). By specifing that, you can code in your text editor/IDE on your host machine and any change you make will be picked up by the container.
+Volumes is like the -v tag we use when executing docker run in the previous project. It mounts the app directory in the container onto the <your_file_path> directory on the host machine(your mac/PC). By specifing that, you can code in your text editor/IDE on your host machine and any change you make will be picked up by the container. It is handy in terms of the development workflow.
 
-Ports expose the port in your container to the port on your host machine. In this case, we are exposing port 8000 in the container to port 8001 on your host machine. By exposing the ports, you can access you Django app in the browser by going to localhost:8001 if you use a native Docker app or <your_docker_ip>:8001 if you use Docker Machine/Toolbox.
+Ports expose the port in your container to the port on your host machine. In this case, we are exposing port 8000 in the container to port 8001 on your host machine. By exposing the ports, you can access you Django app in the browser on your host machine by going to localhost:8001 if you use a native Docker app or <your_docker_ip>:8001 if you use Docker Machine/Toolbox.
 
 Command specifies the command that will be run when the container starts up. In this case it will start the mod_wsgi server.
 
 Now that we've got this, save docker-compose.yml. Having Compose create and run our container is as simple as running
 
 	docker-compose up
-
-in our compose directory.
+	
+NOTE that for the command to run successfully, you need to have your mysql container running.
 
 	docker-compose rm
 
@@ -225,8 +220,9 @@ See Django documentation for the various options for dumpdata: https://docs.djan
 
 The command saves the output of dumpdata to db.json.
 
-To use your fixture:
+To use your fixture for a clean database instance:
 Run command 
+	
 	python manage.py loaddata db.json
 
 See Django documentation for the various options for loaddata:
@@ -239,4 +235,4 @@ To incorporate fixtures into your project submissions, add some data to your dat
 What to turn in
 ---------------
 
-The teaching staff should be able to run your app entirely by using docker-compose up. You can assume we have a clean mysql database called 'cs4501' with user 'www' with password '$3cureUS' (as we configured in project1). You'll send us the link to your github tag. We'll checkout the code, run docker-compose up and expect things to run.
+The teaching staff should be able to run your app entirely by using docker-compose up. You can assume we have a clean mysql database called 'cs4501' with user 'www' of password '$3cureUS' (as we configured in project1) for your models container to hook up to. You'll send us the link to your github tag. We'll checkout the code, run docker-compose up and expect things to run.
