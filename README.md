@@ -156,7 +156,7 @@ There will be one set of office hours for project questions and demos and anothe
       - Monday: 6:30pm to 7:30pm in Rice 340  
       - Wednesday: 2:00pm to 3:00pm in Rice 436  
     
-  - General Q&A (led by Tom): TBD
+  - General Q&A (led by Tom): Thursday 2:30 - 3:30 or by appointment in Rice 425
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
