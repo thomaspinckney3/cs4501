@@ -26,27 +26,26 @@ it before and are using the tutorials etc on the Django site. We're
 using Django 1.8.8 which is not the latest version on the Django
 website. Make sure you're looking at the correct version!
 
-A note on code layout. I prefer to have my projects laid out like
-this:
+A note on code layout. It should look something like this. This is generated using
+the standard Django `startproject`, `startapp` commands.
 
 
 	stuff/
 	├── manage.py
+	├── myapp
+	│   ├── __init__.py
+	│   ├── admin.py
+	│   ├── migrations
+	│   │   └── __init__.py
+	│   ├── models.py
+	│   ├── tests.py
+	│   └── views.py
 	└── stuff
 	    ├── __init__.py
-	    ├── main.py
-	    ├── models.py
 	    ├── settings.py
-	    ├── templates
-	    │   └── start.html
 	    ├── urls.py
 	    └── wsgi.py
 
-
-
-This is different the defualt Django layout that is created if run
-'startproject' and then 'startapp'. I basically skip the 'startapp'
-step and just put everything in the same directory.
 
 It's probably worth your effort to set up the admin interface to make
 it easy to update your data. In the real world you wouldn't do this,
@@ -83,7 +82,7 @@ You can tell compose to create a new container by giving it a name and an image 
 	      - <project_root_dir>:/app
 	    ports:
 	      - "8001:8000"
-	    command: bash -c "mod_wsgi-express start-server --reload-on-changes <your_project_name>/wsgi.py"
+	    command: bash -c "mod_wsgi-express start-server --working-directory <project_root_dir> --reload-on-changes <path_to_wsgi.py>/wsgi.py"
 
 Notice the difference between external_links and links. We use links to link to a container created by the docker-compose.yml. On the other hand, external_links is used to link to a container not created by Compose. In this case, since we are linking to a container "mysql" we created manually, we use external_links. By specifying "mysql:db" we can refer to the "mysql" container in our "models" container simply by "db" instead of refer to it by its IP Address.
 
@@ -92,6 +91,8 @@ Volumes is like the -v tag we use when executing docker run in the previous proj
 Ports expose the port in your container to the port on your host machine. In this case, we are exposing port 8000 in the container to port 8001 on your host machine. By exposing the ports, you can access you Django app in the browser on your host machine by going to localhost:8001 if you use a native Docker app or <your_docker_ip>:8001 if you use Docker Machine/Toolbox.
 
 Command specifies the command that will be run when the container starts up. In this case it will start the mod_wsgi server.
+
+Also note if you NEED to relatvie path in your docker compose file or it won't work on our machine. When you use relative path, you are addressing path from docker-compose.yml's perpective.
 
 Now that we've got this, save docker-compose.yml. Having Compose create and run our container is as simple as running
 
@@ -104,6 +105,8 @@ NOTE that for the command to run successfully, you need to have your mysql conta
 will remove all the instance specified by the docker-compose file.
 
 This creates a new container based off the tp33/django image, and links it to the mysql container with the hostname of "db". This is the name we'll use when we configure our settings.py file.
+
+One other thing about docker compose. If for some reasons (run makemigrations/migrate etc.) you need to attach to a container created by docker compose, instead of using `docker attach <container_name>`(it will hang), use `docker exec -it <container_name> bash`.
 
 You can do a lot more with Docker Compose, including building new images straight from a Dockerfile, configuring ports, and defining shared volumes for containers. These are all things that may be helpful to you later in the course, so keep your compose file updated as you go about your project. There are great examples at https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04
 
@@ -257,4 +260,18 @@ To incorporate fixtures into your project submissions, add some data to your dat
 What to turn in
 ---------------
 
-The teaching staff should be able to run your app entirely by using docker-compose up. You can assume we have a clean mysql database called 'cs4501' with user 'www' of password '$3cureUS' (as we configured in project1) for your models container to hook up to. You'll send us the link to your github tag. We'll checkout the code, run docker-compose up and expect things to run.
+The teaching staff should be able to run your app entirely by using docker-compose up. You can assume we have a clean mysql database called 'cs4501' with user 'www' of password '$3cureUS' (as we configured in project1) for your models container to hook up to. For this project, we would expect your current iteration to have serveral GET APIs and serveral POST APIs.
+
+Something that need to be executed by the docker-compose.yml (some of them may be repetitions from the previous section):
+
+* run makemigrations (I strongly disencourage you to commit your mirgation files. Why? Come to office hour and we can discuss.)
+* run migrate
+* load fixture
+* start the wsgi server
+* (You can do something like `command: bash -c "<command_1> && <command_2> && ..."`)
+* expose ports
+* link to the mysql db container
+
+Also note that you NEED to use relative path for you compose file to work on our machine (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path.
+
+You'll send us the link to your github tag. We'll checkout the code, run docker-compose up and expect things to run. Again, we strongly encourage you to take time to demo in the office hours. We want to make sure not only you are writing code that works but also code that is of best practices.
