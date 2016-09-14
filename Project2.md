@@ -92,7 +92,7 @@ Ports expose the port in your container to the port on your host machine. In thi
 
 Command specifies the command that will be run when the container starts up. In this case it will start the mod_wsgi server.
 
-Also note if you NEED to relatvie path in your docker compose file or it won't work on our machine. When you use relative path, you are addressing path from docker-compose.yml's perpective.
+Also note you NEED to use relatvie paths in your docker compose file or it won't work on our machines. When you use relative path, keep in mind you are addressing path from docker-compose.yml's perpective.
 
 Now that we've got this, save docker-compose.yml. Having Compose create and run our container is as simple as running
 
@@ -264,14 +264,14 @@ The teaching staff should be able to run your app entirely by using docker-compo
 
 Something that need to be executed by the docker-compose.yml (some of them may be repetitions from the previous section):
 
-* run makemigrations (I strongly disencourage you to commit your mirgation files. Why? Come to office hour and we can discuss.)
+* run makemigrations (I strongly discourage you from committing your mirgation files. Why? Come to office hours and we can discuss!)
 * run migrate
-* load fixture
+* load fixtures
 * start the wsgi server
 * (You can do something like `command: bash -c "<command_1> && <command_2> && ..."`)
 * expose ports
 * link to the mysql db container
 
-Also note that you NEED to use relative path for you compose file to work on our machine (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path.
+Also note that you NEED to use relative path for your compose file to work on our machines (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path.
 
 You'll send us the link to your github tag. We'll checkout the code, run docker-compose up and expect things to run. Again, we strongly encourage you to take time to demo in the office hours. We want to make sure not only you are writing code that works but also code that is of best practices.
