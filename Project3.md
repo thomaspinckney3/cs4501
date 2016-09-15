@@ -89,6 +89,27 @@ User Stories and Unit Testing
 Before starting to write any code for Project 3, start with developing a set of user stories. 
 Each feature that you code from this project onwards should correspond to a user story. Each user story should have a documented set of unit tests that validate the user story is correctly implemented (acceptance criteria). For this project, create at least 5 user stories, but no more than 20. Turn in your user stories as part of your project.
 
+### Unit Testing ###
+
+[Django's unit tests](https://docs.djangoproject.com/en/1.10/topics/testing/overview/) use the Python unit testing framework ```unitest```. To run your unit tests, execute ```python manage.py test``` from the command line. By default, this will run all files in your project named ```test*.py``` where * is a wildcard (ex. test_users.py).
+
+Here are some examples of unit tests for your Django views:
+
+    from django.test import TestCase
+    from myapp.models import Order
+    from myapp.models import User
+    
+    class OrderDetailTestCase(TestCase):
+      def setUp(self):     #setUp method is called before each test in this class
+         
+      def tearDown(self):  #tearDown method is called after each test
+         pass              #nothing to tear down
+    class UserDetailTestCase(TestCase):
+      def setUp(self): 
+      
+
+Note: "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
+
 
 Implementation
 --------------
