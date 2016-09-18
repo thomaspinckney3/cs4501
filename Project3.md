@@ -95,21 +95,28 @@ Each feature that you code from this project onwards should correspond to a user
 
 Here are some examples of unit tests for your Django views:
 
-    from django.test import TestCase
-    from myapp.models import Order
-    from myapp.models import User
+    from django.test import TestCase, Client
+    from django.core.urlresolvers import reverse
+    from myapp.models import Order, User
     
-    class OrderDetailTestCase(TestCase):
+    class GetOrderDetailsTestCase(TestCase):
       def setUp(self):     #setUp method is called before each test in this class
+         pass              #nothing to set up
+      def success_response(self):
+         response = self.client.get(reverse('all_orders_list', kwargs={'user_id':1}))   #assumes user with id 1 is stored in db
+         self.assertContains(response, 'order_list')  #checks that response contains parameter order list & implicitly checks that                                                 #statuscode is 200
+      def fails_invalid(self):
+         response = self.client.get(reverse('all_orders_list'))
+         self.assertEquals(response.status_code, 404)    #user_id not given in url, so error
          
       def tearDown(self):  #tearDown method is called after each test
          pass              #nothing to tear down
-    class UserDetailTestCase(TestCase):
-      def setUp(self): 
       
 
 Note: Django specifies that "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
 If you are creating tests in your experience layer, then a test database will not work because the model layer, not the experience layer, is the one that interacts directly with the database. Therefore, in later projects, if you find you are unable to test a particular function through unit tests (like databse deletions or saves), that is okay.  All read-only data (Project 3) should be testable, though.  
+
+Also see [Django Advanced Testing](https://docs.djangoproject.com/en/1.10/topics/testing/advanced/) if interested!
 
 
 Implementation
