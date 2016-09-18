@@ -108,7 +108,8 @@ Here are some examples of unit tests for your Django views:
       def setUp(self): 
       
 
-Note: "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
+Note: Django specifies that "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
+If you are creating tests in your experience layer, then a test database will not work because the model layer, not the experience layer, is the one that interacts directly with the database. Therefore, in later projects, if you find you are unable to test a particular function through unit tests (like databse deletions or saves), that is okay.  All read-only data (Project 3) should be testable, though.  
 
 
 Implementation
