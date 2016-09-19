@@ -69,7 +69,7 @@ most popular content, etc.
 Note, these are read-only pages for showing data in the db. To simplify
 this project we're ignoring how users or things in your marketplace are
 created in the first place. You can test your project using fixtures or by using your entity API to create users and things.
-In later projects we'll add the flows for letting sers sign up and add
+In later projects we'll add the flows for letting users sign up and add
 things/content to your app.
 
 If you have time in this project, you should add other useful read-only pages like a user
@@ -91,7 +91,7 @@ Each feature that you code from this project onwards should correspond to a user
 
 ### Unit Testing ###
 
-[Django's unit tests](https://docs.djangoproject.com/en/1.10/topics/testing/overview/) use the Python unit testing framework ```unitest```. To run your unit tests, execute ```python manage.py test``` from the command line. By default, this will run all files in your project named ```test*.py``` where * is a wildcard (ex. test_users.py).
+[Django's unit tests](https://docs.djangoproject.com/en/1.9/topics/testing/overview/) use the Python unit testing framework ```unitest```. To run your unit tests, execute ```python manage.py test``` from the command line. By default, this will run all files in your project named ```test*.py``` where * is a wildcard (ex. test_users.py).
 
 Here are some examples of unit tests for your Django views:
 
@@ -116,7 +116,7 @@ Here are some examples of unit tests for your Django views:
 Note: Django specifies that "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
 If you are creating tests in your experience layer, then a test database will not work because the model layer, not the experience layer, is the one that interacts directly with the database. Therefore, in later projects, if you find you are unable to test a particular function through unit tests (like databse deletions or saves), that is okay.  All read-only data (Project 3) should be testable, though.  
 
-Also see [Django Advanced Testing](https://docs.djangoproject.com/en/1.10/topics/testing/advanced/) if interested!
+Also see [Django Advanced Testing](https://docs.djangoproject.com/en/1.9/topics/testing/advanced/) if interested!
 
 
 Implementation
@@ -353,4 +353,4 @@ mess. I recommend you do the following:
 
 Create a tag in your GitHub and email your TA the tag. Make sure you've tested your code thoroughly and haven't forgotten to comit anything. Also make sure to test from a clean / empty / new database so that you're not accidentally depending on anything already in your system.
 
-You are required to turn in a docker-compose.yml, a set of fixtures, and unit tests that allow your TA to easily run/test your system and verify that the basic functionality works. Your docker-compose.yml should assume, like in the prior assignment, that there's a mysql container already running and it should be referenced via an external_link. Your fixtures should contain sample test data for viewing the listing page. Also include your user stories and which unit tests they correspond to.
+You are required to turn in a docker-compose.yml, a set of fixtures, user stories, and unit tests that allow your TA to easily run/test your system and verify that the basic functionality works. Your docker-compose.yml should assume, like in the prior assignment, that there's a mysql container already running and it should be referenced via an external_link. Your fixtures should contain sample test data for viewing the listing page. Include your user stories and which unit tests they correspond to.
