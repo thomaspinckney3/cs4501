@@ -68,8 +68,7 @@ most popular content, etc.
 
 Note, these are read-only pages for showing data in the db. To simplify
 this project we're ignoring how users or things in your marketplace are
-created in the first place. You can test your project by manually
-creating rows in the db or use your entity API to create users and things.
+created in the first place. You can test your project using fixtures or by using your entity API to create users and things.
 In later projects we'll add the flows for letting users sign up and add
 things/content to your app.
 
@@ -83,6 +82,42 @@ Don't worry too much about the design of your pages for now. Bootstrap
 will provide decent default styling. However, if you want, you can
 think about how to improve the design or make it responsive for
 smaller screens.
+
+User Stories and Unit Testing
+-----------------------------
+
+Before starting to write any code for Project 3, start with developing a set of user stories. 
+Each feature that you code from this project onwards should correspond to a user story. Each user story should have a documented set of unit tests that validate the user story is correctly implemented (acceptance criteria). For this project, create at least 5 user stories, but no more than 20. Turn in your user stories as part of your project.
+
+### Unit Testing ###
+
+[Django's unit tests](https://docs.djangoproject.com/en/1.9/topics/testing/overview/) use the Python unit testing framework ```unitest```. To run your unit tests, execute ```python manage.py test``` from the command line. By default, this will run all files in your project named ```test*.py``` where * is a wildcard (ex. test_users.py).
+
+Here are some examples of unit tests for your Django views:
+
+    from django.test import TestCase, Client
+    from django.core.urlresolvers import reverse
+    from myapp.models import Order, User
+    
+    class GetOrderDetailsTestCase(TestCase):
+      def setUp(self):     #setUp method is called before each test in this class
+         pass              #nothing to set up
+      def success_response(self):
+         response = self.client.get(reverse('all_orders_list', kwargs={'user_id':1}))   #assumes user with id 1 is stored in db
+         self.assertContains(response, 'order_list')  #checks that response contains parameter order list & implicitly checks that                                                 #statuscode is 200
+      def fails_invalid(self):
+         response = self.client.get(reverse('all_orders_list'))
+         self.assertEquals(response.status_code, 404)    #user_id not given in url, so error
+         
+      def tearDown(self):  #tearDown method is called after each test
+         pass              #nothing to tear down
+      
+
+Note: Django specifies that "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
+If you are creating tests in your experience layer, then a test database will not work because the model layer, not the experience layer, is the one that interacts directly with the database. Therefore, in later projects, if you find you are unable to test a particular function through unit tests (like databse deletions or saves), that is okay.  All read-only data (Project 3) should be testable, though.  
+
+Also see [Django Advanced Testing](https://docs.djangoproject.com/en/1.9/topics/testing/advanced/) if interested!
+
 
 Implementation
 --------------
@@ -108,7 +143,7 @@ models:
       - mysql:db
 ```
    
-Notice the difference between `external_links` and `links`. We use `links` to link to a
+As a reminder: Notice the difference between `external_links` and `links`. We use `links` to link to a
 container created by the docker-compose.yml. On the other hand, `external_links` is used to 
 link to a container outside Compose. In this case, since we are linking to a container outside
 Compose, we use `external_links`.
@@ -266,14 +301,14 @@ mess. I recommend you do the following:
 
 - design your web interface first -- sketch on a piece of paper what
   info you want to show, where it will be relative to the other
-  content etc.
+  content etc. -- this will help you to brainstorm and create user stories
 
-- start with building the web interface tier first to define what your
+- for implementation, start with building the web interface tier first to define what your
   experience services need to return. Then build the experience
   service to provide the data your web interface needs.
 
 - develop and test each tier independently. That means that if you
-  make changes to your entity API, test it carefully before moving
+  make changes to your entity API, test it carefully with unit tests before moving
   on to changes in the experience services tier. You don't want to
   change every tier and then try things and not know why things are
   failing.
@@ -318,4 +353,4 @@ mess. I recommend you do the following:
 
 Create a tag in your GitHub and email your TA the tag. Make sure you've tested your code thoroughly and haven't forgotten to comit anything. Also make sure to test from a clean / empty / new database so that you're not accidentally depending on anything already in your system.
 
-You are required to turn in a docker-compose.yml and a set of fixtures that allow your TA to easily run/test your system. Your docker-compose.yml should assume, like in the prior assignment, that there's a mysql container already running and it should be referenced via an external_link. Your fixtures should contain sample test data for viewing the listing page.
+You are required to turn in a docker-compose.yml, a set of fixtures, user stories, and unit tests that allow your TA to easily run/test your system and verify that the basic functionality works. Your docker-compose.yml should assume, like in the prior assignment, that there's a mysql container already running and it should be referenced via an external_link. Your fixtures should contain sample test data for viewing the listing page. Include your user stories and which unit tests they correspond to.
