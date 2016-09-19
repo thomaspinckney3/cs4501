@@ -138,7 +138,7 @@ the `external_links` or `links` option to the docker compose file:
 
 ```YAML
 models:
-   image: tp33/django:1.2
+   image: tp33/django
    external_links:
       - mysql:db
 ```
@@ -160,7 +160,7 @@ and link it to your low-level API (notice the change from `external_links` to `l
 
 ```YAML
 exp:
-   image: tp33/django:1.2
+   image: tp33/django
    links:
       - models:models-api
 ```
@@ -174,7 +174,7 @@ link to the experience service container:
 
 ```YAML
 exp:
-   image: tp33/django:1.2
+   image: tp33/django:
    links:
       - exp:exp-api
 ```
@@ -185,7 +185,7 @@ I do a few other things to ease my development:
 
 ```YAML
 models:
-   image: tp33/django:1.2
+   image: tp33/django:
    external_links:
       - mysql:db
    ports:
@@ -213,7 +213,7 @@ mounts the file directories inside `<your_file_path>` onto the `/app` directory 
 - Docker containers exit when their main process finishes. To prevent containers from immediate exit, I tell each container to run mod_wsgi-express on startup. If I want to interactively log into the container I later run 'docker exec -it name /bin/bash' where name is the container name I want to start a shell in. This is accomplished by docker compose `command` option:
 ```YAML
 models:
-   image: tp33/django:1.2
+   image: tp33/django:
    external_links:
       - mysql:db
    ports:
@@ -229,7 +229,7 @@ A sample docker-compose.yml (you will have to modify the code accordingly to mat
 
 ```YAML
 models:
-   image: tp33/django:1.2
+   image: tp33/django:
    external_links:
       - mysql:db
    ports:
@@ -239,7 +239,7 @@ models:
    command: "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
    
 exp:
-   image: tp33/django:1.2
+   image: tp33/django:
    links:
       - models:models-api
    ports:
@@ -249,7 +249,7 @@ exp:
    command: "mod_wsgi-express start-server --reload-on-changes stuff-exp/wsgi.py"
    
 web:
-   image: tp33/django:1.2
+   image: tp33/django:
    links:
       - exp:exp-api
    ports:
@@ -268,9 +268,9 @@ This results in my running container set looking like:
     5ef6412cc321        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute   0.0.0.0:8001->8000/tcp   models
     5b18a2deae1a        mysql:5.7.8         "/entrypoint.sh mysql"   4 weeks ago          Up 40 minutes       3306/tcp                 mysql
 
-- My low level API is running in a contianer called 'models' and is listening on port 8000 (which is exposed as port 8001 on my linux VM).
-- My experience service API is running in a container called 'exp' and is listening on port 8000 (which is exposed as port 8002 on my linux VM).
-- My web interface is running in a container called 'web' and is listening on port 8000 (which is exposed as port 8000 on my linux VM).
+- My low level API is running in a contianer called 'models' and is listening on port 8000 (which is exposed as port 8001).
+- My experience service API is running in a container called 'exp' and is listening on port 8000 (which is exposed as port 8002).
+- My web interface is running in a container called 'web' and is listening on port 8000 (which is exposed as port 8000).
 
 ### HTML ###
 
