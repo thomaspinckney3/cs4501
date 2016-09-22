@@ -121,6 +121,7 @@ Also see [Django Advanced Testing](https://docs.djangoproject.com/en/1.9/topics/
 
 Implementation
 --------------
+Part of this section will be repetitions from the previous project, but it will still be beneficial to read along since more detailed explanation is included.
 
 ### Container Linking  ###
 
@@ -181,7 +182,7 @@ exp:
 
 I do a few other things to ease my development:
 
-- I expose each container's port 8000 into my Linux VM with each container exposed as a different port. This is accomplished via adding docker compose `ports` option, for example:
+- I expose each container's port 8000 into my host machine with each container exposed as a different port. This is accomplished via adding docker compose `ports` option, for example:
 
 ```YAML
 models:
@@ -195,7 +196,7 @@ models:
    exposes the port 8000 in the container (which is the `mod_wsgi-express` default port) 
    to port 8001 on the host machine. In this way you can access your models layer by listen to 
    `http://localhost:8001` using a browser in the host machine.
-- I mount the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately (update the last modified time on wsgi.py in the top of your Django app to tell Apache to reaload your app -- can do this via 'touch wsgi.py'). This is accomplished by docker compose `volumes` option:
+- I mount the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately. This is accomplished by docker compose `volumes` option:
 
 ```YAML
 models:
@@ -259,7 +260,7 @@ web:
    command: "mod_wsgi-express start-server --reload-on-changes stuff-web/wsgi.py"
 ```
    
-This results in my running container set looking like:
+This results in my running container set looking like (You will have a different tag for the tp33 docker image):
 
     tp@devel:~$ docker ps
     CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                    NAMES
@@ -329,25 +330,32 @@ mess. I recommend you do the following:
 
 ### Calling HTTP/JSON APIs in Python ###
 
-    import urllib.request
-    import urllib.parse
-    import json
+Python requests is a HTTP library with the mission of "HTTP for Humans". It is easier to use than the 
+standard python urllib/urllib2 packages. There is no need to encode/decode HTTP content, explicitly deserialize json, etc.
+Everything just "works" elegantly! However, since it is not a python 
+standard package (and it is not included in the tp33/django image we are using.), you need to either define your own 
+DockerFile on top of Professor's tp33/django or install requests on the fly when the container starts up.
+Come to office hours if you want to explore the two options!
 
-    # make a GET request and parse the returned JSON                                                                                                                                                           # note, no timeouts, error handling or all the other things needed to do this for real                                                                                                                      
-    print ("About to do the GET...")
-    req = urllib.request.Request('http://jsonplaceholder.typicode.com/posts/1')
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    resp = json.loads(resp_json)
-    print(resp)
+Here is a example snippet if you are not already familiar with requests. Note how easy it is to fire HTTP requests. 
+You can read more about requests here http://docs.python-requests.org/en/master/
 
-    # make a POST request.                                                                                                                                                                                     # we urlencode the dictionary of values we're passing up and then make the POST request                                                                                                                    # again, no error handling                                                                                                                                                                                  
-    print ("About to do the POST...")
-    post_data = {'title': 'Demo Post', 'body': 'This is a test', 'userId': 1}
-    post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
-    req = urllib.request.Request('http://jsonplaceholder.typicode.com/posts', data=post_encoded, method='POST')
-    resp_json = urllib.request.urlopen(req).read().decode('utf-8')
-    resp = json.loads(resp_json)
-    print(resp)
+      import requests
+      
+      # make a GET request and parse the returned JSON                                                                                                                     
+      print ("About to do the GET...")
+      get_req = requests.get('http://jsonplaceholder.typicode.com/posts/1')
+      # this is the deserialized json object. It is THAT SIMPLE!
+      resp_json = get_req.json()
+      print(resp_json)
+      
+      # make a POST request.
+      print ("About to do the POST...")
+      post_data = {'title': 'Demo Post', 'body': 'This is a test', 'userId': 1}
+      post_req = requests.post('http://jsonplaceholder.typicode.com/posts', data=post_data)
+      # again this is the deserialized json object.
+      resp_json = post_req.json()
+      print(resp_json)
 
 ### What to turn in ###
 
