@@ -178,7 +178,7 @@ Django supplies well tested code for hashing and checking
 passwords. You should use this code rather than trying to create your
 own versions. Use `django.contrib.auth.hashers` module's
 `make_password` and `check_password`. My sameple
-Project 2 code (https://github.com/thomaspinckney3/stuff-models/blob/master/stuff/main.py) shows an example of using `make_password`. Read more at the Django Docs https://docs.djangoproject.com/en/1.10/topics/auth/passwords/#module-django.contrib.auth.hashers
+Project 2 code (https://github.com/thomaspinckney3/stuff-models/blob/master/stuff/main.py) shows an example of using `make_password`. Read more at the Django Docs https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#module-django.contrib.auth.hashers
 
 Good further reading on salting, hashing and attempts to crack
 passwords at https://crackstation.net/hashing-security.htm
@@ -278,7 +278,23 @@ to be authenticated. One option is to rewrite the authenticating code for each
 of the views. This violates the software engineering principle of DRY (Don't repeat yourself).
 Don't worry, python has the idea of nested functions, which in turn powers the idea of a decorator.
 You can think of decorator as an on-the-fly modification to a function. In this case you may consider
-creating a decorator to authenticate the user. Python provides the syntax sugar to attach a decorator 
+creating a decorator to authenticate the user. It should look something as follows
+
+```PYTHON
+def login_required(f):
+    def wrap(request, *args, **kwargs):
+        # try authenticating the user
+        user = _validate(request)
+        # failed
+        if not user:
+            # redirect the user to the login page
+            return HttpResponseRedirect(reverse('login')+'?next='+current_url)
+        else:
+            return f(request, *args, **kwargs)
+    return wrap
+```
+
+Python provides the syntax sugar to attach a decorator 
 to a fuction as follows,
 
 ```PYTHON
