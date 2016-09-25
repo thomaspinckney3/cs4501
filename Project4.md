@@ -186,13 +186,15 @@ passwords at https://crackstation.net/hashing-security.htm
 Creating the random authenticators can be done by generating a random
 string as such:
 
+```PYTHON
     import os
     import hmac
     
     # import django settings file
     import settings
     
-    authenticator = hmac.new (key = settings.SECRET_KEY.encode('utf-8'), msg = os.urandom(32), digestmod = 'sha256').hexdigest()
+    authenticator = hmac.new(key = '6frh%w6i!e(8jygkfr&d#=qfk9x)v8bp88g7jhi@jeq(8(=%%c'.encode('utf-8'), msg = password.encode('utf-8'), digestmod = 'sha256').hexdigest()
+```
     
 This will generate 256 bits of randomness which is pretty hard for an
 attacker to guess. It's also pretty unlikely to collide with a previously
@@ -212,6 +214,7 @@ using sufficient randomness, speed etc.
 Here is some pseudo-python illustrating how the web front end might
 implement the login and create_listing views. 
 
+```PYTHON
     import exp_srvc_errors  # where I put some error codes the exp srvc can return
     
     def login(request):
@@ -251,13 +254,15 @@ implement the login and create_listing views.
                 return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing")
          ...
          return render("create_listing_success.html", ...)
-         
+```
+
 Note, the pattern of passing a URL argument of 'next' into the login
 page to specify where the user should be redirected upon succesfull login.
 The create_listing view can use this when it finds that the current user is not
 logged in. They can be redirected to the login page with next set to the url
 for the create_listing view. Then when they complete logging in, the login view
-will redirect them back to the create_listing.
+will redirect them back to the create_listing. The url will look something like this
+/account/login/?next=Create%20Listing
 
 Also notice the pattern of each view handling both rendering via GET and POST
 requests. The form for logging in or creating a listing will initially render
@@ -265,9 +270,34 @@ via a GET and then be POST'ed upon submission. The POST handler will either erro
 and return the same rendered form (plus some helpful errors) or will succeed and return
 the user to wherever they're supposed to go next.
 
-As a further side note, you may wish to use Django's session middleware
-in your web front end for storing and retrieving authenticators
-instead of using cookies directly. It's fine if you want to do it this way.
+### Some Django best practices (Optional) ###
+
+#### Python decorator ####
+Suppose later your site has more services like create_list that needs to first 
+authenticate the user. You will have to rewrite the authenticating code for each 
+of the views. The violates the software engineering practice of DRY (Don't repeat yourself).
+Don't worry, python has the idea of nested functions, which in turn power the idea of a decorator.
+You can think about decorator as a on-the-fly modification to a function. In this case you may consider
+create a decorator to authenticate the user. Python also provides the syntax sugar to attach a decorator 
+as follows,
+
+```PYTHON
+@login_required
+def create_listing(request):
+   ...
+```
+
+You then just need to prepent ```@login_required``` to each view that needs authentication. Come to the office 
+hours if you want to know more about decorators.
+
+#### Slightly advanced Django forms ####
+Django ModelForms provides reasonably well predifined behavior in a majority of use cases. 
+There are some cases when you want to customize the default form. In this case, you probably
+want to look into overriding <field>_clean() method which can provide additional customized checks for a
+model field (eg. if the email is a uva email) and overriding is_valid() method which provide addition customized
+for the model as a whole. You can also do thing like append customized error messages to a field and render that
+message when the form does not validate. Come to office hours if you want to know more about django forms.
+
 
 What to turn in
 ----------------
@@ -276,6 +306,7 @@ Please turn in:
 
   - Tag your code with "project4" when you are done
   - Email your group's assinged TA and the course instructor letting them know you are done
-  - Create data fixtures so that course staff can start your project with necesary database tables filled in with test data
-  - Verify that your docker compose .yml file is correct and references an "external_link" MySQL container
+  - As last project, create data fixtures so that course staff can start your project with necesary database tables filled in with test data
+  - As last project, provide user stories and unit tests associated with those.
+  - As always, we expect ```docker-compose up``` to just work!
  
