@@ -193,7 +193,7 @@ import hmac
 # import django settings file
 import settings
 
-authenticator = hmac.new(key = '6frh%w6i!e(8jygkfr&d#=qfk9x)v8bp88g7jhi@jeq(8(=%%c'.encode('utf-8'), msg = os.urandom(32), digestmod = 'sha256').hexdigest()
+authenticator = hmac.new(key = settings.SECRET_KEY.encode('utf-8'), msg = os.urandom(32), digestmod = 'sha256').hexdigest()
 ```
     
 This will generate 256 bits of randomness which is pretty hard for an
