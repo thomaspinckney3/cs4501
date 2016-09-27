@@ -98,23 +98,33 @@ Each feature that you code from this project onwards should correspond to a user
 
 Here are some examples of unit tests for your Django views:
 
+```Python
     from django.test import TestCase, Client
     from django.core.urlresolvers import reverse
     from myapp.models import Order, User
 
     class GetOrderDetailsTestCase(TestCase):
-      def setUp(self):     #setUp method is called before each test in this class
-         pass              #nothing to set up
-      def success_response(self):
-         response = self.client.get(reverse('all_orders_list', kwargs={'user_id':1}))   #assumes user with id 1 is stored in db
-         self.assertContains(response, 'order_list')  #checks that response contains parameter order list & implicitly checks that                                                 #statuscode is 200
-      def fails_invalid(self):
-         response = self.client.get(reverse('all_orders_list'))
-         self.assertEquals(response.status_code, 404)    #user_id not given in url, so error
+        #setUp method is called before each test in this class
+        def setUp(self):
+            pass #nothing to set up
 
-      def tearDown(self):  #tearDown method is called after each test
-         pass              #nothing to tear down
+        def success_response(self):
+            #assumes user with id 1 is stored in db
+            response = self.client.get(reverse('all_orders_list', kwargs={'user_id':1}))
 
+            #checks that response contains parameter order list & implicitly
+            # checks that the HTTP status code is 200
+            self.assertContains(response, 'order_list')
+
+        #user_id not given in url, so error
+        def fails_invalid(self):
+            response = self.client.get(reverse('all_orders_list'))
+            self.assertEquals(response.status_code, 404)
+
+        #tearDown method is called after each test
+        def tearDown(self):
+            pass #nothing to tear down
+```
 
 Note: Django specifies that "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
 If you are creating tests in your experience layer, then a test database will not work because the model layer, not the experience layer, is the one that interacts directly with the database. Therefore, in later projects, if you find you are unable to test a particular function through unit tests (like databse deletions or saves), that is okay.  All read-only data (Project 3) should be testable, though.
@@ -214,7 +224,11 @@ models:
 
 mounts the file directories inside `<your_file_path>` onto the `/app` directory in the container.
 
-- Docker containers exit when their main process finishes. To prevent containers from immediate exit, I tell each container to run mod_wsgi-express on startup. If I want to interactively log into the container I later run 'docker exec -it name /bin/bash' where name is the container name I want to start a shell in. This is accomplished by docker compose `command` option:
+- Docker containers exit when their main process finishes. To prevent containers
+  from immediate exit, I tell each container to run mod_wsgi-express on startup.
+  If I want to interactively log into the container I later run `docker exec -it
+  name /bin/bash` where name is the container name I want to start a shell in.
+  This is accomplished by docker compose `command` option:
 ```YAML
 models:
    image: tp33/django:
