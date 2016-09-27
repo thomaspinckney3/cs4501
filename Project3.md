@@ -302,7 +302,7 @@ You should be thinking of your app as three separate sub-apps: the
 entity API, the experience service API and the HTML
 front-end. The best way to do this is to create three separate Django
 projects, each in their own directories of one git repository. Note, however,
-that only the entity / model API app will be configured to talk to the DB.
+that only the entity/model API app will be configured to talk to the DB.
 
 Using multiple projects will allow you to have three separate settings.py
 files. This will be important because you'll want to do things
@@ -347,6 +347,7 @@ mess. I recommend you do the following:
 
 ### Calling HTTP/JSON APIs in Python ###
 
+```Python
     import urllib.request
     import urllib.parse
     import json
@@ -377,12 +378,13 @@ mess. I recommend you do the following:
 
     resp = json.loads(resp_json)
     print(resp)
+```
 
 ### What to turn in ###
 
 Create a tag in your GitHub and email your TA the tag. Make sure you've tested
 your code thoroughly and haven't forgotten to commit anything. Also make sure to
-test your full stack from a clean / empty / new database so that you're not
+test your full stack from a clean/empty/new database so that you're not
 accidentally depending on anything already in your system.
 
 You are required to turn in a `docker-compose.yml`, a set of fixtures, user
