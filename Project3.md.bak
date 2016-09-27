@@ -42,9 +42,9 @@ Recall that there are several reasons for creating an experience service level:
 
 The key point of this is the strict isolation between levels. The only
 way the HTML front-end communicates with the rest of your app is
-through the experience service level. In turn, the only way your
+through the expereince service level. In turn, the only way your
 experience service level interacts with the database is through the
-entity API. This is directly analogous to the data abstraction and
+entity API. This is directly analagous to the data abstraction and
 modularity that you learn about applying in an individual program, but
 here it is applied to a system of programs.
 
@@ -63,19 +63,18 @@ Pages
 
 The only required pages for this project are a home page and an item
 detail page. The detail page should show details about whatever it is
-your marketplace is about: rides, books, tickets---whatever relevant
-models your app uses. The home page should show links to the detail
-pages -- maybe the newest content, the most popular content, etc.
+your marketplace is about -- rides, books, tickets. The home page
+should show links to the detail pages -- maybe the newest content, the
+most popular content, etc.
 
-Note: These are read-only pages for showing data in the db. To simplify
+Note, these are read-only pages for showing data in the db. To simplify
 this project we're ignoring how users or things in your marketplace are
-created in the first place. You can test your project using fixtures or by using
-your entity API to create users and things.
+created in the first place. You can test your project by manually
+creating rows in the db or use your entity API to create users and things.
 In later projects we'll add the flows for letting users sign up and add
 things/content to your app.
 
-If you have time in this project, you should add other useful read-only pages
-like a user
+If you have time in this project, you should add other useful read-only pages like a user
 profile page to show info about buyers / sellers. Later on, we'll add
 a search page powered by a real search engine. For now you can add a
 simple / dummy search page if you like that just shows all content in
@@ -85,42 +84,6 @@ Don't worry too much about the design of your pages for now. Bootstrap
 will provide decent default styling. However, if you want, you can
 think about how to improve the design or make it responsive for
 smaller screens.
-
-User Stories and Unit Testing
------------------------------
-
-Before starting to write any code for Project 3, start with developing a set of user stories.
-Each feature that you code from this project onwards should correspond to a user story. Each user story should have a documented set of unit tests that validate the user story is correctly implemented (acceptance criteria). For this project, create at least 5 user stories, but no more than 20. Turn in your user stories as part of your project.
-
-### Unit Testing ###
-
-[Django's unit tests](https://docs.djangoproject.com/en/1.9/topics/testing/overview/) use the Python unit testing framework ```unitest```. To run your unit tests, execute ```python manage.py test``` from the command line. By default, this will run all files in your project named ```test*.py``` where * is a wildcard (ex. test_users.py).
-
-Here are some examples of unit tests for your Django views:
-
-    from django.test import TestCase, Client
-    from django.core.urlresolvers import reverse
-    from myapp.models import Order, User
-
-    class GetOrderDetailsTestCase(TestCase):
-      def setUp(self):     #setUp method is called before each test in this class
-         pass              #nothing to set up
-      def success_response(self):
-         response = self.client.get(reverse('all_orders_list', kwargs={'user_id':1}))   #assumes user with id 1 is stored in db
-         self.assertContains(response, 'order_list')  #checks that response contains parameter order list & implicitly checks that                                                 #statuscode is 200
-      def fails_invalid(self):
-         response = self.client.get(reverse('all_orders_list'))
-         self.assertEquals(response.status_code, 404)    #user_id not given in url, so error
-
-      def tearDown(self):  #tearDown method is called after each test
-         pass              #nothing to tear down
-
-
-Note: Django specifies that "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
-If you are creating tests in your experience layer, then a test database will not work because the model layer, not the experience layer, is the one that interacts directly with the database. Therefore, in later projects, if you find you are unable to test a particular function through unit tests (like databse deletions or saves), that is okay.  All read-only data (Project 3) should be testable, though.
-
-Also see [Django Advanced Testing](https://docs.djangoproject.com/en/1.9/topics/testing/advanced/) if interested!
-
 
 Implementation
 --------------
@@ -141,43 +104,43 @@ the `external_links` or `links` option to the docker compose file:
 
 ```YAML
 models:
-   image: tp33/django
+   image: tp33/django:1.2
    external_links:
       - mysql:db
 ```
 
-As a reminder: Notice the difference between `external_links` and `links`. We use `links` to link to a
-container created by the `docker-compose.yml`. On the other hand, `external_links` is used to
-link to a container outside `docker-compose`. In this case, since we are linking to a container outside
-`docker-compose`, we use `external_links`.
+Notice the difference between `external_links` and `links`. We use `links` to link to a
+container created by the docker-compose.yml. On the other hand, `external_links` is used to
+link to a container outside Compose. In this case, since we are linking to a container outside
+Compose, we use `external_links`.
 
 That option will create a hostname called `db` and make sure it's
 always pointing to the IP address for the container named
 `mysql` in `models` container. Thus, your app in this container can always connect to the
 host `db` instead of having to know which IP address your MySQL
 container is actually running as. This is how you set up your
-project's `settings.py` so far.
+project's settings.py so far.
 
 Similarly, you'll add another container for your experience service
 and link it to your low-level API (notice the change from `external_links` to `links`):
 
 ```YAML
 exp:
-   image: tp33/django
+   image: tp33/django:1.2
    links:
       - models:models-api
 ```
 
 In this case we are linking to a container created by docker compose, so
 we use `links`. Then the app running in this container can make HTTP requests to the
-host model-api in order to connect to your model-api container.
+host model-api in order to conncect to your model-api container.
 
 And finally, your third container for running the HTML front-end will
 link to the experience service container:
 
 ```YAML
 exp:
-   image: tp33/django:
+   image: tp33/django:1.2
    links:
       - exp:exp-api
 ```
@@ -188,7 +151,7 @@ I do a few other things to ease my development:
 
 ```YAML
 models:
-   image: tp33/django:
+   image: tp33/django:1.2
    external_links:
       - mysql:db
    ports:
@@ -198,8 +161,7 @@ models:
    exposes the port 8000 in the container (which is the `mod_wsgi-express` default port)
    to port 8001 on the host machine. In this way you can access your models layer by listen to
    `http://localhost:8001` using a browser in the host machine.
-
-- I mount the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately (update the last modified time on wsgi.py in the top of your Django app to tell Apache to reload your app -- can do this via 'touch wsgi.py'). This is accomplished by docker compose `volumes` option:
+- I mount the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately (update the last modified time on wsgi.py in the top of your Django app to tell Apache to reaload your app -- can do this via 'touch wsgi.py'). This is accomplished by docker compose `volumes` option:
 
 ```YAML
 models:
@@ -217,7 +179,7 @@ mounts the file directories inside `<your_file_path>` onto the `/app` directory 
 - Docker containers exit when their main process finishes. To prevent containers from immediate exit, I tell each container to run mod_wsgi-express on startup. If I want to interactively log into the container I later run 'docker exec -it name /bin/bash' where name is the container name I want to start a shell in. This is accomplished by docker compose `command` option:
 ```YAML
 models:
-   image: tp33/django:
+   image: tp33/django:1.2
    external_links:
       - mysql:db
    ports:
@@ -229,11 +191,11 @@ models:
 
 Putting that all together into the docker-compose.yml will start my three containers for me (I manually start the mysql container).
 
-A sample docker-compose.yml (you will have to modify the code accordingly to match your configuration):
+A sample docker-compose.yml (you will have to modify the code accordingly to match you configuration):
 
 ```YAML
 models:
-   image: tp33/django:
+   image: tp33/django:1.2
    external_links:
       - mysql:db
    ports:
@@ -243,7 +205,7 @@ models:
    command: "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
 
 exp:
-   image: tp33/django:
+   image: tp33/django:1.2
    links:
       - models:models-api
    ports:
@@ -253,7 +215,7 @@ exp:
    command: "mod_wsgi-express start-server --reload-on-changes stuff-exp/wsgi.py"
 
 web:
-   image: tp33/django:
+   image: tp33/django:1.2
    links:
       - exp:exp-api
    ports:
@@ -272,9 +234,9 @@ This results in my running container set looking like:
     5ef6412cc321        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute   0.0.0.0:8001->8000/tcp   models
     5b18a2deae1a        mysql:5.7.8         "/entrypoint.sh mysql"   4 weeks ago          Up 40 minutes       3306/tcp                 mysql
 
-- My low level API is running in a container called 'models' and is listening on port 8000 (which is exposed as port 8001).
-- My experience service API is running in a container called 'exp' and is listening on port 8000 (which is exposed as port 8002).
-- My web interface is running in a container called 'web' and is listening on port 8000 (which is exposed as port 8000).
+- My low level API is running in a contianer called 'models' and is listening on port 8000 (which is exposed as port 8001 on my linux VM).
+- My experience service API is running in a container called 'exp' and is listening on port 8000 (which is exposed as port 8002 on my linux VM).
+- My web interface is running in a container called 'web' and is listening on port 8000 (which is exposed as port 8000 on my linux VM).
 
 ### HTML ###
 
@@ -291,7 +253,7 @@ projects, each in their own directories of one git repository. Note, however,
 that only the entity / model API app will be configured to talk to the DB.
 
 Using multiple projects will allow you to have three separate settings.py
-files. This will be important because you'll want to do things
+files. This will be imporant because you'll want to do things
 differently in your HTML front-end since it's the part the public will
 be able to access and it's the part that's serving HTML as opposed to
 JSON. For example, you'll want to enable things like CSRF-protection
@@ -300,36 +262,36 @@ other tiers of your web app.
 
 ### Development process ###
 
-If you're not careful and methodical, you'll quickly end up with a
+If you're not careful and mehthodical, you'll quickly end up with a
 mess. I recommend you do the following:
 
-- Design your web interface first -- sketch on a piece of paper what
+- design your web interface first -- sketch on a piece of paper what
   info you want to show, where it will be relative to the other
-  content, etc. -- this will help you to brainstorm and create user stories
+  content etc.
 
-- For implementation, start with building the web interface tier first to define what your
+- start with building the web interface tier first to define what your
   experience services need to return. Then build the experience
   service to provide the data your web interface needs.
 
-- Develop and test each tier independently. That means that if you
-  make changes to your entity API, test it carefully using unit tests before moving
-  content on to changes in the experience services tier. You don't want to
+- develop and test each tier independently. That means that if you
+  make changes to your entity API, test it carefully before moving
+  on to changes in the experience services tier. You don't want to
   change every tier and then try things and not know why things are
   failing.
 
-- Start early because if you wait until a few days before the
+- start early because if you wait until a few days before the
   assignment is due you will fail to finish it.
 
-- Ask questions to get help from your teammates and from me.
+- ask questions to get help from your teammates and from me.
 
-- Check your code in to your GitHub repository in small chunks instead
-  of giant commits. Make one logical change, test it, get a teammate to review it, and then
+- check your code in as small chunks instead of giant commits. Make
+  one logical change, test it, get a teammate to review it, and then
   commit it. If you commit lots of small changes and you later find
   something doesn't work, it's easier to go through the small changes
   to see what broke things as opposed to having to go through a huge
   set of changes all in one commit.
 
-- Use Django Fixtures to reproducibly load test data into your databases.
+- use Django Fixtures to reproducibly load test data into your databases.
 
 ### Calling HTTP/JSON APIs in Python ###
 
@@ -358,7 +320,7 @@ mess. I recommend you do the following:
 
     post_encoded = urllib.parse.urlencode(post_data).encode('utf-8')
 
-    req = urllib.request.Request('http://placeholder.com/v1/api/posts/create', data=post_encoded, method='POST')
+    req = urllib.request.Request('http://jsonplaceholder.typicode.com/posts', data=post_encoded, method='POST')
     resp_json = urllib.request.urlopen(req).read().decode('utf-8')
 
     resp = json.loads(resp_json)
@@ -371,10 +333,8 @@ your code thoroughly and haven't forgotten to commit anything. Also make sure to
 test your full stack from a clean / empty / new database so that you're not
 accidentally depending on anything already in your system.
 
-You are required to turn in a `docker-compose.yml`, a set of fixtures, user
-stories, and unit tests that allow your TA to easily run/test your system and
-verify that the basic functionality works. Your `docker-compose.yml` should
+You are required to turn in a `docker-compose.yml` and a set of fixtures that
+allow your TA to easily run/test your system. Your `docker-compose.yml` should
 assume, like in the prior assignment, that there's a `mysql` container already
 running and it should be referenced via an `external_link`. Your fixtures should
-contain sample test data for viewing the listing page. Include your user stories
-and which unit tests they correspond to.
+contain sample test data for viewing the listing page.
