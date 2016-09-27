@@ -63,7 +63,7 @@ Course Topics (subject to revision as course progresses)
 6. Security (Tuesday 9/20 and Thursday 9/22)
   - SQL injection and XSS
   - Denial of Service
-  - Untrusted content (eg image exploits in UGC)
+  - Untrusted content (e.g.image exploits in UGC)
   - Stack smashing
   - Phishing
   - Internal IT and employees as attack vector
