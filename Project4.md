@@ -2,7 +2,7 @@ Overview
 ========
 
 In this project you will add the ability for users to create accounts,
-login, and to create new listings in your market place. As part of
+login, and create new listings in your marketplace. As part of
 this, you will extend your APIs to support authentication.
 
 Architecture
@@ -10,11 +10,11 @@ Architecture
 
 There are two discrete components to this project:
 
-   - Adding user account support
-   - Adding the ability for users to create new listings
+1. Adding user account support
+2. Adding the ability for users to create new listings
 
 Inevitably, you will end up having to make changes to the particular
-low-level model API's that you have created. Don't be overly
+low-level model APIs that you have created. Don't be overly
 sentimental about what you may have already created in Project 2. Now
 that you understand what your application needs, you have a much
 better understanding of what your APIs need to support. It's natural
@@ -24,7 +24,7 @@ what you're trying to build.
 ### User Accounts ###
 
 You will _not_ be using Django's built in authentication framework in
-your project. Instead, you will be implementing it's functionaliy on
+your project. Instead, you will be implementing it's functionality on
 your own. This is because we want to support both cookie based
 authentication in the web front end as well as service based
 authentication in your experience services. The latter is because we
@@ -59,8 +59,8 @@ call. However, this would require our web front end or mobile client
 to store the user's password for the lifetime of the session. This is
 considered poor security practice as it increases the risk that this
 information could be stolen. If a password was stolen, it could
-potentially lead to accounts at other sites being comproposed if the
-user has the same password accross sites. So intead, we store the
+potentially lead to accounts at other sites being compromised if the
+user has the same password across sites. So instead, we store the
 passwords in the client only long enough to convert it into a
 authenticator which can only be used on this site and for a limited
 time.
@@ -73,7 +73,7 @@ Your web front end will be responsible for:
      page and passing it on to the create account experience
      service. In the real world this page would be protected by
      SSL/TLS to prevent anyone from intercepting the new user's
-     passowrd as it's being sent from the browser to the web front
+     password as it's being sent from the browser to the web front
      end.
 
    - Login page: reading user login info on a login page and passing
@@ -117,7 +117,7 @@ more than a certain amount of time old. This prevents a stolen
 authenticator from being used indefinitely.
 
 Since the web front end stores authenticators in browser cookies, the
-user could tamper with the authenticor or even forge a new one. Also,
+user could tamper with the authenticator or even forge a new one. Also,
 in the real world, the experience services would have to be exposed
 outside the firewall so that mobile clients could call them. Thus
 anyone could make an experience service call and pass it a potentially
@@ -139,7 +139,7 @@ intercepted the authenticators they pass in API calls.
 
 You will add new a new listing model(s), model API(s), and experience
 service(s) to support adding new listings. Only logged in users should
-be able to create listings. 
+be able to create listings.
 
 Implementation
 --------------
@@ -153,7 +153,7 @@ You will extend your Project 3 app with the following:
    - Extending your experience services to have a create account,
      logout, login and create listing service.
 
-   - Exnteding your model APIs to allow creating and authenticating
+   - Extending your model APIs to allow creating and authenticating
      users and creating listings.
 
    - Verifying correct authentication information in the create
@@ -169,7 +169,7 @@ each of these use cases.
 
 You can/should pass each form into the template rendering the page so
 that the form can be rendered by Django rather than you recreating
-the html for each form element. This will help keep your template and
+the HTML for each form element. This will help keep your template and
 form in sync since you only need to change the form definition.
 
 ### Password management ###
@@ -177,7 +177,7 @@ form in sync since you only need to change the form definition.
 Django supplies well tested code for hashing and checking
 passwords. You should use this code rather than trying to create your
 own versions. Use `django.contrib.auth.hashers` module's
-`make_password` and `check_password`. My sameple
+`make_password` and `check_password`. My sample
 Project 2 code (https://github.com/thomaspinckney3/stuff-models/blob/master/stuff/main.py) shows an example of using `make_password`. Read more at the Django Docs https://docs.djangoproject.com/en/1.9/topics/auth/passwords/#module-django.contrib.auth.hashers
 
 Good further reading on salting, hashing and attempts to crack
@@ -195,7 +195,7 @@ import settings
 
 authenticator = hmac.new(key = settings.SECRET_KEY.encode('utf-8'), msg = os.urandom(32), digestmod = 'sha256').hexdigest()
 ```
-    
+
 This will generate 256 bits of randomness which is pretty hard for an
 attacker to guess. It's also pretty unlikely to collide with a previously
 generated authenticator that may be in the db. To be 100% safe however
@@ -212,7 +212,7 @@ using sufficient randomness, speed etc.
 #### Web front end authentication checking skeleton code ####
 
 Here is some pseudo-python illustrating how the web front end might
-implement the login and create_listing views. 
+implement the login and create_listing views.
 
 ```PYTHON
 import exp_srvc_errors  # where I put some error codes the exp srvc can return
@@ -226,7 +226,7 @@ def login(request):
       # bogus form post, send them back to login page and show them an error
       return render('login.html', ...)
     username = f.cleaned_data['username']
-    password = f.clearned_data['password']
+    password = f.cleaned_data['password']
     next = f.cleaned_data.get('next') or reverse('home')
     resp = login_exp_api (username, password)
     if not resp or not resp['ok']:
@@ -257,11 +257,11 @@ def create_listing(request):
 ```
 
 Note, the pattern of passing a URL argument of 'next' into the login
-page to specify where the user should be redirected upon succesfull login.
+page to specify where the user should be redirected upon successful login.
 The create_listing view can use this when it finds that the current user is not
-logged in. They can be redirected to the login page with next set to the url
+logged in. They can be redirected to the login page with next set to the URL
 for the create_listing view. Then when they complete logging in, the login view
-will redirect them back to the create_listing. The url will look something like this
+will redirect them back to the create_listing. The URL will look something like this
 /account/login/?next=CreateListing
 
 Also notice the pattern of each view handling both rendering via GET and POST
@@ -273,8 +273,8 @@ the user to wherever they're supposed to go next.
 ### Some Django best practices (Optional) ###
 
 #### Python decorator ####
-Suppose later your site has more services like create_list that requires the user 
-to be authenticated. One option is to rewrite the authenticating code for each 
+Suppose later your site has more services like create_list that requires the user
+to be authenticated. One option is to rewrite the authenticating code for each
 of the views. This violates the software engineering principle of DRY (Don't repeat yourself).
 Don't worry, python has the idea of nested functions, which in turn powers the idea of a decorator.
 You can think of decorator as an on-the-fly modification to a function. In this case you may consider
@@ -294,8 +294,8 @@ def login_required(f):
     return wrap
 ```
 
-Python provides the syntax sugar to attach a decorator 
-to a fuction as follows,
+Python provides the syntax sugar to attach a decorator
+to a function as follows,
 
 ```PYTHON
 @login_required
@@ -303,14 +303,14 @@ def create_listing(request):
    ...
 ```
 
-You then just need to prepend ```@login_required``` to each view that needs authentication. Come to the office 
+You then just need to prepend ```@login_required``` to each view that needs authentication. Come to the office
 hours if you want to know more about decorators.
 
 #### Slightly advanced Django forms ####
-Django ModelForms provide nice predifined behaviors in a majority of use cases. 
-However, there are some cases in which you want to customize the default hehaviors. In these cases, you probably
+Django ModelForms provide nice predefined behaviors in a majority of use cases.
+However, there are some cases in which you want to customize the default behaviors. In these cases, you probably
 want to look into overriding <field>_clean() method which provides additional customized checks for a
-model field (eg. if the email is a uva email) and overriding is_valid() method which provides addition customized
+model field (e.g. if the email is a UVa email) and overriding is_valid() method which provides addition customized
 checks for a model as a whole. You can also do things like append customized error messages to a field and render that
 message when the form does not validate. Come to the office hours if you want to know more about django forms.
 
@@ -321,8 +321,8 @@ What to turn in
 Please turn in:
 
   - Tag your code with "project4" when you are done
-  - Email your group's assinged TA and the course instructor letting them know you are done
-  - As before, create data fixtures so that course staff can start your project with necesary database tables filled in with test data
+  - Email your group's assigned TA and the course instructor letting them know you are done
+  - As before, create data fixtures so that course staff can start your project with necessary database tables filled in with test data
   - As before, provide user stories and unit tests accordingly.
   - As always, we expect ```docker-compose up``` to work out of box!
- 
+
