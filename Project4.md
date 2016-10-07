@@ -69,14 +69,14 @@ time.
 
 Your web front-end will be responsible for:
 
-   - Create account page: reading new user info on the create account
+   - __Create account page__: reading new user info on the create account
      page and passing it on to the create account experience
      service. In the real world this page would be protected by
      SSL/TLS to prevent anyone from intercepting the new user's
      password as it's being sent from the browser to the web front
      end.
 
-   - Login page: reading user login info on a login page and passing
+   - __Login page__: reading user login info on a login page and passing
      it to a login experience service that would check the
      username/password. The web front-end receives an authenticator
      back from the experience service if the username/password matches
@@ -88,7 +88,7 @@ Your web front-end will be responsible for:
      then our web front-end can in turn pass this authenticator back
      into each experience service call.
 
-   - Logout page: logging out the user by removing the cookie storing
+   - __Logout page__: logging out the user by removing the cookie storing
      the authenticator. This means that future requests to the web
      front-end will not have the authenticator and so future web
      requests will no longer be processed using the user's identity.
@@ -146,17 +146,17 @@ Implementation
 
 You will extend your Project 3 app by implementing the following changes:
 
-    - Extend your web front-end to have "create account", "login",
-     "logout", and "create new listing" pages, along with associated HTML
-     templates for rendering.
+- Extend your web front-end to have "create account", "login",
+ "logout", and "create new listing" pages, along with associated HTML
+ templates for rendering.
 
-    - Extend your experience services to have a "create account",
-     "logout", "login" and "create new listing" service.
+- Extend your experience services to have a "create account",
+ "logout", "login" and "create new listing" service.
 
-    - Extend your model APIs to allow for creating and authenticating
-     users, as well as creating new listings.
+- Extend your model APIs to allow for creating and authenticating
+ users, as well as creating new listings.
 
-        - Verify that the given authentication information is correct
+    - Verify that the given authentication information is correct
          in any "create new listing" API calls. This will allow only
          authenticated users to create new listings.
 
@@ -168,8 +168,7 @@ creating listings. Your web front-end will use one Django form for
 each of these use cases.
 
 You can (and should!) pass each form into the template rendering that page,
-so
-that the form can be rendered by Django rather than you recreating
+so that the form can be rendered by Django rather than you recreating
 the HTML for each form element. This will help keep your template and
 form in sync, since you only need to change the form definition.
 
@@ -180,13 +179,14 @@ passwords. You should use this code rather than trying to create your
 own versions. Use the `django.contrib.auth.hashers` module's
 `make_password` and `check_password`. My
 [sample Project 2 code](https://github.com/thomaspinckney3/stuff-models/blob/master/stuff/main.py)
-shows an example of using `make_password`. Read more about password hashing in the official Django documentation:
+shows an example of using `make_password`. Read more about password hashing in
+the official Django documentation:
 
-    https://docs.djangoproject.com/en/1.8/topics/auth/passwords/#module-django.contrib.auth.hashers
+<https://docs.djangoproject.com/en/1.8/topics/auth/passwords/#module-django.contrib.auth.hashers>
 
 There is additional reading on salting, hashing, and password-cracking at:
 
-    https://crackstation.net/hashing-security.htm
+<https://crackstation.net/hashing-security.htm>
 
 Creating the random authenticators can be done by generating a random
 string as such:
@@ -222,81 +222,126 @@ randomness, speed, and so on.
 
 #### Web front-end authentication checking skeleton code ####
 
-Here is some pseudo-python illustrating how the web front-end might
-implement the login and create_listing views.
+Here is some pseudo-Python illustrating how the web front-end might
+implement the `login` and `create_listing` views.
 
 ```PYTHON
-import exp_srvc_errors  # where I put some error codes the exp srvc can return
+"""
+exp_srvc_errors.py: where I put some HTTP error status codes that the experience
+service can return.
+"""
+import exp_srvc_errors
 
 def login(request):
+    # If we received a GET request instead of a POST request
     if request.method == 'GET':
-      next = request.GET.get('next') or reverse('home')
-      return render('login.html', ...)
+        # display the login form page
+        next = request.GET.get('next') or reverse('home')
+        return render('login.html', ...)
+
+    # Creates a new instance of our login_form and gives it our POST data
     f = login_form(request.POST)
+
+    # Check if the form instance is invalid
     if not f.is_valid():
-      # bogus form post, send them back to login page and show them an error
+      # Form was bad -- send them back to login page and show them an error
       return render('login.html', ...)
+
+    # Sanitize username and password fields
     username = f.cleaned_data['username']
     password = f.cleaned_data['password']
+
+    # Get next page
     next = f.cleaned_data.get('next') or reverse('home')
-    resp = login_exp_api (username, password)
+
+    # Send validated information to our experience layer
+    resp = login_exp_api(username, password)
+
+    # Check if the experience layer said they gave us incorrect information
     if not resp or not resp['ok']:
-      # couldn't log them in, send them back to login page with error
+      # Couldn't log them in, send them back to login page with error
       return render('login.html', ...)
-    # logged them in. set their login cookie and redirect to back to wherever they came from
+
+    """ If we made it here, we can log them in. """
+    # Set their login cookie and redirect to back to wherever they came from
     authenticator = resp['resp']['authenticator']
+
     response = HttpResponseRedirect(next)
     response.set_cookie("auth", authenticator)
+
     return response
 
 def create_listing(request):
+
+    # Try to get the authenticator cookie
     auth = request.COOKIES.get('auth')
+
+    # If the authenticator cookie wasn't set...
     if not auth:
-      # handle user not logged in while trying to create a listing
+      # Handle user not logged in while trying to create a listing
       return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing")
+
+    # If we received a GET request instead of a POST request...
     if request.method == 'GET':
-      return render("create_listing.html", ...)
+        # Return to form page
+        return render("create_listing.html", ...)
+
+    # Otherwise, create a new form instance with our POST data
     f = create_listing_form(request.POST)
-    ...
+
+    # ...
+
+    # Send validated information to our experience layer
     resp = create_listing_exp_api(auth, ...)
+
+    # Check if the experience layer said they gave us incorrect information
     if resp and not resp['ok']:
         if resp['error'] == exp_srvc_errors.E_UNKNOWN_AUTH:
-            # exp service reports invalid authenticator -- treat like user not logged in
+            # Experience layer reports that the user had an invalid authenticator --
+            #   treat like user not logged in
             return HttpResponseRedirect(reverse("login") + "?next=" + reverse("create_listing")
-     ...
-     return render("create_listing_success.html", ...)
+
+    # ...
+
+    return render("create_listing_success.html", ...)
 ```
 
-Note, the pattern of passing a URL argument of 'next' into the login
-page to specify where the user should be redirected upon successful login.
-The create_listing view can use this when it finds that the current user is not
+Note, the pattern of passing a `GET` field `next` into the login
+page in order to specify where the user should be redirected upon successful login.
+The `create_listing` view can use this when it finds that the current user is not
 logged in. They can be redirected to the login page with next set to the URL
-for the create_listing view. Then when they complete logging in, the login view
-will redirect them back to the create_listing. The URL will look something like this
-/account/login/?next=CreateListing
+for the `create_listing` view. Then when they complete logging in, the login view
+will redirect them back to `create_listing`. The URL will look something like this:
 
-Also notice the pattern of each view handling both rendering via GET and POST
+    http://localhost:8000/account/login/?next=CreateListing
+
+Also notice the pattern of each view handling both rendering via `GET` and
+`POST`
 requests. The form for logging in or creating a listing will initially render
-via a GET and then be POST'ed upon submission. The POST handler will either error out
-and return the same rendered form (plus some helpful errors) or will succeed and return
+via a `GET` and then be `POST`'ed upon submission. The `POST` handler will either error out
+and return the same rendered form (plus some helpful errors), or it will succeed and return
 the user to wherever they're supposed to go next.
 
 ### Some Django best practices (Optional) ###
 
 #### Python decorator ####
-Suppose later your site has more services like create_list that requires the user
+Suppose later your site has more services like `create_list` that requires the user
 to be authenticated. One option is to rewrite the authenticating code for each
-of the views. This violates the software engineering principle of DRY (Don't repeat yourself).
+of the views. This violates the software engineering principle of DRY.
 Don't worry, python has the idea of nested functions, which in turn powers the idea of a decorator.
 You can think of decorator as an on-the-fly modification to a function. In this case you may consider
-creating a decorator to authenticate the user. It should look something as follows
+creating a decorator to authenticate the user. It should look something like as follows:
+
+*[DRY]: don't repeat yourself
 
 ```PYTHON
 def login_required(f):
     def wrap(request, *args, **kwargs):
+
         # try authenticating the user
         user = _validate(request)
-        # failed
+
+        # authentication failed
         if not user:
             # redirect the user to the login page
             return HttpResponseRedirect(reverse('login')+'?next='+current_url)
@@ -305,16 +350,15 @@ def login_required(f):
     return wrap
 ```
 
-Python provides the syntax sugar to attach a decorator
-to a function as follows,
+Python provides syntactic sugar to attach a decorator to a function as follows:
 
 ```PYTHON
 @login_required
 def create_listing(request):
-   ...
+   # [...]
 ```
 
-You then just need to prepend ```@login_required``` to each view that needs authentication. Come to the office
+You then just need to prepend `@login_required` to each view that needs authentication. Come to the office
 hours if you want to know more about decorators.
 
 #### Slightly advanced Django forms ####
