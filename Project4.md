@@ -327,7 +327,7 @@ the user to wherever they're supposed to go next.
 #### Python decorator ####
 Suppose later your site has more services like `create_list` that requires the user
 to be authenticated. One option is to rewrite the authenticating code for each
-of the views. This violates the software engineering principle of <abbr title="Don't Repeat Yourself">DRY</abbr>.
+of the views. This violates the software engineering principle of DRY (Don't Repeat Yourself).
 
 Before you begin to worry: Python has the idea of nested functions, which in turn powers the idea of a _decorator_.
 You can think of decorator as an on-the-fly modification to a function. In this case you may consider
