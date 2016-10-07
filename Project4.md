@@ -327,9 +327,9 @@ the user to wherever they're supposed to go next.
 #### Python decorator ####
 Suppose later your site has more services like `create_list` that requires the user
 to be authenticated. One option is to rewrite the authenticating code for each
-of the views. This violates the software engineering principle of [Don't Repeat
-Yourself][DRY].
-Don't worry, python has the idea of nested functions, which in turn powers the idea of a decorator.
+of the views. This violates the software engineering principle of <abbr title="Don't Repeat Yourself">DRY</abbr>.
+
+Before you begin to worry: Python has the idea of nested functions, which in turn powers the idea of a _decorator_.
 You can think of decorator as an on-the-fly modification to a function. In this case you may consider
 creating a decorator to authenticate the user. It should look something like as follows:
 
@@ -362,21 +362,22 @@ hours if you want to know more about decorators.
 
 #### Slightly advanced Django forms ####
 Django ModelForms provide nice predefined behaviors in a majority of use cases.
+
 However, there are some cases in which you want to customize the default behaviors. In these cases, you probably
-want to look into overriding <field>_clean() method which provides additional customized checks for a
-model field (e.g. if the email is a UVa email) and overriding is_valid() method which provides addition customized
+want to look into overriding the \<field\>_clean() method, which provides additional customized checks for a
+model field (e.g. if the email is a UVa email), and overriding the `is_valid()` method, which provides addition customized
 checks for a model as a whole. You can also do things like append customized error messages to a field and render that
-message when the form does not validate. Come to the office hours if you want to know more about django forms.
+message when the form does not validate. Come to the office hours if you want to know more about Django forms.
 
 
 What to turn in
 ----------------
 
-Please turn in:
+Please turn in a tag to your GitHub repository (e.g. "project4") to your assigned TA when your team has completed the assignment.
 
-  - Tag your code with "project4" when you are done
-  - Email your group's assigned TA and the course instructor letting them know you are done
-  - As before, create data fixtures so that course staff can start your project with necessary database tables filled in with test data
-  - As before, provide user stories and unit tests accordingly.
-  - As always, we expect ```docker-compose up``` to work out of box!
+Some additional reminders:
+  - As before, create data fixtures so that course staff can start your project with necessary database tables filled in with test data.
+  - Provide user stories and unit tests accordingly.
+  - We expect `docker-compose up` to work out of box! Make sure to test your
+    code with a clean database (that will be loaded wth fixtures at runtime).
 
