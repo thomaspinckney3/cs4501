@@ -1,9 +1,9 @@
-Overview
-========
+Workflows Overview
+==================
 
 The following are various workflows you may find useful to refer to throughout the
 projects. You may need to make modifications to the provided code snippets 
-to fit your project's needs.
+to fit your project's needs (in particular, `docker` container names).
 
 Continuous Integration (CI)
 ---------------------------
@@ -16,7 +16,7 @@ merge local code changes multiple times per day.
 
 [Travis CI](https://travis-ci.org/) is a hosted free tool for open source projects 
 that we can integrate with GitHub to run unit tests and integration tests on every push. 
-A build in Travis CI is `passing` if your script exits with status code `0` (so
+A build in Travis CI is `passing` if your test script exits with status code `0` (so
 you can implement arbitrary testing environments). 
 
 To use Travis CI, connect your GitHub account to it (simply click "sign in with
@@ -53,7 +53,7 @@ before_script:
 
 script:
   - >
-    docker exec -it models bash -c
+    docker exec -it models bash -c     # 'models' is the name of the docker container
     "pip install -r requirements.txt &&
     python manage.py test --noinput" # run Django unit tests on models
   # can put other tests (e.g. integrations) here too with exp, web containers
@@ -66,26 +66,29 @@ after_script:
   - rm -rf db
 ```
 
+Developers with projects on GitHub often include a [badge of their Travis CI build status](https://blog.travis-ci.com/2014-03-20-build-status-badges-support-svg/) in their `README.md`. You can copy the `.svg` link for your badge from the Travis build for your repository.
+
 Automated Database Creation
 ---------------------------
 
 [GNU make](https://www.gnu.org/software/make/) is a useful tool for compiling a 
-project with a set of file dependencies. We can write a `Makefile` to specify build 
+project with a set of file dependencies (you may remember using `make` in the data structures course, [UVA CS 2150](https://github.com/aaronbloomfield/pdr)). We can write a `Makefile` to specify build 
 targets, such as automatically creating a `mysql` database with `docker`:
 
 ```Makefile
+# Makefile
 # put 'db/' in your .gitignore file, so git will ignore your database directory.
 database: clean
-	sudo docker pull mysql:5.7.14
+	docker pull mysql:5.7.14
 	mkdir db
-	sudo docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='$$3cureUS' -v `pwd`/db:/var/lib/mysql mysql:5.7.14
+	docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='$$3cureUS' -v `pwd`/db:/var/lib/mysql mysql:5.7.14
 	sleep 20 # need to give time for mysql to start...
-	sudo docker run -it --name mysql-cmd --rm --link mysql:db mysql:5.7.14 \
+	docker run -it --name mysql-cmd --rm --link mysql:db mysql:5.7.14 \
           mysql -uroot -p'$$3cureUS' -h db -e \
           "CREATE DATABASE cs4501 CHARACTER SET utf8; \
           CREATE DATABASE test_cs4501 CHARACTER SET utf8; \
           CREATE USER 'www'@'%' IDENTIFIED BY '\$$3cureUS'; \
-          GRANT ALL PRIVILEGES ON *.* TO 'www'@'%';"
+          GRANT ALL PRIVILEGES ON *.* TO 'www'@'%';" # this is all one command, and should be spaced without the TAB key.
 
   # if you encounter ERROR 2003 (HY000): Can't connect to MySQL server on 'db' (111):
   # increase the sleep time. this *likely* occured because the db docker container 
@@ -93,14 +96,14 @@ database: clean
 
 clean:
 	@echo "cleaning..." 
-	@sudo docker stop mysql > /dev/null 2>&1 && \
-	 sudo docker rm mysql > /dev/null 2>&1 ||:
-	@sudo rm -rf db > /dev/null 2>&1 ||:
+	@docker stop mysql > /dev/null 2>&1 && \
+	 docker rm mysql > /dev/null 2>&1 ||:
+	@rm -rf db > /dev/null 2>&1 ||:
 ```
 
 Running `make database` will build the target. `make clean` will remove the
-database (useful if when you are using fixtures and need to reset your
-database).
+database (useful if you are using fixtures and need to reset your
+database for any reason). Come see us in office hours if you have questions about `make` or `Makefile`s.
 
 
 HTTP requests and JSON responses in Python
@@ -146,13 +149,11 @@ class GetOrderDetailsTestCase(TestCase):
   def success_response(self):
      response = self.client.get(reverse('all_orders_list',
 kwargs={'user_id':1}))   #assumes user with id 1 is stored in db
-     self.assertContains(response, 'order_list')  #checks that response contains
-parameter order list & implicitly checks that
+     self.assertContains(response, 'order_list')  #checks that response contains parameter order list & implicitly checks that
 #statuscode is 200
   def fails_invalid(self):
      response = self.client.get(reverse('all_orders_list'))
-     self.assertEquals(response.status_code, 404)    #user_id not given in url,
-so error
+     self.assertEquals(response.status_code, 404)    #user_id not given in url, so error
 
   def tearDown(self):  #tearDown method is called after each test
      pass              #nothing to tear down
