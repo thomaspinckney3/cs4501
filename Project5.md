@@ -107,10 +107,10 @@ es:
       - "9200:9200"
 
 batch:
-   image: tp33/docker
+   image: tp33/django
    container_name: batch
    links:
-      - kafka: kafka
+      - kafka:kafka
       - es:es
    command: <run a python script that pulls messages from Kafka and indexs that in ES>
 ```
