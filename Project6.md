@@ -16,11 +16,9 @@ Chose from the following list of topics:
       You can't use Django's caching interfaces to configure whole page caching with Redis without using additonal packages. Instead just directly call the Redis python client to store pages and later look them up. Think about how and when
       to invalidate the cache'd content (after a certain amount of time? when the DB changes? something else?).
     
-3. Unit tests
+3. Continuous Integration
     
-      Write unit tests for your models or experience services.Django has extensive support for writing unit tests
-      including running tests against a new 'test' database so that your main database isn't changed
-      by the test runs.
+      Use a continuous integration tool such as Travis CI to automate builds of your marketplace project. 
     
 4. Integration tests
     
@@ -50,10 +48,12 @@ Please turn in via email a write up including:
 
 2. updated docker-compose.yml if you are running any new or changed containers
  
-2. link to any code in github you wrote for this (especially for caching and unit test work)
+2. link to any code in github you wrote for this (especially for caching)
 
-3. include any sample output (especially for the load balancer, unit test, performance test examples)
+3. include any sample output (especially for the load balancer, continuous integration, performance test examples)
 
 4. include any command lines (such as for running load tests, unit tests or load balancers)
 
 5. for hosting on digital island, include a link to your app or service working there
+
+6. Don't forget to provide user stories and unit tests accordingly.
