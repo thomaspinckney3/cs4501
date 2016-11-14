@@ -18,7 +18,7 @@ Chose from the following list of topics:
     
 3. Continuous Integration
     
-      Use a continuous integration tool such as Travis CI to automate builds of your marketplace project. 
+      Use a continuous integration (CI) tool such as Travis CI to automate builds of your marketplace project. Your CI build should also automatically run unit tests or integration tests that your team has written and verify that they all pass.
     
 4. Integration tests
     
@@ -55,5 +55,3 @@ Please turn in via email a write up including:
 4. include any command lines (such as for running load tests, unit tests or load balancers)
 
 5. for hosting on digital island, include a link to your app or service working there
-
-6. Don't forget to provide user stories and unit tests accordingly.
