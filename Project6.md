@@ -59,8 +59,7 @@ Chose from the following list of topics:
         * frontend: settings concerning HAProxy's listening for connections from clients
         * backend: settings concerning the servers where HAPoxy sends/forwards incoming connections
             
-            
-      - More details about the configuration file/how to make it, can be found in the documentation and online.
+      More details about the configuration file/how to make it, can be found in the documentation and online.
       A good debugging strategy is to look at the load balancer's server logs. The logs don't just show up in the 
       terminal though - a separate server must be set up to receive logs.
       [papertrail](https://papertrailapp.com/) is a great cloud-hosted free log manager/server - you can arrange to
