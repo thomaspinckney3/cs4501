@@ -53,7 +53,7 @@ Chose from the following list of topics:
       HaProxy has extensive [documentation](http://cbonte.github.io/haproxy-dconv/1.6/intro.html) and great general information
       about load-balancers and proxies in general.
       
-      For this application, the config file needs 4 sections that can be roughly described like so:
+      - For this application, the config file needs 4 sections that can be roughly described like so:
         * global: settings which apply to all sections
         * default: settings which apply to the proxies below it, i.e. logging settings
         * frontend: settings concerning HAProxy's listening for connections from clients
