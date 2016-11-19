@@ -53,14 +53,14 @@ Chose from the following list of topics:
       HaProxy has extensive [documentation](http://cbonte.github.io/haproxy-dconv/1.6/intro.html) and great general information
       about load-balancers and proxies in general.
       
-      For this application, the config file needs 4 sections that can be roughly described like so:
+      - For this application, the config file needs 4 sections that can be roughly described like so:
         * global: settings which apply to all sections
         * default: settings which apply to the proxies below it, i.e. logging settings
         * frontend: settings concerning HAProxy's listening for connections from clients
         * backend: settings concerning the servers where HAPoxy sends/forwards incoming connections
             
             
-      More details about the configuration file/how to make it, can be found in the documentation and online.
+      - More details about the configuration file/how to make it, can be found in the documentation and online.
       A good debugging strategy is to look at the load balancer's server logs. The logs don't just show up in the 
       terminal though - a separate server must be set up to receive logs.
       [papertrail](https://papertrailapp.com/) is a great cloud-hosted free log manager/server - you can arrange to
