@@ -34,11 +34,37 @@ Chose from the following list of topics:
 6. Load balancing
     
       Run multiple instances of your app tiers with a load balancer in front to distribute the load across
-      all the instances. For example, if you have two copies of your web front end the load balance will
+      all the instances. For example, if you have two copies of your web front end, the load balancer will
       sit in front of it, receive connections from browsers, and forward them on to one or the other
-      of the web front end instances. 'pen' is a common and relatively simple one and is available 
+      of the web front end instances.
+      
+      'pen' is a common and relatively simple one and is available 
       as a Docker image at https://hub.docker.com/r/galexrt/pen/ .
-
+      
+      A more complicated, but popular open source load-balancer is [HAProxy](https://en.wikipedia.org/wiki/HAProxy).
+      The official Docker image can be found [here](https://hub.docker.com/_/haproxy/).
+      The official image, however, does not work right out of the box. As the Docker page describes, you must write a
+      configuration file that specifies how the load balancer should behave (i.e. specify where it should forward requests,
+      how extensive its logs should be, etc.), then you must build a new image that inherits from the official docker image but
+      also incorporates this file.
+      
+      HaProxy has extensive [documentation](http://cbonte.github.io/haproxy-dconv/1.6/intro.html) and great general information
+      about load-balancers and proxies in general.
+      
+      - For this application, the config file needs 4 sections that can be roughly described like so:
+        * global: settings which apply to all sections
+        * default: default settings which apply to the proxies below it, i.e. logging settings
+        * frontend: settings concerning HAProxy's listening for connections from clients
+        * backend: settings concerning the servers where HAPoxy sends/forwards incoming connections
+            
+      More details about the configuration file/how to make it, can be found in the documentation and online.
+      A good debugging tool and method to verify that your load balancer is working is to look at the load balancer's 
+      server logs. The logs don't just show up in the terminal though - a separate server must be set up to receive logs.
+      [papertrail](https://papertrailapp.com/) is a great cloud-hosted free log manager/server - you can arrange to
+      have the server logs be sent to a papertrail account by following the directions [here](http://help.papertrailapp.com/kb/configuration/haproxy/)
+      
+      
+      
 Deliverable
 ===========
 
