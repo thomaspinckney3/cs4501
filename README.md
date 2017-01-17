@@ -30,13 +30,13 @@ Readings are listed for each week and should be completed BEFORE the week they a
 Course Topics (subject to revision as course progresses)
 ---------------------------------------------------------
 
-1. Anatomy of the modern internet, websites and mobile apps (Tues 8/23 and Thurs 8/25)
+1. Anatomy of the modern internet, websites and mobile apps (Wed 1/18 and Mon 1/23)
   - Trace a web request from browser to server and back
   - Overview of three/four tier app architecture
   - Overview of data center architecture: load balancers, switches, storage, servers
   - Overview of Model View Controller (MVC) design pattern
   - Overview of Docker and course project
-  - Project: set up Docker container with Hello World Python/Django web app. Due Tuesday 9/6 (email your screenshot to tp3ks@virginia.edu). https://github.com/thomaspinckney3/cs4501/blob/master/Project1.md
+  - Project: set up Docker container with Hello World Python/Django web app. Due TBD (email your screenshot to tp3ks@virginia.edu). https://github.com/thomaspinckney3/cs4501/blob/master/Project1.md
   - Resources: Django Getting Started docs https://docs.djangoproject.com/en/1.8/intro/ and https://docs.docker.com as well as  https://www.udacity.com/course/web-development--cs253 or http://www.codecademy.com/en/tracks/web if needed for HTML and CSS intro
 2. Requirements and documentation (Tues 8/30)
   - User stories
