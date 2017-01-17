@@ -1,4 +1,4 @@
-# cs4501 Spring 2016
+# cs4501 Spring 2017
 Internet Scale Applications
 ===========================
 
@@ -30,13 +30,13 @@ Readings are listed for each week and should be completed BEFORE the week they a
 Course Topics (subject to revision as course progresses)
 ---------------------------------------------------------
 
-1. Anatomy of the modern internet, websites and mobile apps (Tues 8/23 and Thurs 8/25)
+1. Anatomy of the modern internet, websites and mobile apps (Wed 1/18 and Mon 1/23)
   - Trace a web request from browser to server and back
   - Overview of three/four tier app architecture
   - Overview of data center architecture: load balancers, switches, storage, servers
   - Overview of Model View Controller (MVC) design pattern
   - Overview of Docker and course project
-  - Project: set up Docker container with Hello World Python/Django web app. Due Tuesday 9/6 (email your screenshot to tp3ks@virginia.edu). https://github.com/thomaspinckney3/cs4501/blob/master/Project1.md
+  - Project: set up Docker container with Hello World Python/Django web app. Due TBD (email your screenshot to tp3ks@virginia.edu). https://github.com/thomaspinckney3/cs4501/blob/master/Project1.md
   - Resources: Django Getting Started docs https://docs.djangoproject.com/en/1.8/intro/ and https://docs.docker.com as well as  https://www.udacity.com/course/web-development--cs253 or http://www.codecademy.com/en/tracks/web if needed for HTML and CSS intro
 2. Requirements and documentation (Tues 8/30)
   - User stories
@@ -143,20 +143,19 @@ Office Hours
 
 The teaching staff for this semester are:
 
-  - Tom Pinckney (lecturer): tp3ks@virginia.edu
+  - Tom Pinckney (Lecturer): tp3ks@virginia.edu
   - Ian Zheng (TA): yz9fy@virginia.edu
-  - Leandra Irvine (TA): lli5ba@virginia.edu
+  - Zakey Faieq (TA): lli5ba@virginia.edu
+  - Christine Tsou (TA): cyt3ea@virginia.edu
 
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
 
-  - Project review, help, and demo hours (led by TAs): 
-    - Ian:
-      - Sunday: 1:00pm to 3:00pm in Rice 340
-    - Leandra:  
-      - Monday: 6:30pm to 7:30pm in Rice 340  
-      - Wednesday: 2:00pm to 3:00pm in Rice 436  
+  - Office Hours, Project Review, Help, and Demo Hours (led by TAs): 
+    - Ian: TBD
+    - Zakey: TBD  
+    - Christine: TBD
     
-  - General Q&A (led by Tom): Thursday 2:30 - 3:30 or by appointment in Rice 425
+  - General Q&A (led by Tom): TBD
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
