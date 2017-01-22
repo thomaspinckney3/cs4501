@@ -281,7 +281,7 @@ inside your web container.
 Making your own containers
 ---------------------------
 
-You can create your down Docker images. The easiest way to do this is
+You can create your own Docker images. The easiest way to do this is
 to start with an existing container and make changes to it. For
 example, maybe there are some Python libraries that you want to use
 and which I didn't install in tp33/django. You could build your own
