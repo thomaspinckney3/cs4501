@@ -30,7 +30,7 @@ Containers
 ----------
 
 Docker is a system for managing Linux containers. You can read more
-about them elsewhere, but they're like a virtual machione but lighter
+about them elsewhere, but they're like virtual machines but lighter
 weight. They're one component of treating infrastructure as
 software. You can define what kind of environment you need, install
 apps, define networking topologies, and then easily clone/start as
@@ -281,7 +281,7 @@ inside your web container.
 Making your own containers
 ---------------------------
 
-You can create your down Docker images. The easiest way to do this is
+You can create your own Docker images. The easiest way to do this is
 to start with an existing container and make changes to it. For
 example, maybe there are some Python libraries that you want to use
 and which I didn't install in tp33/django. You could build your own
