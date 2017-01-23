@@ -151,9 +151,12 @@ The teaching staff for this semester are:
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
 
   - Office Hours, Project Review, Help, and Demo Hours (led by TAs): 
-    - Ian: TBD
-    - Zakey: TBD  
-    - Christine: TBD
+    - Ian:
+      - Monday & Wednesday: 3:30 - 4:30 in Rice 436
+    - Zakey:
+      - Tuesday: 5:00 - 6:30 in Rice 340
+    - Christine:
+      - Thursday: 4:30 - 5:30 in Rice 436
     
   - General Q&A (led by Tom): 1-2pm but please email to reserve a time first.
 
