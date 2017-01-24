@@ -158,7 +158,7 @@ There will be one set of office hours for project questions and demos and anothe
     - Christine:
       - Thursday: 4:30 - 5:30 in Rice 436
     
-  - General Q&A (led by Tom): 1-2pm but please email to reserve a time first.
+  - General Q&A (led by Tom): Monday 1-2pm but please email/slack me to reserve a time first.
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
