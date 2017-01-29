@@ -211,7 +211,7 @@ container. Let's restart the web container this way:
     tp@devel:~$ docker ps -a
     CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS               NAMES
     f34a25b95ffa        mysql:5.7.14         "/entrypoint.sh mysql"   About a minute ago   Up About a minute   3306/tcp            mysql
-    tp@devel:~$ docker run -it --name web --link mysql:db -v ~/cs4501/app:/app tp33/django
+    tp@devel:~$ docker run -it --name web -p 8000:8000 --link mysql:db -v ~/cs4501/app:/app tp33/django
     root@1c359b81b84f:/app# ping db
     PING db (172.17.0.5): 56 data bytes
     64 bytes from 172.17.0.5: icmp_seq=0 ttl=64 time=0.110 ms
@@ -225,7 +225,9 @@ container. Let's restart the web container this way:
 
 This tells Docker to create a new container from the tp33/django
 image and create a hosts entry named db that references the IP address
-used by the mysql container.
+used by the mysql container. It also exposes port 8000 on the container
+to port 8000 on the host machine (so you can see the app on your browser
+just like you could any other web page).
 
 When you exit a container, its disk image persists -- allowing you to
 restart it later. You can re-start your web container with 'docker
