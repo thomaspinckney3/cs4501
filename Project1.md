@@ -260,6 +260,18 @@ mysql container should store its /var/lib/mysql data under the host's
 Go ahead and try creating a file on your host in ~/cs4501/app and then
 verify that you can access that file inside your web container.
 
+Knowing `curl` as a command line HTTP tool is important, but developing a 
+Django project by looking at raw HTML from the terminal is not the 
+best development experience. To see those HTML scripts in a browser on 
+your host machine, you need to expose a port inside the container to a port
+on your host machine. The -p argument to the 'docker run' command does that.
+It expose port 8000 (the 8000 after colon) inside the container to port 8000
+on your host machine (the 8000 before the colon). Then the Django app can be
+reached on the host machine at http://localhost:8000. Note for students who are
+using Docker Toolbox. The Toolbox does not automatically forward the Docker
+host to localhost. You can find the Docker host at the beginning of the Docker
+Quickstart Terminal (under the whale logo).
+
 Development Environment
 ====================
 
