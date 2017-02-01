@@ -25,10 +25,13 @@ instructions for how to build a Django app. I'm assuming you've done
 it before and are using the tutorials and support provided on the Django site.
 
 As of the release of project 2 in Spring 2017, a new version of the tp33/django docker image
-with Django 1.10 installed has been made available. To use the updated image, add the '1.1' tag to 
-the end of the image name like so 'tp33/django:1.1'
+with Django 1.10 installed has been made available. To use the updated image, simply run the command:
 
-The tp33/django:1.1 image also installs a different MySQL client (mysqlclient). For Django to still work properly with the database you must change the 'ENGINE' value in settings.py from 'mysql.connector.django' to 'django.db.backends.mysql'
+```
+docker pull tp33/django
+```
+
+The new tp33/django image also installs a different MySQL client (mysqlclient). For Django to still work properly with the database you must change the 'ENGINE' value in settings.py from 'mysql.connector.django' to 'django.db.backends.mysql'
 
 This is what it should look like:
 ```
@@ -106,7 +109,7 @@ container we created from last time is started.
 You can tell compose to create a new container by giving it a name and an image to use.
 
 	models:
-	    image: tp33/django:1.1
+	    image: tp33/django
 	    external_links:
 	      -  mysql:db
 	    volumes:
