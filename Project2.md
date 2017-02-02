@@ -22,9 +22,33 @@ Django
 The Django documentation is going to be invaluable and essential for
 completing this work. I'm not going to provide step-by-step
 instructions for how to build a Django app. I'm assuming you've done
-it before and are using the tutorials and support provided on the Django site. We're
-using Django 1.8.8, which is not the latest version on the Django
-website. Make sure you're looking at the correct version!
+it before and are using the tutorials and support provided on the Django site.
+
+As of the release of project 2 in Spring 2017, a new version of the tp33/django docker image
+with Django 1.10 installed has been made available. To use the updated image, simply run the command:
+
+```
+docker pull tp33/django
+```
+
+The new tp33/django image also installs a different MySQL client (mysqlclient). For Django to still work properly with the database you must change the 'ENGINE' value in settings.py from 'mysql.connector.django' to 'django.db.backends.mysql'
+
+This is what it should look like:
+```
+DATABASES = {
+    'default': {
+          'ENGINE': 'django.db.backends.mysql',
+          'NAME': 'cs4501',
+          'USER': 'www',
+          'PASSWORD': '$3cureUS',
+          'HOST': 'db',
+    }
+}
+```
+
+The latest stable MySQL release (5.7.17) has also been tested to be compatible with future projects in the class.
+To use the updated MySQL image, use the image name "mysql:5.7.17"
+Updating the MySQL image is optional.
 
 A note on code layout. It should look something like this. This is generated using
 the standard Django `startproject`, `startapp` commands.
@@ -58,7 +82,7 @@ Docker Compose
 
 One other thing to introduce before we start coding is Docker Compose. Compose
 is a tool for defining the topology and running multi-container Docker
-applications.  With Compose, you use a Compose file to configure your
+applications.  With Compose, you use a YAML file called docker-compose.yml to configure your
 application’s services.  Recall how we start the 'web' and 'mysql' containers
 one by one in the previous project. This approach works fine when we have only
 two containers (and the configuration is simple), but it is certainly not scalable.
