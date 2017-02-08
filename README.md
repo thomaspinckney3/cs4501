@@ -156,7 +156,7 @@ There will be one set of office hours for project questions and demos and anothe
     - Zakey:
       - Tuesday: 5:00 - 6:30 in Rice 340
     - Christine:
-      - Thursday: 4:30 - 5:30 in Rice 436
+      - Thursday: 4:30 - 6:00 in Rice 340
     
   - General Q&A (led by Tom): Monday 1-2pm but please email/slack me to reserve a time first.
 
