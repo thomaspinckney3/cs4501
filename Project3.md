@@ -96,6 +96,10 @@ Each feature that you code from this project onwards should correspond to a user
 
 [Django's unit tests](https://docs.djangoproject.com/en/1.9/topics/testing/overview/) use the Python unit testing framework ```unitest```. To run your unit tests, execute ```python manage.py test``` from the command line. By default, this will run all files in your project named ```test*.py``` where * is a wildcard (ex. test_users.py).
 
+Django creates and destroys a temporary test database every test run. To be able to grant the the user access to the database, we will need to grant permission for user 'www' like in Project 1.
+
+```mysql> grant all on test_cs4501.* to 'www'@'%';```
+
 Here are some examples of unit tests for your Django views:
 
 ```Python
@@ -187,7 +191,7 @@ link to the experience service container:
 
 ```YAML
 exp:
-   image: tp33/django:
+   image: tp33/django
    links:
       - exp:exp-api
 ```
@@ -198,7 +202,7 @@ I do a few other things to ease my development:
 
 ```YAML
 models:
-   image: tp33/django:
+   image: tp33/django
    external_links:
       - mysql:db
    ports:
@@ -213,7 +217,7 @@ models:
 
 ```YAML
 models:
-   image: tp33/django:1.2
+   image: tp33/django
    external_links:
       - mysql:db
    ports:
@@ -231,7 +235,7 @@ mounts the file directories inside `<your_file_path>` onto the `/app` directory 
   This is accomplished by docker compose `command` option:
 ```YAML
 models:
-   image: tp33/django:
+   image: tp33/django
    external_links:
       - mysql:db
    ports:
@@ -247,7 +251,7 @@ A sample docker-compose.yml (you will have to modify the code accordingly to mat
 
 ```YAML
 models:
-   image: tp33/django:
+   image: tp33/django
    external_links:
       - mysql:db
    ports:
@@ -257,7 +261,7 @@ models:
    command: "mod_wsgi-express start-server --reload-on-changes stuff-models/wsgi.py"
 
 exp:
-   image: tp33/django:
+   image: tp33/django
    links:
       - models:models-api
    ports:
@@ -267,7 +271,7 @@ exp:
    command: "mod_wsgi-express start-server --reload-on-changes stuff-exp/wsgi.py"
 
 web:
-   image: tp33/django:
+   image: tp33/django
    links:
       - exp:exp-api
    ports:
