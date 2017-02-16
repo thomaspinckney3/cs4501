@@ -145,7 +145,7 @@ The teaching staff for this semester are:
 
   - Tom Pinckney (Lecturer): tp3ks@virginia.edu
   - Ian Zheng (TA): yz9fy@virginia.edu
-  - Zakey Faieq (TA): lli5ba@virginia.edu
+  - Zakey Faieq (TA): zaf2xk@virginia.edu
   - Christine Tsou (TA): cyt3ea@virginia.edu
 
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
