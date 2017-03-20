@@ -21,6 +21,14 @@ better understanding of what your APIs need to support. It's natural
 to refactor and rewrite like this as you iteratively learn more about
 what you're trying to build.
 
+### User Stories ###
+
+Create new user stories and update old ones to reflect the changes that 
+should be completed by the end of the sprint/project. You should use this
+as a tool that will help you cement your understanding of how you want 
+your registration, login, and create-listing flow to work as well as a tool to help
+you divide up the work among your group members.
+
 ### User Accounts ###
 
 You will _not_ be using Django's built in authentication framework in
