@@ -25,6 +25,10 @@ runs pulling new listings out of Kafka and adding them to ES.
 
 The architecture is illutrated by this image: https://drive.google.com/file/d/0BwxFrbFICisjdUVzQURaTGFzX3c/view?usp=sharing
 
+### User Stories ###
+
+Create new user stories and update old ones to reflect the changes that should be completed by the end of the sprint/project. You should use this as a tool that will help you cement your understanding of how you want your create-listing/add to ES/search flow to work as well as a tool to help you divide up the work among your group members.
+
 ### Kafka ###
 
 As you recall from class, Kafka is an open source queuing system built
