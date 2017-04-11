@@ -1,19 +1,19 @@
 Overview
 ========
 
-In this project you will choose three things from a list of improvements for your web site.
-Chose from the following list of topics:
+This project is semi grabbag-style. There are six different topics that is related to improving the website you build. You must complete Continuous Integration(#3), Integration Testing(#4) and Load Balancing(#6). In addition, you will need to choose one topic from the remaining three which are Hosting on DigitalOcean(#1), Caching with Redis(#2) and Performance Testing(#5).
+The detailed topic descriptions are listed as follows:
 
 1. Hosting on DigitalOcean
     
-      Email me for an invite if you you'd like to do this.
+      Email me (Professor Pinckney) for an invite if you you'd like to do this.
     
 2. Caching with Redis
     
       Install the Python Redis client https://pypi.python.org/pypi/redis with pip and
       start a Redis docker image such as https://hub.docker.com/_/redis/ .
       
-      You can't use Django's caching interfaces to configure whole page caching with Redis without using additonal packages. Instead just directly call the Redis python client to store pages and later look them up. Think about how and when
+      You can't use Django's caching interfaces to configure whole page caching with Redis without using additonal packages (Look into https://github.com/niwinz/django-redis if you want to set Redis as Django's caching backend). Instead just directly call the Redis python client to store pages and later look them up. Think about how and when
       to invalidate the cache'd content (after a certain amount of time? when the DB changes? something else?).
     
 3. Continuous Integration
@@ -33,15 +33,7 @@ Chose from the following list of topics:
     
 6. Load balancing
     
-      Run multiple instances of your app tiers with a load balancer in front to distribute the load across
-      all the instances. For example, if you have two copies of your web front end, the load balancer will
-      sit in front of it, receive connections from browsers, and forward them on to one or the other
-      of the web front end instances.
-      
-      'pen' is a common and relatively simple one and is available 
-      as a Docker image at https://hub.docker.com/r/galexrt/pen/ .
-      
-      A more complicated, but popular open source load-balancer is [HAProxy](https://en.wikipedia.org/wiki/HAProxy).
+      A popular open source load-balancer is [HAProxy](https://en.wikipedia.org/wiki/HAProxy).
       The official Docker image can be found [here](https://hub.docker.com/_/haproxy/).
       The official image, however, does not work right out of the box. As the Docker page describes, you must write a
       configuration file that specifies how the load balancer should behave (i.e. specify where it should forward requests,
@@ -80,4 +72,4 @@ Please turn in via email a write up including:
 
 4. include any command lines (such as for running load tests, unit tests or load balancers)
 
-5. for hosting on digital island, include a link to your app or service working there
+5. for hosting on DigitalOcean, include a link to your app or service working there
