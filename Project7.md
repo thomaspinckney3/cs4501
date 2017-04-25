@@ -1,7 +1,7 @@
 Overview
 ========
 
-In this project you will build a map/reduce job on Apache Spark. Your job will take a web site access log as input and as output produce data that can be used by a recommendation system.
+In this project you will build a recommendation system that generates accurate recommendations based on a recurring map/reduce job on Apache Spark. Your Spark job will take a web site access log as input and as output produce data that will be used by the recommendation system.
 
 Co-views
 --------
@@ -24,7 +24,12 @@ A pseudocode map-reduce style algorithm for computing co-views is something like
 Implementation
 ==============
 
-Spark setup
+Producing the Access Log
+------------------------
+
+The access log that your Spark job will use should be in the form of a file with two columns of values where each row consists of a user-id and an item-id representing an item page view by a logged in user. Similar to project 5's implementation, every time a page view occurs you will need to push the two relevant values to Kafka from the experience layer and have another batch container/script consume the page-view and append it to the aforementioned running log file. 
+
+Spark Setup
 -----------
 
 Here is a Docker compose example for a two node spark cluster (one master and one worker node):
@@ -80,7 +85,7 @@ spark-worker:
     - ./data:/tmp/data
 ```
 
-Here's a sample Spark program. It will read in a file consisting of two values -- a user id and a page id. The program will then calculate the frequcny of each page id. 
+Here's a sample Spark program. It will read in a file consisting of two values -- a user id and a page id. The program will then calculate the frequency of each page id. 
 
 ```
 from pyspark import SparkContext
@@ -103,6 +108,7 @@ sc.stop()
 ```
 
 which reads a file like this of tab separated values:
+
 ```
 tp      4
 bob     5
@@ -172,12 +178,61 @@ It is also very useful to write comments for each line describing what the forma
 
 If you have an error in your program, Spark will print an exception (or many exceptions). You'll have to read carefully through the logging output to find a reference to what line or part of your program actually failed.
 
+
+Creating a Recommendation System
+--------------------------------
+
+With Spark's output of popular co-views, all that's left is figuring out how to store the information efficiently in a manner such that it would be easily accessible by a recommendation service. For this, we will create another table in our database with only two columns. The first column will contain item-id's, and the second column will contain variable length strings that will contain a comma separated "list" of all item-ids that were co-viewed 3 or more times with the item in the first column. This format is not difficult to implement and is a natural choice for a recommendation service, which need only have an item-id to retrieve from the database a list of "recommended" item-ids for that item. So an example recommendation table could look like this:
+
+```
+item_id  | recommended_items
+---------|------------------
+1        |  5, 7, 9,
+2        |  3, 4
+3        |  4, 2, 1, 5,
+```
+
+
+To populate and access this recommendations table, you will interface with the MySQL database directly with a [python MySQL client](https://github.com/PyMySQL/mysqlclient-python) rather than Django's ORM. Population of the table will occur during the Pyspark job. Within your Pyspark program, you will need to:
+
+1. Initiate a connection with the database using PyMySQL.
+2. Create a recommendations table with the appropriate column types if there is not already one, and insure sure it is empty.
+3. Make appropriate INSERT queries while iterating through co-view results after the ```collect``` call, making sure to account for items that already have rows in the table, as well as those that don't.
+
+The spark containers that will contain your Pyspark program don't come with everything needed for PyMySQL right off the bat, so some package installation must be taken care of. After 'docker-composing up' but before running your spark job for the first time, manually enter the two spark containers and run the following commands (either individually by hand, or in script form like below):
+
+```
+#!/usr/bin/env bash
+apt-get update &&
+apt-get install python3-dev libmysqlclient-dev -y &&
+apt-get install python-pip -y &&
+pip install mysqlclient &&
+apt-get install python-mysqldb
+```
+
+You should now be ready to get your hands dirty with some raw SQL queries! There's plenty of [helpful documentation](https://www.tutorialspoint.com/python/python_database_access.htm) all over the web to get you started, but here are some tips that may be of use:
+* To see what your SQL queries are actually doing to the database, you can access MySQL through the mysql-cmdline container and see what's exactly in the recommendations table with the commands ```USE cs4501;``` and ```SELECT * FROM recommendations;```
+* Some SQL syntax you might want to consider looking into is ```ON DUPLICATE KEY UPDATE```, ```CONCAT()```, and ```TRUNCATE```.
+* With all the containers you have running at this point, Spark may not have enough RAM to work properly. The errors aren't too helpful when this happens, so just be aware when facing obscure problems that you may need to just increase the amount of RAM your computer allocates to Docker.
+
+Once you have correctly populated the database with Sparks output for the recommendation service, you can now move on to implementing the service itself in the experience layer. In every item detail page, you must now display a few of it's recommendations if it has any. You will also need to use PyMySQL for this, but only to read from the database table. Note that you may need to install some of the same packages that you needed in the Spark containers in the experience container as well.
+
+
+Automated Spark Job
+---------------------
+The last step is to automate the Spark job so that it executes on regular intervals to keep the recommendations up to date and accurate. You should create a simple bash script that triggers the job around every minute or two so that you have time to test the effect of co-views on an items recommendations. This script will be separate from docker compose and should be started only after you've already 'docker-composed up'.
+
+Since we don't have a real stream of data, you can just run the Spark job on the entirety of the same single access log file every time, the idea being that as the log is appended to and expanded over time, the generated recommendations are keeping up right alongside it (hence why you should erase the recommendations table every time the job is run)
+
+
 What to turn in
 ================
 
-You should turn in three things:
+You should include in your submission:
 
   1. Your source code in github
-  2. Sample input file that your program takes as input
-  3. Sample output produced by your program
+  2. Input file that was generated by your web app that is/will be used by Spark
+  3. Output file that contains the output produced by one Spark job on the input file from (2). 
+  4. Bash script that automates a Spark job schedule
+  5. Anything else not mentioned in this repo that was necessary to make everything in project 7 work (i.e. had to install an extra package).
   
