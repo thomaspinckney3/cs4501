@@ -27,7 +27,7 @@ Implementation
 Producing the Access Log
 ------------------------
 
-The access log that your Spark job will use should be in the form of a file with two columns of values where each row consists of a user-id and an item-id representing an item page view by a logged in user. Similar to project 5's implementation, every time a page view occurs you will need to push the two relevant values to Kafka from the experience layer and have another batch container/script consume the page-view and append it to the aforementioned running log file. 
+The access log that your Spark job will use should be in the form of a file with two columns of values where each row consists of a user-id and an item-id representing an item page view by a logged in user. Similar to project 5's implementation, every time a page view occurs you will need to push the two relevant values (user-id and item-id) to Kafka from the experience layer and have another batch container/script consume the page-view and write/append it to the aforementioned running log file that will be used by Spark as input. You can use Docker volumes to allow Spark to see the log file produced by the batch script. Whenever you decide to mount a volume, follow the general security principle of least privilege by making sure that containers don't needlessly have access to important files they don't need.
 
 Spark Setup
 -----------
@@ -193,10 +193,12 @@ item_id  | recommended_items
 ```
 
 
-To populate and access this recommendations table, you will interface with the MySQL database directly with a [python MySQL client](https://github.com/PyMySQL/mysqlclient-python) rather than Django's ORM. Population of the table will occur during the Pyspark job. Within your Pyspark program, you will need to:
+To create the recommendations table, simply create another model in your models.py with the appropriate fields corresponding to the columns described above.
+
+To populate this recommendations table, you will interface with the MySQL database directly with a [python MySQL client](https://github.com/PyMySQL/mysqlclient-python) rather than Django's ORM like you have been doing. Population of the table will occur during the Pyspark job. Within your Pyspark program, you will need to:
 
 1. Initiate a connection with the database using PyMySQL.
-2. Create a recommendations table with the appropriate column types if there is not already one, and insure sure it is empty.
+2. Reset/Clear the recommendations table to remove any outdated data if there is any.
 3. Make appropriate INSERT queries while iterating through co-view results after the ```collect``` call, making sure to account for items that already have rows in the table, as well as those that don't.
 
 The spark containers that will contain your Pyspark program don't come with everything needed for PyMySQL right off the bat, so some package installation must be taken care of. After 'docker-composing up' but before running your spark job for the first time, manually enter the two spark containers and run the following commands (either individually by hand, or in script form like below):
@@ -215,7 +217,7 @@ You should now be ready to get your hands dirty with some raw SQL queries! There
 * Some SQL syntax you might want to consider looking into is ```ON DUPLICATE KEY UPDATE```, ```CONCAT()```, and ```TRUNCATE```.
 * With all the containers you have running at this point, Spark may not have enough RAM to work properly. The errors aren't too helpful when this happens, so just be aware when facing obscure problems that you may need to just increase the amount of RAM your computer allocates to Docker.
 
-Once you have correctly populated the database with Sparks output for the recommendation service, you can now move on to implementing the service itself in the experience layer. In every item detail page, you must now display a few of it's recommendations if it has any. You will also need to use PyMySQL for this, but only to read from the database table. Note that you may need to install some of the same packages that you needed in the Spark containers in the experience container as well.
+Once you have correctly populated the database with Sparks output for the recommendation service, you can now move on to implementing the service itself. In every item detail page, you must now display a few of it's recommended items if it has any. To retrieve recommendations, just augment your current set of APIs in the models layer so that you can read recommended item-ids from the database using Django's ORM as well. Then pass those on to your experience layer recommendations service, etc.
 
 
 Automated Spark Job
