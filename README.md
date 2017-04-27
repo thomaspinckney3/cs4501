@@ -138,6 +138,24 @@ Grades will be computed approximately as follows:
 
 More detailed project grading guidelines can be found at https://docs.google.com/document/d/1nZrh3uvwQFh3wf3mE8kuH8LL12j5WbLh42-j6AJwr38/edit?usp=sharing
 
+Academic Honor Code
+-------------------
+
+All work products that you submit for this class -- whether projects, quizes or anything else -- is assumed to be your own
+creation UNLESS you specifically call out that you are including someone else's work, either in spirit or verbatim. Violating
+this honor code by presenting work as your own when in fact it is not your own will result in severe disciplinary action
+potentially including referral to the University Honor Code comittee who may recommend expulsion.
+
+If there is reason for you to submit other's work in your github repo then you must cite them as the author of
+the work. If their work has a copyright notice on it, make sure that copyright notice is perserved and contained in your work
+saying "Portions of this work copyright DATE by AUTHOR". If the work has a license agreement associated with it, make sure you 
+are complying with the terms of the license agreement. If there is no license or copyright, you must still explicitly list the 
+author(s) whose work you are including. This should be in the form of a comment at the top of the source file including their 
+work.
+
+Finally, if you are using someone else's work as the substantial basis of your work (even if you're not literally copying it
+character by character) then you are still copying their work and you must cite them.
+
 Office Hours
 -------------
 
