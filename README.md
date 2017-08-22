@@ -29,7 +29,7 @@ Readings are listed for each week and should be completed BEFORE the week they a
 Course Topics (subject to revision as course progresses)
 ---------------------------------------------------------
 
-1. Anatomy of the modern internet, websites and mobile apps (Wed 1/18 and Mon 1/23)
+1. Anatomy of the modern internet, websites and mobile apps
   - Trace a web request from browser to server and back
   - Overview of three/four tier app architecture
   - Overview of data center architecture: load balancers, switches, storage, servers
@@ -172,4 +172,6 @@ There will be one set of office hours for project questions and demos and anothe
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
-Remember, it's always better to ask questions, bring up problems, etc. sooner versus later.
+We will use Collab announcements when I need to email everyone in the class for announcements, project assignments etc. I'll send a Welcome announcement after the first class. If you don't receive it, check with me or the TA's to figure out what's wrong. If you added the class after the first day then please make sure to review the archive of announcements on Collab.
+
+Finally, it's always better to ask questions, bring up problems, etc. sooner versus later. Please don't be shy. I enjoy people coming to office hours, asking question on Slack, bringing things up in class etc. 
