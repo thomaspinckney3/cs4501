@@ -1,5 +1,4 @@
-# cs4501 Spring 2017
-Internet Scale Applications
+CS401 - Internet Scale Applications
 ===========================
 
 This course will provide a survey of methods for building large-scale internet websites and mobile apps. The intent is to build upon prior classes by explaining how theory meets practice. Topics covered will include scaling, security, large team software engineering, etc. There will be a series of cumulative course projects resulting in students building a working marketplace website. Weekly readings from industry and academic sources will complement the weekly lecture.
@@ -132,7 +131,7 @@ Grading
 -------
 
 Grades will be computed approximately as follows:
-10% class participation (based on discussion in class)
+10% class participation (based on discussion in class -- note, attendance is not sufficient, you must participate in discussion)
 40% two quizzes
 50% class project
 
@@ -143,8 +142,8 @@ Academic Honor Code
 
 All work products that you submit for this class -- whether projects, quizes or anything else -- is assumed to be your own
 creation UNLESS you specifically call out that you are including someone else's work, either in spirit or verbatim. Violating
-this honor code by presenting work as your own when in fact it is not your own will result in severe disciplinary action
-potentially including referral to the University Honor Code comittee who may recommend expulsion.
+this honor code will result in severe disciplinary action potentially including referral to the University Honor Code comittee 
+who may recommend expulsion.
 
 If there is reason for you to submit other's work in your github repo then you must cite them as the author of
 the work. If their work has a copyright notice on it, make sure that copyright notice is perserved and contained in your work
@@ -161,22 +160,15 @@ Office Hours
 
 The teaching staff for this semester are:
 
-  - Tom Pinckney (Lecturer): tp3ks@virginia.edu
-  - Ian Zheng (TA): yz9fy@virginia.edu
-  - Zakey Faieq (TA): zaf2xk@virginia.edu
-  - Christine Tsou (TA): cyt3ea@virginia.edu
+  - Tom Pinckney (Lecturer): tp3ks@virginia.edu Room Rice 425
+  - TBD1
 
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
 
   - Office Hours, Project Review, Help, and Demo Hours (led by TAs): 
-    - Ian:
-      - Monday & Wednesday: 3:30 - 4:30 in Rice 436
-    - Zakey:
-      - Tuesday: 5:00 - 6:30 in Rice 340
-    - Christine:
-      - Thursday: 4:45 - 6:15 in Rice 340
+    TBD
     
-  - General Q&A (led by Tom): Monday 1-2pm but please email/slack me to reserve a time first.
+  - General Q&A (led by Tom): Tuesday 2:30-3:30pm but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
