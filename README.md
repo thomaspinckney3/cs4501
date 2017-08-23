@@ -1,4 +1,4 @@
-CS401 - Internet Scale Applications
+CS4501 - Internet Scale Applications
 ===========================
 
 This course will provide a survey of methods for building large-scale internet websites and mobile apps. The intent is to build upon prior classes by explaining how theory meets practice. Topics covered will include scaling, security, large team software engineering, etc. There will be a series of cumulative course projects resulting in students building a working marketplace website. Weekly readings from industry and academic sources will complement the weekly lecture.
