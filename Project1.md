@@ -350,7 +350,7 @@ Back on your Mac/Windows shell:
 
     DATABASES = {
               'default': {
-              'ENGINE': 'mysql.connector.django',
+              'ENGINE': 'django.db.backends.mysql',
               'NAME': 'cs4501',
               'USER': 'www',
               'PASSWORD': '$3cureUS',
