@@ -161,7 +161,7 @@ Office Hours
 The teaching staff for this semester are:
 
   - Tom Pinckney (Lecturer): tp3ks@virginia.edu Room Rice 425
-  - TBD1
+  - Srikanth Chelluri: sc5ba@virginia.edu
 
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
 
@@ -169,6 +169,9 @@ There will be one set of office hours for project questions and demos and anothe
     - Christine Tsou (cyt3ea)
       - Wednesday: 3:30 - 4:30 in Rice 436
       - Thursday: 4 - 5:30 in Rice 340
+    - Srikanth Chelluri (sc5ba)
+    	- Tuesday: 2 - 3:30 in Rice 436
+    	- Wednesday: 10 - 11:30 in Olsson 001
     
   - General Q&A (led by Tom): Tuesday 2:30-3:30pm but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
 
