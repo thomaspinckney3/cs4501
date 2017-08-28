@@ -164,6 +164,7 @@ The teaching staff for this semester are:
   - Christine Tsou (TA): cyt3ea@virginia.edu
   - Srikanth Chelluri (TA): sc5ba@virginia.edu
   - Nikhil Gupta (TA): ng3br@virginia.edu
+  - Zakey Faieq (TA): zaf2xk@virginia.edu
 
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
 
@@ -177,6 +178,9 @@ There will be one set of office hours for project questions and demos and anothe
     - Nikhil Gupta (ng3br)
       - Monday: 11 - 12:30 in Rice 436
       - Sunday: 3:30 - 5 in Rice 436
+    - Zakey Faieq (zaf2xk)
+      - Monday: 3:30 - 4:30 in Rice 436
+      - Tuesday: 12:30 - 2:00 in Rice 436
     
   - General Q&A (led by Tom): Tuesday 2:30-3:30pm but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
 
