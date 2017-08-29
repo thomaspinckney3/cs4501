@@ -170,7 +170,7 @@ There will be one set of office hours for project questions and demos and anothe
 
   - Office Hours, Project Review, Help, and Demo Hours (led by TAs): 
     - Christine Tsou (cyt3ea)
-      - Wednesday: 3:30 - 4:30 in Rice 436
+      - Wednesday: 2 - 3:30 in Rice 340
       - Thursday: 4 - 5:30 in Rice 340
     - Srikanth Chelluri (sc5ba)
       - Tuesday: 2 - 3:30 in Rice 436
