@@ -176,7 +176,7 @@ There will be one set of office hours for project questions and demos and anothe
       - Tuesday: 2 - 3:30 in Rice 436
       - Wednesday: 10 - 11:30 in Olsson 001
     - Nikhil Gupta (ng3br)
-      - Monday: 11 - 12:30 in Rice 436
+      - Monday: 10:30 - 11:30 in Rice 436
       - Sunday: 3:30 - 5 in Rice 436
     - Zakey Faieq (zaf2xk)
       - Monday: 3:30 - 4:30 in Rice 436
