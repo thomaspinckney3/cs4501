@@ -174,7 +174,7 @@ There will be one set of office hours for project questions and demos and anothe
       - Thursday: 4 - 5:30 in Rice 340
     - Srikanth Chelluri (sc5ba)
       - Tuesday: 2 - 3:30 in Rice 436
-      - Wednesday: 10 - 11:30 in Olsson 001
+      - Wednesday: 10 - 11:00 in Rice 514
     - Nikhil Gupta (ng3br)
       - Monday: 10:30 - 11:30 in Rice 436
       - Sunday: 3:30 - 5 in Rice 436

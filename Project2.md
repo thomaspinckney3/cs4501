@@ -24,14 +24,13 @@ completing this work. I'm not going to provide step-by-step
 instructions for how to build a Django app. I'm assuming you've done
 it before and are using the tutorials and support provided on the Django site.
 
-As of the release of project 2 in Spring 2017, a new version of the tp33/django docker image
-with Django 1.10 installed has been made available. To use the updated image, simply run the command:
+We're using Django 1.10 as of spring 2017. Ensure you have the updated image:
 
 ```
 docker pull tp33/django
 ```
 
-The new tp33/django image also installs a different MySQL client (mysqlclient). For Django to still work properly with the database you must change the 'ENGINE' value in settings.py from 'mysql.connector.django' to 'django.db.backends.mysql'
+The image also installs the package `mysqlclient`. And so in your Django settings, make sure your database backend engine is `django.db.backends.mysql` (and not `mysql.connector.django`).
 
 This is what it should look like:
 ```
@@ -46,12 +45,9 @@ DATABASES = {
 }
 ```
 
-The latest stable MySQL release (5.7.17) has also been tested to be compatible with future projects in the class.
-To use the updated MySQL image, use the image name "mysql:5.7.17"
-Updating the MySQL image is optional.
+The latest stable MySQL release (5.7.17) has also been tested to be compatible with future projects in the class. To use the updated MySQL image, use the image name "mysql:5.7.17". Updating the MySQL image is optional.
 
-A note on code layout. It should look something like this. This is generated using
-the standard Django `startproject`, `startapp` commands.
+A note on code layout: it should look something like this. This is the same directory structure you get when when you use the standard Django `startproject`, `startapp` commands.
 
 
 	stuff/
@@ -90,8 +86,10 @@ Using Docker Compose, we will be able to start up our containers using a single
 command. Here is a tutorial about how Docker Compose works:
 
 First, install Docker Compose if you haven't already done so. You can check if
-you have docker-compose on you machine by typing docker-compose in your
+you have docker-compose on your machine by typing `docker-compose` in your
 terminal.
+
+If you don't, install it:
 
 	$ curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 	$ chmod +x /usr/local/bin/docker-compose
@@ -99,12 +97,7 @@ terminal.
 
 When you've got Compose installed, go ahead and create a new file,
 docker-compose.yml, in the project root directory (you need to name the file
-exactly as docker-compose.yml). Docker Compose uses these files, called YAML
-files, to automatically set up or start a group of containers. This is handy,
-much easier than managing each container individually. You can specify a lot of
-different options here, but for now we're merely going to create our entity
-layer and then link it to our mysql database. You need to make sure the mysql
-container we created from last time is started.
+exactly as docker-compose.yml). Docker Compose uses these files, called YAML (pronounced "yeah-mull") files, to automatically set up or start a group of containers. This is handy, much easier than managing each container individually. You can specify a lot of different options here, but for now we're merely going to create our entity layer and then link it to our mysql database. You need to make sure the mysql container we created from last time is started.
 
 You can tell compose to create a new container by giving it a name and an image to use.
 
@@ -127,7 +120,7 @@ container simply by "db" instead of refer to it by its IP Address.
 
 Volumes is like the -v tag we use when executing docker run in the previous
 project. It mounts the app directory in the container onto the <your_file_path>
-directory on the host machine(your mac/PC). By specifing that, you can code in
+directory on the host machine (your Mac/PC). By specifing that, you can code in
 your text editor/IDE on your host machine and any change you make will be picked
 up by the container. It is handy in terms of the development workflow.
 
@@ -146,34 +139,33 @@ Now that we've got this, save docker-compose.yml. Having Compose create and run 
 
 	docker-compose up
 
-NOTE that for the command to run successfully, you need to have your mysql
-container running.
+NOTE: for the command to run successfully, you need to have your mysql
+container running (since our containers depend on the database to be up)
 
 	docker-compose rm
 
-will remove all the instance specified by the docker-compose file.
+will remove all the container instances specified by the docker-compose file.
 
-One other thing about docker compose. If for some reasons (run makemigrations/migrate etc.) you need to attach to a container created by docker compose, instead of using `docker attach <container_name>`(it will hang), use `docker exec -it <container_name> bash`.
+One other thing about docker compose. If for some reason (run makemigrations/migrate, etc.) you need to attach to a container created by docker compose, instead of using `docker attach <container_name>`(it will hang), use `docker exec -it <container_name> bash`.
 
-You can do a lot more with Docker Compose, including building new images straight from a Dockerfile, configuring ports, and defining shared volumes for containers. These are all things that may be helpful to you later in the course, so keep your compose file updated as you go about your project. There are great examples at https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04
+You can do a lot more with Docker Compose, including building new images straight from a Dockerfile, configuring ports, and defining shared volumes for containers. These are all things that may be helpful to you later in the course, so keep your compose file updated as you go about your project. There are great examples at https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04.
 
 Models
 ------
 
-The first step is to create your Django models for your project.
-
-Generally, there are a few guidelines to consider:
+The first step is to create your Django models for your project. Generally, there are a few guidelines to consider:
 
   Remember, each model corresponds to a table in your database. Each
   model is represented in Django by a Python class. Each row in your
   table will correspond to an instance of your model class. Django
-  will automatically create the database tables you need.`
+  will automatically create the database tables you need.
 
   Every model should include a unique id. For example, if your project
-  has things that can be sold, there'll likely be a Items model that
+  has things that can be sold, there'll likely be an Items model that
   represents the things to be sold. Each Item should have a unique id
   that you can record, for example, when creating the lists of Items a
-  user has bought or sold.
+  user has bought or sold. Django's built-in auto primary key works fine
+  (but be sure to know why it works).
 
   You need to think through the relationships between
   models. Continuing the example above, a single user may have bought
@@ -183,11 +175,12 @@ Generally, there are a few guidelines to consider:
   being reviewed. There will be exactly one Item that the Review
   references. This is known as a "one-to-one" relation.
 
-  Users and Picture models are generally handled specially in
+  User and Picture models are generally handled specially in
   Django. However, as we'll discuss in later classes, we're not
-  going to use the Django User class. Pictures are complicated by the
-  fact that they tend to be large. For now, I'd just ignore doing
-  anything with pictures.
+  going to use the Django User class. You can use it as a placeholder,
+  but know that you'll change it in the next few projects.
+  Pictures are complicated by the fact that they tend to be large.
+  For now, I'd just ignore doing anything with pictures. 
 
 Docker
 --------
@@ -319,7 +312,14 @@ Initial data should now be in db!
 To incorporate fixtures into your project submissions, add some data to your
 database and create a fixture before pushing to github and add “python manage.py
 loaddata” command to your docker-compose command to load the data before
-starting your server.
+starting your server. This is how we can use every group's app without having to
+manually enter data every time.
+
+This should go without saying - make sure everyone in the group can flush their
+database and load a fixture. Sometimes, you'll have issues with contenttypes and
+permissions creating conflicts. Look into the flags you can use to exclude these
+from making it into the fixtures JSON. Ensure that everyone in your group can load
+data because that's a good sign that the TA's will be able to as well.
 
 What to turn in
 ---------------
@@ -336,6 +336,6 @@ Something that need to be executed by the docker-compose.yml (some of them may b
 * expose ports
 * link to the mysql db container
 
-Also note that you NEED to use relative path for your compose file to work on our machines (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path.
+Also note that you NEED to use relative path for your compose file to work on our machines (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path. Again, test on your group's machines.
 
 You'll send us the link to your github tag. We'll checkout the code, run docker-compose up and expect things to run. Again, we strongly encourage you to take time to demo in the office hours. We want to make sure not only you are writing code that works but also code that is of best practices.
