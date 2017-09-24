@@ -96,7 +96,7 @@ Each feature that you code from this project onwards should correspond to a user
 
 [Django's unit tests](https://docs.djangoproject.com/en/1.9/topics/testing/overview/) use the Python unit testing framework ```unitest```. To run your unit tests, execute ```python manage.py test``` from the command line. By default, this will run all files in your project named ```test*.py``` where * is a wildcard (ex. test_users.py).
 
-Django creates and destroys a temporary test database every test run. To be able to grant the the user access to the database, we will need to grant permission for user 'www' like in Project 1.
+Django creates and destroys a temporary test database every test run. To be able to grant the user access to the database, we will need to grant permission for user 'www' like in Project 1. Permission can be granted without the database existing yet.
 
 ```mysql> grant all on test_cs4501.* to 'www'@'%';```
 
@@ -131,7 +131,7 @@ Here are some examples of unit tests for your Django views:
 ```
 
 Note: Django specifies that "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
-If you are creating tests in your experience layer, then a test database will not work because the model layer, not the experience layer, is the one that interacts directly with the database. Therefore, in later projects, if you find you are unable to test a particular function through unit tests (like databse deletions or saves), that is okay.  All read-only data (Project 3) should be testable, though.
+If you are creating tests in your experience layer, then a test database will not work because the model layer, not the experience layer, is the one that interacts directly with the database. Therefore, in later projects, if you find you are unable to test a particular function through unit tests (like database deletions or saves), that is okay. All read-only data (Project 3) should be testable, as well as the API CRUD functionalities built in Project 2. Therefore, unit tests in the models layer is required for this project.
 
 Also see [Django Advanced Testing](https://docs.djangoproject.com/en/1.9/topics/testing/advanced/) if interested!
 
@@ -184,7 +184,11 @@ exp:
 
 In this case we are linking to a container created by docker compose, so
 we use `links`. Then the app running in this container can make HTTP requests to the
-host model-api in order to connect to your model-api container.
+host model-api in order to connect to your model-api container by making a request like so:
+
+`req = urllib.request.Request('http://models-api:8000/')`
+
+Note: You can only use the url 'http://models-api:8000' in code run in a container that links to the model container using 'models-api' like in the example above. If you are testing outside the container (like in a browser), you will have to use 'http://localhost:port'.
 
 And finally, your third container for running the HTML front-end will
 link to the experience service container:
