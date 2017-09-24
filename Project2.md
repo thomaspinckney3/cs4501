@@ -328,7 +328,7 @@ The teaching staff should be able to run your app entirely by using docker-compo
 
 Something that need to be executed by the docker-compose.yml (some of them may be repetitions from the previous section):
 
-* run makemigrations (I strongly discourage you from committing your mirgation files. Why? Come to office hours and we can discuss!)
+* run makemigrations (I strongly discourage you from committing your migration files. Why? Come to office hours and we can discuss!)
 * run migrate
 * load fixtures
 * start the wsgi server
