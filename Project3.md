@@ -139,13 +139,18 @@ Also see [Django Advanced Testing](https://docs.djangoproject.com/en/1.9/topics/
 Implementation
 --------------
 
-### Container Linking  ###
+### Container Linking ###
 
 You will have four Docker containers running -- one for each layer in
 your app: one instance of the MySQL container and three instances of
-your Django container. In terms of grading, since you can assume we
-have a MySQL container `mysql` running, you only need to start up three containers
-in the docker-compose.yml, all of which link to the MySQL container.
+your Django container. Keep in mind that in order to execute commands like
+`python manage.py test`, you must be inside the container (not host). For
+example, running `docker exec -it models bash` opens a bash terminal inside
+the container named "models".
+
+In terms of grading, since you can assume we have a MySQL container
+`mysql` running, you only need to start up three containers in the
+docker-compose.yml, all of which link to the MySQL container.
 
 Docker assigns a unique IP address to every container running. We'll
 use container linking to make sure each container knows the IP address
