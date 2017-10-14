@@ -199,7 +199,7 @@ And finally, your third container for running the HTML front-end will
 link to the experience service container:
 
 ```YAML
-exp:
+web:
    image: tp33/django
    links:
       - exp:exp-api
