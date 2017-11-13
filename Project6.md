@@ -22,7 +22,39 @@ The detailed topic descriptions are listed as follows:
     
 4. Integration tests
     
-      Write integration tests using Selenium http://www.seleniumhq.org to test your web front end.
+      Write integration tests using [Selenium](http://www.seleniumhq.org) to test your web front end.
+      To create Selenium tests in python, you'll need to install the selenium package from PyPi. This package will enable to use Selenium's python API to interact with the Selenium WebDriver. 
+      
+      From [Selenium's documentation](http://www.seleniumhq.org/docs/03_webdriver.jsp#introducing-webdriver):
+      ` WebDriver’s goal is to supply a well-designed object-oriented API that provides improved support for modern advanced web-app testing problems. Selenium-WebDriver makes direct calls to the browser using each browser’s native support for automation. How these direct calls are made, and the features they support depends on the browser you are using. ` 
+      
+      For this class, we only expect you to create tests for Google Chrome. To interface with Google Chrome, the Selenium WebDriver needs to use ChromeDriver ([info](http://www.seleniumhq.org/docs/03_webdriver.jsp#chromedriver))
+      
+      In the past, we've had students download the [chrome driver](https://sites.google.com/a/chromium.org/chromedriver/home) locally. But many people had problems with their python code not finding the local driver in their PATH. As a result, we've transitioned to a new solution using, you guessed it, containers! Selenium has created a [docker container image](https://hub.docker.com/r/selenium/standalone-chrome/) with Google Chrome, ChromeDriver, and the Selenium WebDriver already installed. The Selenium WebDriver in this container can be accessed via the 'Selenium Server' that is also included in the container (and is started upon container instantiation). From Selenium's documentation: 
+      `You may, or may not, need the Selenium Server, depending on how you intend to use Selenium-WebDriver. If your browser and tests will all run on the same machine, and your tests only use the WebDriver API, then you do not need to run the Selenium-Server; WebDriver will run the browser directly... use the Selenium-Server... (if) you want to connect to a remote machine... `
+
+    To set up containers for Selenium and for the test script, your docker-compose should include a section that looks something like this:
+    ```
+    selenium-chrome:
+      image: selenium/standalone-chrome
+      container_name: selenium-chrome
+      links:
+        - web:web
+      ports:
+        - "4444:4444"
+
+    selenium-test:
+      image: tp33/django
+      container_name: selenium-test
+      links:
+        - selenium-chrome:selenium-chrome
+        - web:web
+      volumes:
+        - ./app/selenium:/app
+      command: bash -c "pip install selenium==<some version number> && python <your_selenium_test_script>.py"
+      ```
+
+    See [Selenium's Python documentation](http://selenium-python.readthedocs.io/getting-started.html#using-selenium-with-remote-webdriver) on how to connect to a remote WebDriver from your python code.
     
 5. Performance testing
     
