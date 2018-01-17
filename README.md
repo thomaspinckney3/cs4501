@@ -131,11 +131,10 @@ Grading
 -------
 
 Grades will be computed approximately as follows:
-10% class participation (based on discussion in class -- note, attendance is not sufficient, you must participate in discussion)
-40% two quizzes
+50% two quizzes
 50% class project
 
-More detailed project grading guidelines can be found at https://docs.google.com/document/d/1nZrh3uvwQFh3wf3mE8kuH8LL12j5WbLh42-j6AJwr38/edit?usp=sharing
+More detailed project grading guidelines can be found at https://docs.google.com/document/d/1nZrh3uvwQFh3wf3mE8kuH8LL12j5WbLh42-j6AJwr38/edit?usp=sharing Note, these are guidelines and teaching staff may deviate as they believe the situation requires. 
 
 Academic Honor Code
 -------------------
@@ -160,29 +159,16 @@ Office Hours
 
 The teaching staff for this semester are:
 
-  - Tom Pinckney (Lecturer): tp3ks@virginia.edu Room Rice 425
-  - Christine Tsou (TA): cyt3ea@virginia.edu
-  - Srikanth Chelluri (TA): sc5ba@virginia.edu
-  - Nikhil Gupta (TA): ng3br@virginia.edu
-  - Zakey Faieq (TA): zaf2xk@virginia.edu
+  - Tom Pinckney (Lecturer): tp3ks@virginia.edu 
+  - Zakey Faieq (Head TA): zaf2xk@virginia.edu
+  - More TA's TBD
 
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
 
   - Office Hours, Project Review, Help, and Demo Hours (led by TAs): 
-    - Christine Tsou (cyt3ea)
-      - Wednesday: 2 - 3:30 in Rice 340
-      - Thursday: 4:45 - 6:15 in Rice 340
-    - Srikanth Chelluri (sc5ba)
-      - Tuesday: 2 - 3:30 in Rice 436
-      - Wednesday: 10 - 11:00 in Rice 514
-    - Nikhil Gupta (ng3br)
-      - Monday: 10:30 - 11:30 in Rice 436
-      - Sunday: 3:30 - 5 in Rice 436
-    - Zakey Faieq (zaf2xk)
-      - Monday: 3:30 - 4:30 in Rice 436
-      - Tuesday: 12:30 - 2:00 in Rice 436
+    TBD
     
-  - General Q&A (led by Tom): Tuesday 2:30-3:30pm but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
+  - General Q&A (led by Tom): Times TBD but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
