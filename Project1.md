@@ -7,7 +7,7 @@ app in Django. Whew!
 
 There's a lot of Linux and system level stuff in this project. It may
 seem like you don't need to know all of this, but you do :). Don't just
-type the commands that apear here. Understand what's going on and only
+type the commands that appear here. Understand what's going on and only
 use these instructions as a hint.
 
 This is probably the most involved project in the course. If you get
@@ -22,9 +22,6 @@ running SSH, looking at Apache log files, etc. While you don't need to
 be a shell scripting god, you should also be able to get the gist of a
 script if need be.
 
-If you want a reference with additional commands, we're going to
-consistently update this document with common questions:
-https://docs.google.com/a/virginia.edu/document/d/1fCqyJQBS0Qoi0kWcS2B6xKGQHmUQzr-CpqEG1vQ5kak/edit?usp=sharing
 
 Containers
 ----------
@@ -35,16 +32,14 @@ weight. They're one component of treating infrastructure as
 software. You can define what kind of environment you need, install
 apps, define networking topologies, and then easily clone/start as
 many instances of that container as you like -- on your dev machine or
-on public hosting providers like Amazon AWS.
+on public hosting providers like Amazon AWS or Digital Ocean.
 
-You'll be using two containers initially -- one that contains an
-Apache/Django installation and another that contains MySQL.
+You'll be using two containers initially -- one that has Apache and Django pre-installed and built to work together easily, and another that contains MySQL.
 
 The system for containers we're using requires Linux. If you're
 already running Linux on your laptop then you will likely need to just
 install Docker. If you're using a Mac or Windows, you will need to
-install the special Docker for Mac or Docker for Windows packages (see
-below).
+install Docker for Mac or Docker for Windows. If you have an older version of Docker, you may need to install Docker Toolbox. And lastly, if for some reason you cannot get any of those to work (rarely occurs), you could run Docker from within a Linux virtual box (Although it would seem like that defeats the purpose of using Docker, the experience you gain from dealing with containers is still invaluable).
 
 Note, when you're using the Docker for Mac or Docker for Windows
 packages you're still using Linux. These packages install a
@@ -56,7 +51,7 @@ Django
 ------
 
 You should already be familiar with Python and Django. If not, go read more
-here: https://docs.djangoproject.com/en/1.8/. We highly recommend that you
+here: https://docs.djangoproject.com/en/1.11. We highly recommend that you
 work through the example application in the Django tutorial if this is your
 first experience with Django.
 
@@ -67,7 +62,7 @@ The database used in this class will be MySQL. It's a very common SQL
 database. You can read more at
 http://dev.mysql.com/doc/refman/5.7/en/index.html.
 
-You will not need detailed knowledge of SQL for this class, but you
+You will not need detailed knowledge of SQL for most of the class, but you
 should be familiar with the concepts involved of tables, queries,
 updates etc.
 
@@ -81,7 +76,7 @@ Install everything
 	  - Windows: https://docs.docker.com/docker-for-windows/
 	  - More OS options available: https://docs.docker.com/engine/installation/
 
-- Pull down the Docker containers for Django:
+- Pull down the [Docker container image](https://hub.docker.com/r/tp33/django/~/dockerfile/) containing the Apache/Django installations:
 
         tp@devel:~$ docker pull tp33/django
         latest: Pulling from tp33/django
@@ -90,7 +85,7 @@ Install everything
         Digest: sha256:90ff75c9817102fe0f5f5e59ff823bd0ea5ad05df24a87bd6def6c18f194da8a
         Status: Downloaded newer image for tp33/django:latest
 
-- And MySQL:
+- And now pull a container image with MySQL installed:
 
         tp@devel:~$ docker pull mysql:5.7.14
         5.7.14: Pulling from library/mysql
@@ -100,7 +95,7 @@ Install everything
         Status: Downloaded newer image for mysql:5.7.14
         tp@devel:~$
 
-- Test it:
+- Start up the container with Apache/Django using the image you just pulled:
 
         tp@devel:~$ mkdir -p ~/cs4501/app
         tp@devel:~$ docker run -it --name web -v ~/cs4501/app:/app tp33/django
@@ -140,7 +135,7 @@ Now it's time to create the user and database in MySQL for your
 app. You'll use the MySQL command line client to do
 this. Conveniently, that's installed in the MySQL image you've already
 got. You'll just need to start a NEW container running that image and
-use it to connect to the first MySQL container image you're already
+use the MySQL client in that container to connect to the first MySQL container image you're already
 running.
 
     tp@devel:~$ docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 bash
@@ -178,9 +173,9 @@ required for this app and no other privileges.
 
 (hit Ctrl-D at the mysql> prompt to exit the MySQL shell).
 
-This will create a new MySQL user named www and a new databse named
-cs4501 (replace foo with the name of your project). www's password is
-'$3cureUS'. Finally, this gives www access to all tables in cs4501.
+This will create a new MySQL user named `www` and a new database named
+`cs4501`. The user `www`'s password is
+'$3cureUS'. Finally, this gives `www` access to all tables in cs4501.
 
 You can keep this container around for easy access to the MySQL
 command line.
@@ -199,7 +194,7 @@ mysql'.
 Docker provides a simple way for containers to talk to each other via
 private networks. When you start a container you can tell Docker to
 create an /etc/hosts entry for another running container. We'll do
-this so that the web container can easily connect to the mysql
+this using the `--link` flag so that the web container can easily connect to the mysql
 container. Let's restart the web container this way:
 
     tp@devel:~$ docker ps -a
@@ -227,7 +222,8 @@ This tells Docker to create a new container from the tp33/django
 image and create a hosts entry named db that references the IP address
 used by the mysql container. It also exposes port 8000 on the container
 to port 8000 on the host machine (so you can see the app on your browser
-just like you could any other web page).
+just like you could any other web page). The concepts of port exposure and container
+networking has historically been often misunderstood by students. It's highly recommended to come to office hours if you do not fully understand this topic - it will save you a lot of time later on.
 
 When you exit a container, its disk image persists -- allowing you to
 restart it later. You can re-start your web container with 'docker
@@ -238,7 +234,8 @@ If you want to remove a container, use 'docker rm'. If you want to
 remove an image, use 'docker rmi'. Once you remove a container, any
 changes that you made inside of it are gone.
 
-The way that you can persist data between container invocations is to
+The way that you can persist data between container invocations in a way
+that can be viewed on your host machine as well is to
 store the data outside the container and then make the data accessible
 once the container starts. The simplest way to do this is to mount a
 directory from outside the containers to a point inside the container.
@@ -252,7 +249,7 @@ will persist beyond the container's lifetime.
 
 Notice that when we started the web and mysql containers above we used
 the -v argument to tell docker that we wanted to make data in our host
-system mounted into the containers. We said that /app in the web
+system be mounted into the containers. We said that /app in the web
 container should access data stored in the host's ~/cs4501/app and the
 mysql container should store its /var/lib/mysql data under the host's
 ~/cs4501/db.
@@ -265,11 +262,11 @@ Django project by looking at raw HTML from the terminal is not the
 best development experience. To see those HTML scripts in a browser on 
 your host machine, you need to expose a port inside the container to a port
 on your host machine. The -p argument to the 'docker run' command does that.
-It expose port 8000 (the 8000 after colon) inside the container to port 8000
+It exposes port 8000 (the 8000 after colon) inside the container to port 8000
 on your host machine (the 8000 before the colon). Then the Django app can be
 reached on the host machine at http://localhost:8000. Note for students who are
 using Docker Toolbox. The Toolbox does not automatically forward the Docker
-host to localhost. You can find the Docker host at the beginning of the Docker
+host to localhost. You can find the Docker host IP at the beginning of the Docker
 Quickstart Terminal (under the whale logo).
 
 Development Environment
@@ -280,7 +277,8 @@ Git
 
 You'll use GitHub for version control. If you don't have a GitHub
 account already, go create one. There's good online help for using
-GitHub and Git.
+GitHub and Git. You should not be pushing pycache files, database files, or database migration files on Github.
+Learn to use .gitignore to enforce this, otherwise nasty merge conflicts and other issues will pop up later on.
 
 Dev process
 -------------
@@ -309,6 +307,8 @@ Dockeriles on the Docker website.
 
 The Dockerfile I used to create tp33/django is at
 https:/github.com/thomaspinckney3/django-docker.
+
+If you are interested in learning more about this, come to office hours.
 
 Code layout
 -----------
@@ -364,7 +364,7 @@ Finally, commit and push your newly created Django app up to GitHub.
 
 You should create an ssh key pair ('ssh key-gen') and then upload your
 public key to GitHub so you can push/pull changes without typing your
-password each time.
+password each time. (Not required)
 
 In the future, when you want to deploy a test or production container
 you can just use 'docker run' to start an instance of tp33/django,
@@ -447,12 +447,13 @@ Hello World
 Next you're going to write a very simple
 Django app. This assumes you're already familiar with the basics of
 Django development. If not, now is a good time to review the Django
-tutorial and docs. We're using version 1.8.X.
+tutorial and docs. We're using version 1.10, but using 1.11 documentation should be
+fine for everything you do.
 
 Create a very simple home page for your app. You should add an entry
 to your urls.py that points to a view that you create in a new file
 named home.py. You can return whatever you want, but whatever it is
-should be rendered by a Django template.
+should be rendered in an html file using the `render` keyword.
 
 Later on in the course we're going to be using the Bootstrap CSS
 library. If you want to get fancy, you can include this CSS to pretty
@@ -462,4 +463,4 @@ What to turn in
 ---------------
 
 Turn in screenshots of 'docker ps' showing your running containers
-along with a screenshot of your "Hello World" output from curl.
+along with a screenshot of your "Hello World" output from curl. Submit this to tp3ks@virginia.edu and zaf2xk@virginia.edu.
