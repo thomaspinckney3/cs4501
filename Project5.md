@@ -23,6 +23,12 @@ runs code outside of the context of a web request. Step two above,
 adding things to ES, will be a backend Python worker process that constantly
 runs pulling new listings out of Kafka and adding them to ES.
 
+The architecture is illutrated by this image: https://drive.google.com/file/d/0BwxFrbFICisjdUVzQURaTGFzX3c/view?usp=sharing
+
+### User Stories ###
+
+Create new user stories and update old ones to reflect the changes that should be completed by the end of the sprint/project. You should use this as a tool that will help you cement your understanding of how you want your create-listing/add to ES/search flow to work as well as a tool to help you divide up the work among your group members.
+
 ### Kafka ###
 
 As you recall from class, Kafka is an open source queuing system built
@@ -55,7 +61,7 @@ documents (how we look up documents that match a user query).
 We're writing a new backend process that will sit in an endless loop,
 waiting for new listings to appear in our Kafka topic. When a new
 listing appears, the search indexer will call the ES API for adding it
-to the search index.
+to the search index. This sits in a separate container called batch.
 
 ### Create Listing Changes ###
 
@@ -83,8 +89,9 @@ Implementation
 You will be adding three new containers to your application:
 
    - ElasticSearch based on the 'elasticsearch:2.0' image on Dockerhub
-   - Kafka based on the 'spotify/kafka' image on Dockerhub
-   - The backend search indexer based on my new tp33/django-docker:1.3 image on Dockerhub (kafka-python upgraded)
+   - Kafka based on the 'spotify/kafka' image on Dockerhub. Keep in mind that despite the name
+   the image is really Kafka, ZooKeeper and all the configurations to make them work together.
+   - The backend search indexer called batch based on tp33/django image on Dockerhub (kafka-python upgraded) whose only job is to run a python script that pulls messages from Kafka and indexes that in ES.
 
 You can download and run the new Kafka and ES containers like:
 
@@ -102,6 +109,14 @@ es:
    container_name: es
    ports:
       - "9200:9200"
+
+batch:
+   image: tp33/django
+   container_name: batch
+   links:
+      - kafka:kafka
+      - es:es
+   command: <run a python script that pulls messages from Kafka and indexs that in ES>
 ```
 
 These images may take a few minutes to download as you're pulling down different Java versions for each, dependent apps like Zookeeper, and the main ES and Kafka apps themselves. Still, a lot easier than building and installing all the tools and depencies from source!
@@ -110,22 +125,14 @@ Make sure to keep the container names as I used here unless you want
 to figure out the nuances of Kafka and it's dependent Zookeeper
 configuration :)
 
-And let's start a container to run your search indexer:
+And let's start a container to try out ES and Kafka:
 
-    docker run -it --name batch --link kafka:kafka --link es:es tp33/django-docker:1.3
+    docker run -it --name batch_test --link kafka:kafka --link es:es tp33/django
     root@d806ea9af85a:/app#
-
-The image takes a few secondes to download. Notice how easy it is to modify a environment and distribute it to everyone.
-
-If you run out of space on your Linux machine, you can delete docker image on disk:
-
-```
-docker rmi <hash of the image>
-```
 
 And in that container you can try some simple tests of ES:
    
-```
+``` PYTHON
 root@d806ea9af85a:/app#  python
 Python 3.5.0 (default, Oct 29 2015, 07:33:09) 
 [GCC 4.9.2] on linux
@@ -149,7 +156,7 @@ Finally, there's an example of calling `es.search()` to query the listing_index 
 
 And test out adding messages to a Kafka queue via 'KafkaProducer':
 
-```
+``` PYTHON
 >>> from kafka import KafkaProducer
 >>> import json
 >>> producer = KafkaProducer(bootstrap_servers='kafka:9092')
@@ -160,13 +167,13 @@ And test out adding messages to a Kafka queue via 'KafkaProducer':
    
 We're queing up a message via producer.send which takes a message (in this case a JSON doument in bytes) and a topic name (in this case 'new-listings-topic'). The KafkaProducer is in asynchronous mode by default. The returned value shows that the message was queued up asynchronously (The message may NOT be in the queue yet when the value returns).
 
-And test our receiving messages from Kafka (To see messages sent, you need to start another `tp33/django-docker:1.3` container connecting to Kafka, and run the following script in that container):
+And test our receiving messages from Kafka (To see messages sent, you need to start another terminal session that connects to the batch_test container. Recall the command `docker exec -it batch_test bash`):
    
-```
+``` PYTHON
 >>> from kafka import KafkaConsumer
 >>> consumer = KafkaConsumer('new-listings-topic', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])
 >>> for message in consumer:
->>> new_listing = json.loads((message.value).decode('utf-8'))
+...   print(json.loads((message.value).decode('utf-8')))
 ```
 
 Here we're showing an example of a consumer reading messages from the 'new-listings-topic' topic. The consumer is part of the 'listings-indexer' consumer group. Each topic can have multiple groups of consumer reading messages. Each message will be delivered exactly once to SOME member of each group. That is, if there are three clients consuming messages from this topic and all are part of the same group, only one of the three clients will get any given message. This functionality is built to support scaling up the number of consumers. For example, if you had millions of new listings being created per day you might want more than one consumer reading the new listing messages and adding them to ES. However, you'd want to make sure that each new listing was only added to ES once.
@@ -177,3 +184,5 @@ point. So in the example above where you use the producer to send a message and 
 start a client to read the messages, the client will hang waiting for a new message. To see the client
 actually receive a message you'll need to open two shells, run the producer and consumer simultaneously
 and then should see the consumer receive messages from the sender.
+
+Use the code snippets above to implement the python scripts that sits in the batch container. Again, all that script does is just pulling messages from Kafka and index the message in ES!
