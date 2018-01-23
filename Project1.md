@@ -275,9 +275,11 @@ Development Environment
 Git
 ---
 
-You'll use GitHub for version control. If you don't have a GitHub
+You'll use GitHub for version control for this class. If you don't have a GitHub
 account already, go create one. There's good online help for using
-GitHub and Git. You should not be pushing pycache files, database files, or database migration files on Github.
+GitHub and Git.
+
+Creating a repo for Project 1 is not required since it is an individual project and it won't be checked/needed for project submission. However, if you are not experienced with Git/Github, it is highly recommended that you start to familiarize yourself with it now. You should be familiar with using a basic [Git Workflow](https://guides.github.com/introduction/flow/), and consider using it when you start Project 2 with your group. You should not be pushing pycache files, database files, or database migration files on Github.
 Learn to use .gitignore to enforce this, otherwise nasty merge conflicts and other issues will pop up later on.
 
 Dev process
