@@ -404,7 +404,7 @@ will need to replace that with your project's name.
 
 Inside your web container:
 
-    root@399bd9c4a2a5:/app# mod_wsgi-express start-server --working-directory /app/foo /app/foo/foo/wsgi.py &
+    root@399bd9c4a2a5:/app# mod_wsgi-express start-server --reload-on-changes --working-directory /app/foo /app/foo/foo/wsgi.py &
     [1] 73
     Server URL         : http://localhost:8000/
     Server Root        : /tmp/mod_wsgi-localhost:8000:0
