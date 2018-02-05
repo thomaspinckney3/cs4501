@@ -45,12 +45,12 @@ DATABASES = {
 }
 ```
 
-The latest stable MySQL release (5.7.17) has also been tested to be compatible with future projects in the class. To use the updated MySQL image, use the image name "mysql:5.7.17". Updating the MySQL image is optional.
+The latest stable MySQL release (5.7.17) has also been tested to be compatible with future projects in the class. To use the updated MySQL image, use the image name "mysql:5.7.17".
 
 A note on code layout: it should look something like this. This is the same directory structure you get when when you use the standard Django `startproject`, `startapp` commands.
 
 
-	stuff/
+	myapp-microservices/
 	├── manage.py
 	├── myapp
 	│   ├── __init__.py
@@ -60,7 +60,7 @@ A note on code layout: it should look something like this. This is the same dire
 	│   ├── models.py
 	│   ├── tests.py
 	│   └── views.py
-	└── stuff
+	└── myapp-microservices
 	    ├── __init__.py
 	    ├── settings.py
 	    ├── urls.py
@@ -201,6 +201,8 @@ be invoked to handle that url. They will look something like this:
     /api/v1/users/43 - GET to return info about user 43, POST to update the user's info.
     /api/v1/things/23 - GET to return info about thing 23, POST to update it
     /api/v1/things/create - POST to create a new thing
+    /api/v1/things/23/update
+    /api/v1/things/23/delete
 
 You'll then create a Django view for each url. The view may handle
 both GET and POST requests. You'll need to consult the Django
@@ -324,9 +326,11 @@ data because that's a good sign that the TA's will be able to as well.
 What to turn in
 ---------------
 
-The teaching staff should be able to run your app entirely by using docker-compose up. You can assume we have a clean mysql database called 'cs4501' with user 'www' of password '$3cureUS' (as we configured in project1) for your models container to hook up to. For this project, we would expect your current iteration to have serveral GET APIs and serveral POST APIs.
+You'll send us the link to your github repo and a tag with the version of your code we should use. We'll checkout the code, run "docker-compose up" and expect things to run.
 
-Something that need to be executed by the docker-compose.yml (some of them may be repetitions from the previous section):
+You can assume we have a clean mysql database called 'cs4501' with user 'www' of password '$3cureUS' (as we configured in project1) for your models container to hook up to. For this project, we expect your project to have APIs for each model for creating, reading, updating and deleting (basic CRUD operations). Make sure you do not omit error checking.
+
+As a reminder, some things that need to be executed by the docker-compose.yml:
 
 * run makemigrations (I strongly discourage you from committing your migration files. Why? Come to office hours and we can discuss!)
 * run migrate
@@ -336,6 +340,6 @@ Something that need to be executed by the docker-compose.yml (some of them may b
 * expose ports
 * link to the mysql db container
 
-Also note that you NEED to use relative path for your compose file to work on our machines (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path. Again, test on your group's machines.
+Also note that you NEED to use relative path for your compose file to work on our machines (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path. We highly recommend that you do a final test of your system by checking out and running your code on a clean system and an empty database just like we will test.
 
-You'll send us the link to your github tag. We'll checkout the code, run docker-compose up and expect things to run. Again, we strongly encourage you to take time to demo in the office hours. We want to make sure not only you are writing code that works but also code that is of best practices.
+Again, we strongly encourage you to take time to demo in the office hours. We want to make sure not only you are writing code that works but also code that is of best practices.
