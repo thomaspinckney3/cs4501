@@ -224,6 +224,8 @@ from looking up a user might look like:
      }
     }
 
+For testing your APIs, you can use your browser to make sure GET requests behave as expected, but browsers cannot send POST requests if there is no form to submit. So, you have the option of rendering forms in your views which will send the desired POST requests, or you can use [Postman](https://www.getpostman.com/) (recommended) to test your APIs - this is what the graders will be using to test your APIs. Make sure you know the difference between sending parameters in the URL's query string (e.g. for GET requests), and sending parameters in the POST body. It can be easy to mix up the two while using Postman.
+
 Remember, this is a four-tier app we're building. The DB is the fourth
 / bottom tier. This layer of services you're building now is the
 third tier. It should focus on providing access to creating, looking
@@ -326,9 +328,17 @@ data because that's a good sign that the TA's will be able to as well.
 What to turn in
 ---------------
 
-You'll send us the link to your github repo and a tag with the version of your code we should use. We'll checkout the code, run "docker-compose up" and expect things to run.
+First, the owner of the group's repository needs to make the project repo private and add the other group members and the grader (Github username: "Zakinator123", email: "zaf2xk@virginia.edu") as 'collaborators'. 
 
-You can assume we have a clean mysql database called 'cs4501' with user 'www' of password '$3cureUS' (as we configured in project1) for your models container to hook up to. For this project, we expect your project to have APIs for each model for creating, reading, updating and deleting (basic CRUD operations). Make sure you do not omit error checking.
+Second, once you are ready to submit, create a Github Release, and email Zakey (zaf2xk) and Tom (tp3ks) the link to the release - please make the subject of the email "ISA Project 2 Submission". A Github release will essentially make a snapshot commit of the repo that's labeled with a tag that I will use. See here for more details: https://help.github.com/articles/creating-releases/. 
+
+We should be able to clone your repository, git check out the appropriate commit/release, and run docker-compose up without any problems.
+
+Remember not to commit database files, migration files, or pycache files to Github. If you have already accidentally done so, figure out how to remove them.
+
+You can assume we have a clean mysql database called 'cs4501' with user 'www' of password '$3cureUS' (as we configured in project1) for your models container to hook up to.
+
+For this project, we just expect your project to have APIs for each model for creating, reading, updating and deleting (basic CRUD operations). Make sure you do not omit error checking.
 
 As a reminder, some things that need to be executed by the docker-compose.yml:
 
