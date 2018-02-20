@@ -90,7 +90,7 @@ User Stories and Unit Testing
 -----------------------------
 
 Before starting to write any code for Project 3, start with developing a set of user stories.
-Each feature that you code from this project onwards should correspond to a user story. Each user story should have a documented set of unit tests that validate the user story is correctly implemented (acceptance criteria). For this project, create at least 5 user stories, but no more than 20. Turn in your user stories as part of your project.
+Each feature that you code from this project onwards should correspond to a user story. Each user story should have a documented set of unit tests that validate the user story is correctly implemented (acceptance criteria). For this project, create at least 5 user stories, but no more than 20. Turn in your user stories as part of your project via your [repository's Wiki page](https://help.github.com/articles/about-github-wikis/).
 
 ### Unit Testing ###
 
@@ -220,7 +220,7 @@ models:
 
    exposes the port 8000 in the container (which is the `mod_wsgi-express` default port)
    to port 8001 on the host machine. In this way you can access your models layer by listen to
-   `http://localhost:8001` using a browser in the host machine.
+   `http://localhost:8001` using a browser in the host machine. The exposure of ports and why it is necessary is a critical concept to understand, if you need more help understanding it, please come to office hours.
 
 - I mount the source for each container from my Linux VM so that I can edit code in Linux and have each container pick up the changes immediately (update the last modified time on wsgi.py in the top of your Django app to tell Apache to reload your app -- can do this via 'touch wsgi.py'). This is accomplished by docker compose `volumes` option:
 
@@ -395,7 +395,7 @@ mess. I recommend you do the following:
 
 ### What to turn in ###
 
-Create a tag in your GitHub and email your TA the tag. Make sure you've tested
+once you are ready to submit, create a Github Release, and email Zakey (zaf2xk) the link to the release - please make the subject of the email "ISA Project 3 Submission". Make sure you've tested
 your code thoroughly and haven't forgotten to commit anything. Also make sure to
 test your full stack from a clean/empty/new database so that you're not
 accidentally depending on anything already in your system.
@@ -405,5 +405,5 @@ stories, and unit tests that allow your TA to easily run/test your system and
 verify that the basic functionality works. Your `docker-compose.yml` should
 assume, like in the prior assignment, that there's a `mysql` container already
 running and it should be referenced via an `external_link`. Your fixtures should
-contain sample test data for viewing the listing page. Include your user stories
-and which unit tests they correspond to.
+contain sample test data for viewing the listing page. Include your user stories in the github wiki
+and make sure your unit tests attempt to correspond to the user stories.
