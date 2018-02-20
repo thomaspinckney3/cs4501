@@ -166,9 +166,9 @@ There will be one set of office hours for project questions and demos and anothe
 
   - Office Hours, Project Review, Help, and Demo Hours (led by TAs): 
     
-    Monday: 5-6pm, Rice 414
-    Tuesday: 7:30-9:30pm, Rice 204
-    Thursday: 5-6pm, Rice 404
+    * Monday: 5-6pm, Rice 414
+    * Tuesday: 7:30-9:30pm, Rice 204
+    * Thursday: 5-6pm, Rice 404
     
   - General Q&A (led by Tom): Times TBD but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
 
