@@ -21,14 +21,6 @@ better understanding of what your APIs need to support. It's natural
 to refactor and rewrite like this as you iteratively learn more about
 what you're trying to build.
 
-### User Stories ###
-
-Create new user stories and update old ones to reflect the changes that 
-should be completed by the end of the sprint/project. You should use this
-as a tool that will help you cement your understanding of how you want 
-your registration, login, and create-listing flow to work as well as a tool to help
-you divide up the work among your group members.
-
 ### User Accounts ###
 
 You will _not_ be using Django's built in authentication framework in
@@ -100,6 +92,10 @@ Your web front-end will be responsible for:
      the authenticator. This means that future requests to the web
      front-end will not have the authenticator and so future web
      requests will no longer be processed using the user's identity.
+     
+   - __Create Listing page__: allow logged in users to fill in a form with
+   the details of a new listing. 
+     
 
 #### Authenticators ####
 
@@ -328,62 +324,27 @@ via a `GET` and then be `POST`'ed upon submission. The `POST` handler will eithe
 and return the same rendered form (plus some helpful errors), or it will succeed and return
 the user to wherever they're supposed to go next.
 
-### Some Django best practices (Optional) ###
-
-#### Python decorator ####
-Suppose later your site has more services like `create_list` that requires the user
-to be authenticated. One option is to rewrite the authenticating code for each
-of the views. This violates the software engineering principle of DRY (Don't Repeat Yourself).
-
-Before you begin to worry: Python has the idea of nested functions, which in turn powers the idea of a _decorator_.
-You can think of decorator as an on-the-fly modification to a function. In this case you may consider
-creating a decorator to authenticate the user. It should look something like as follows:
-
-```PYTHON
-def login_required(f):
-    def wrap(request, *args, **kwargs):
-
-        # try authenticating the user
-        user = _validate(request)
-
-        # authentication failed
-        if not user:
-            # redirect the user to the login page
-            return HttpResponseRedirect(reverse('login')+'?next='+current_url)
-        else:
-            return f(request, *args, **kwargs)
-    return wrap
-```
-
-Python provides syntactic sugar to attach a decorator to a function as follows:
-
-```PYTHON
-@login_required
-def create_listing(request):
-   # [...]
-```
-
-You then just need to prepend `@login_required` to each view that needs authentication. Come to the office
-hours if you want to know more about decorators.
-
-#### Slightly advanced Django forms ####
-Django ModelForms provide nice predefined behaviors in a majority of use cases.
-
-However, there are some cases in which you want to customize the default behaviors. In these cases, you probably
-want to look into overriding the \<field\>_clean() method, which provides additional customized checks for a
-model field (e.g. if the email is a UVa email), and overriding the `is_valid()` method, which provides addition customized
-checks for a model as a whole. You can also do things like append customized error messages to a field and render that
-message when the form does not validate. Come to the office hours if you want to know more about Django forms.
-
-
 What to turn in
 ----------------
 
+### User Stories ###
+
+Create new user stories and update old ones to reflect the changes that 
+should be completed by the end of the sprint/project. You should use this
+as a tool that will help you cement your understanding of how you want 
+your registration, login, and create-listing flow to work as well as a tool to help
+you divide up the work among your group members.
+
+### GitHub ###
+
 Please turn in a tag to your GitHub repository (e.g. "project4") to your assigned TA when your team has completed the assignment.
 
-Some additional reminders:
-  - As before, create data fixtures so that course staff can start your project with necessary database tables filled in with test data.
-  - Provide user stories and unit tests accordingly.
+### Reminders ####
+
+  - Create data fixtures so that course staff can start your project with necessary
+   database tables filled in with test data.
+  - Create and update unit tests for the new functionality you added in this project
+  - Create user stories
   - We expect `docker-compose up` to work out of box! Make sure to test your
     code with a clean database (that will be loaded wth fixtures at runtime).
 
