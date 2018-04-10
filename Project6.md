@@ -1,12 +1,12 @@
 Overview
 ========
 
-This project is semi grabbag-style. There are six different topics that is related to improving the website you build. You must complete Continuous Integration(#3), Integration Testing(#4) and Load Balancing(#6). In addition, you will need to choose one topic from the remaining three which are Hosting on DigitalOcean(#1), Caching with Redis(#2) and Performance Testing(#5).
+This project is semi grabbag-style. There are six different topics that are related to improving the website you build. You must complete Continuous Integration(#3), Integration Testing(#4) and Load Balancing(#6). In addition, you will need to choose one topic from the remaining three which are Hosting on DigitalOcean(#1), Caching with Redis(#2) and Performance Testing(#5).
 The detailed topic descriptions are listed as follows:
 
 1. Hosting on DigitalOcean
     
-      Email me (Professor Pinckney) for an invite if you you'd like to do this.
+      Email me (Professor Pinckney) for an invite if you you'd like to do this. Do this within the first week this project is assigned so that I have time to get invites to everyone that needs one.
     
 2. Caching with Redis
     
@@ -67,10 +67,7 @@ The detailed topic descriptions are listed as follows:
     
       A popular open source load-balancer is [HAProxy](https://en.wikipedia.org/wiki/HAProxy).
       The official Docker image can be found [here](https://hub.docker.com/_/haproxy/).
-      The official image, however, does not work right out of the box. As the Docker page describes, you must write a
-      configuration file that specifies how the load balancer should behave (i.e. specify where it should forward requests,
-      how extensive its logs should be, etc.), then you must build a new image that inherits from the official docker image but
-      also incorporates this file.
+      You must write a configuration file that specifies how the load balancer should behave (i.e. specify where it should forward requests, how extensive its logs should be, etc.), then you must build a new image that inherits from the official docker image but also incorporates this file.
       
       HaProxy has extensive [documentation](http://cbonte.github.io/haproxy-dconv/1.6/intro.html) and great general information
       about load-balancers and proxies in general.
@@ -98,7 +95,7 @@ Please turn in via email a write up including:
 
 2. updated docker-compose.yml if you are running any new or changed containers
  
-2. link to any code in github you wrote for this (especially for caching)
+2. GitHub link to any code or config files required to make the project work
 
 3. include any sample output (especially for the load balancer, continuous integration, performance test examples)
 
