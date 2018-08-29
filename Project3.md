@@ -94,7 +94,7 @@ Each feature that you code from this project onwards should correspond to a user
 
 ### Unit Testing ###
 
-[Django's unit tests](https://docs.djangoproject.com/en/1.9/topics/testing/overview/) use the Python unit testing framework ```unitest```. To run your unit tests, execute ```python manage.py test``` from the command line. By default, this will run all files in your project named ```test*.py``` where * is a wildcard (ex. test_users.py).
+[Django's unit tests](https://docs.djangoproject.com/en/2.1/topics/testing/overview/) use the Python unit testing framework ```unitest```. To run your unit tests, execute ```python manage.py test``` from the command line. By default, this will run all files in your project named ```test*.py``` where * is a wildcard (ex. test_users.py).
 
 Django creates and destroys a temporary test database every test run. To be able to grant the user access to the database, we will need to grant permission for user 'www' like in Project 1. Permission can be granted without the database existing yet.
 
@@ -104,7 +104,7 @@ Here are some examples of unit tests for your Django views:
 
 ```Python
     from django.test import TestCase, Client
-    from django.core.urlresolvers import reverse
+    from django.urls import reverse
     from myapp.models import Order, User
 
     class GetOrderDetailsTestCase(TestCase):
@@ -133,7 +133,7 @@ Here are some examples of unit tests for your Django views:
 Note: Django specifies that "Tests that require a database (namely, model tests) will not use your “real” (production) database. Separate, blank databases are created for the tests. Regardless of whether the tests pass or fail, the test databases are destroyed when all the tests have been executed."
 If you are creating tests in your experience layer, then a test database will not work because the model layer, not the experience layer, is the one that interacts directly with the database. Therefore, in later projects, if you find you are unable to test a particular function through unit tests (like database deletions or saves), that is okay. All read-only data (Project 3) should be testable, as well as the API CRUD functionalities built in Project 2. Therefore, unit tests in the models layer is required for this project.
 
-Also see [Django Advanced Testing](https://docs.djangoproject.com/en/1.9/topics/testing/advanced/) if interested!
+Also see [Django Advanced Testing](https://docs.djangoproject.com/en/2.1/topics/testing/advanced/) if interested!
 
 
 Implementation

@@ -24,7 +24,7 @@ completing this work. I'm not going to provide step-by-step
 instructions for how to build a Django app. I'm assuming you've done
 it before and are using the tutorials and support provided on the Django site.
 
-We're using Django 1.10 as of spring 2017. Ensure you have the updated image:
+We're using Django 2.1 as of fall 2018. Ensure you have the updated image:
 
 ```
 docker pull tp33/django
@@ -275,7 +275,7 @@ Dump existing db data to db.json (JSON file name does not matter) using
 
 	python manage.py dumpdata > db.json
 
-See Django documentation for the various options for dumpdata: https://docs.djangoproject.com/en/1.9/ref/django-admin/#dumpdata
+See Django documentation for the various options for dumpdata: https://docs.djangoproject.com/en/2.1/ref/django-admin/#dumpdata
 
 This is an example fixture. You can see it is basically Django model instances
 serialized into JSON format.
@@ -309,7 +309,7 @@ The command will deserialize the models instances and loaded them into your
 database.
 
 See Django documentation for the various options for loaddata:
-https://docs.djangoproject.com/en/1.9/howto/initial-data/
+https://docs.djangoproject.com/en/2.1/howto/initial-data/
 
 Initial data should now be in db!
 

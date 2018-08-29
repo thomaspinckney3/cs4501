@@ -51,7 +51,7 @@ Django
 ------
 
 You should already be familiar with Python and Django. If not, go read more
-here: https://docs.djangoproject.com/en/1.11. We highly recommend that you
+here: https://docs.djangoproject.com/en/2.1. We highly recommend that you
 work through the example application in the Django tutorial if this is your
 first experience with Django.
 
@@ -82,7 +82,7 @@ Install everything
         latest: Pulling from tp33/django
         [...]
         f9d42c108fd8: Pull complete
-        Digest: sha256:90ff75c9817102fe0f5f5e59ff823bd0ea5ad05df24a87bd6def6c18f194da8a
+        Digest: sha256:77257e2e5894f2258b6cbb90d91d7a530ed1e6c5c194f119f7d6c979610bff72
         Status: Downloaded newer image for tp33/django:latest
 
 - And now pull a container image with MySQL installed:
@@ -100,12 +100,12 @@ Install everything
         tp@devel:~$ mkdir -p ~/cs4501/app
         tp@devel:~$ docker run -it --name web -v ~/cs4501/app:/app tp33/django
     	root@4b6cb96f80f3:/app# python
-        Python 3.5.1 (default, Aug 17 2016, 09:30:08)
+        Python 3.5.4 (default, Aug 17 2018, 09:30:08)
         [GCC 4.9.2] on linux
         Type "help", "copyright", "credits" or "license" for more information.
         >>> import django
         >>> django.VERSION
-        (1, 8, 14, 'final', 0)
+        (2, 1, 0, 'final', 0)
         >>>
         root@4b6cb96f80f3:/app# exit
         tp@devel:~$
@@ -122,7 +122,7 @@ Install everything
         tp@devel:~$ docker ps -a
         CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
         79c856338ace        mysql:5.7.14        "/entrypoint.sh mysql"   8 seconds ago        Up 8 seconds                    3306/tcp            mysql
-        4b6cb96f80f3        tp33/django		    "/bin/bash"              About a minute ago   Exited (0) About a minute ago                       web
+        a6e3ac9cd1b5        tp33/django		    "bash"                   About a minute ago   Exited (0) About a minute ago                       web
         tp@devel:~$
 
 Congratulations -- you now have two containers running, one for
@@ -315,32 +315,32 @@ If you are interested in learning more about this, come to office hours.
 Code layout
 -----------
 
-Your Django app will go in /app in the web container, which is mounted
-from ~/cs4501/app in your host environment.
+Your Django app will go in `/app` in the web container, which is mounted
+from `~/cs4501/app` in your host environment.
 
 Inside your web container, create a new Django project with
-'django-admin startproject foo' where foo is the name you want to give
+`django-admin startproject foo` where *foo* is the name you want to give
 your project.
 
-On your host environment, edit the ~/cs4501/app/foo/foo/settings.py file to point
+On your host environment, edit the `~/cs4501/app/foo/foo/settings.py` file to point
 to your database.
 
-The tp33/django image already has the MySQL Python Connector installed
-so use the engine 'mysql.connector.django'. The HOST setting is 'db'
-as that's what we tell Docker to expose the mysql container's IP
-address under in this container (via the --link command when we
-started this container). Set USER, PASSWORD, and NAME to 'www',
-'$3cureUS', and 'cs4501'. You must use these values in order to hook
+The tp33/django image already has mysqlclient installed
+so use the engine `'django.db.backends.mysql'`. The HOST setting is `'db'`
+as that's what we tell Docker to expose the *mysql* container's IP
+address under in this container (via the `--link` command when we
+started this container). Set USER, PASSWORD, and NAME to `'www'`,
+`'$3cureUS'`, and `'cs4501'`. You must use these values in order to hook
 into our grading systems later.
 
-Again, note, you're creating / editting your code outside the
-container in the host but running inside the container under /app.
+Again, note, you're creating / editing your code outside the
+container in the host but running inside the container under `/app`.
 
-Inside your web container:
+Inside your *web* container:
 
     root@4ee80653d2be:/app# django-admin startproject foo
 
-(but replace 'foo' with the name of your project)
+(but replace *foo* with the name of your project)
 
 Back on your Mac/Windows shell:
 
@@ -348,7 +348,7 @@ Back on your Mac/Windows shell:
     tp@devel:~/cs4501/app/foo/foo# vi settings.py
     tp@devel:~/cs4501/app/foo/foo# grep -A 10 -B 5 DATABASES settings.py
     # Database
-    # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+    # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
     DATABASES = {
               'default': {
@@ -449,8 +449,7 @@ Hello World
 Next you're going to write a very simple
 Django app. This assumes you're already familiar with the basics of
 Django development. If not, now is a good time to review the Django
-tutorial and docs. We're using version 1.10, but using 1.11 documentation should be
-fine for everything you do.
+tutorial and docs.
 
 Create a very simple home page for your app. You should add an entry
 to your urls.py that points to a view that you create in a new file

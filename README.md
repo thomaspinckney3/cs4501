@@ -36,7 +36,7 @@ Course Topics (subject to revision as course progresses)
   - Overview of Model View Controller (MVC) design pattern
   - Overview of Docker and course project
   - Project: set up Docker container with Hello World Python/Django web app. https://github.com/thomaspinckney3/cs4501/blob/master/Project1.md
-  - Resources: Django Getting Started docs https://docs.djangoproject.com/en/1.8/intro/ and https://docs.docker.com as well as  https://www.udacity.com/course/web-development--cs253 or http://www.codecademy.com/en/tracks/web if needed for HTML and CSS intro
+  - Resources: Django Getting Started docs https://docs.djangoproject.com/en/2.1/intro/ and https://docs.docker.com as well as  https://www.udacity.com/course/web-development--cs253 or http://www.codecademy.com/en/tracks/web if needed for HTML and CSS intro
 2. Requirements and documentation
   - User stories
   - Product requirement documents
@@ -67,8 +67,8 @@ Course Topics (subject to revision as course progresses)
   - Phishing
   - Internal IT and employees as attack vector
   - Project: Build view layer. https://github.com/thomaspinckney3/cs4501/blob/master/Project3.md
-  - Resources: Bootstrap http://getbootstrap.com/getting-started/ and Django templates https://docs.djangoproject.com/en/1.8/topics/templates/
-  - Resource: Django security features: https://docs.djangoproject.com/en/1.8/topics/security/
+  - Resources: Bootstrap http://getbootstrap.com/getting-started/ and Django templates https://docs.djangoproject.com/en/2.1/topics/templates/
+  - Resource: Django security features: https://docs.djangoproject.com/en/2.1/topics/security/
 15. Messaging and queing
   - Integrating online and offline processing / Sync vs async
   - Queueing systems
@@ -93,7 +93,7 @@ Course Topics (subject to revision as course progresses)
   - Content delivery networks
   - Case study: memcached
   - Reading: http://radar.oreilly.com/2009/07/velocity-making-your-site-fast.html
-  - Resources: Python futures https://docs.python.org/3.4/library/concurrent.futures.html and Django cache APIs https://docs.djangoproject.com/en/1.8/topics/cache/
+  - Resources: Python futures https://docs.python.org/3.4/library/concurrent.futures.html and Django cache APIs https://docs.djangoproject.com/en/2.1/topics/cache/
   - Project: search. https://github.com/thomaspinckney3/cs4501/blob/master/Project5.md
 8. Testing and DevOps
   - Automated testing for services, web pages and mobile apps

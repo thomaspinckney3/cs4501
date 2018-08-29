@@ -184,7 +184,7 @@ own versions. Use the `django.contrib.auth.hashers` module's
 `make_password` and `check_password`. Read more about password hashing in
 the official Django documentation:
 
-<https://docs.djangoproject.com/en/1.10/topics/auth/passwords/#module-django.contrib.auth.hashers>
+<https://docs.djangoproject.com/en/2.1/topics/auth/passwords/#module-django.contrib.auth.hashers>
 
 There is additional reading on salting, hashing, and password-cracking at:
 
