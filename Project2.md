@@ -26,14 +26,15 @@ it before and are using the tutorials and support provided on the Django site.
 
 We're using Django 2.1 as of fall 2018. Ensure you have the updated image:
 
-```
+```sh
 docker pull tp33/django
 ```
 
 The image also installs the package `mysqlclient`. And so in your Django settings, make sure your database backend engine is `django.db.backends.mysql` (and not `mysql.connector.django`).
 
 This is what it should look like:
-```
+
+```py
 DATABASES = {
     'default': {
           'ENGINE': 'django.db.backends.mysql',
@@ -91,7 +92,7 @@ terminal.
 
 If you don't, install it:
 
-	$ curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+	$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
 	$ chmod +x /usr/local/bin/docker-compose
 
 
@@ -101,15 +102,17 @@ exactly as docker-compose.yml). Docker Compose uses these files, called YAML (pr
 
 You can tell compose to create a new container by giving it a name and an image to use.
 
-	models:
-	    image: tp33/django
-	    external_links:
-	      -  mysql:db
-	    volumes:
-	      - <project_root_dir>:/app
-	    ports:
-	      - "8001:8000"
-	    command: bash -c "mod_wsgi-express start-server --working-directory <project_root_dir> --reload-on-changes <path_to_wsgi.py>/wsgi.py"
+```YAML
+models:
+  image: tp33/django
+  external_links:
+    - mysql:db
+  volumes:
+    - <project_root_dir>:/app
+  ports:
+    - "8001:8000"
+  command: bash -c "mod_wsgi-express start-server --working-directory <project_root_dir> --reload-on-changes <path_to_wsgi.py>/wsgi.py"
+```
 
 Notice the difference between external_links and links. We use links to link to
 a container created by the docker-compose.yml. On the other hand, external_links
@@ -155,47 +158,48 @@ Models
 
 The first step is to create your Django models for your project. Generally, there are a few guidelines to consider:
 
-  Remember, each model corresponds to a table in your database. Each
-  model is represented in Django by a Python class. Each row in your
-  table will correspond to an instance of your model class. Django
-  will automatically create the database tables you need.
+Remember, each model corresponds to a table in your database. Each
+model is represented in Django by a Python class. Each row in your
+table will correspond to an instance of your model class. Django
+will automatically create the database tables you need.
 
-  Every model should include a unique id. For example, if your project
-  has things that can be sold, there'll likely be an Items model that
-  represents the things to be sold. Each Item should have a unique id
-  that you can record, for example, when creating the lists of Items a
-  user has bought or sold. Django's built-in auto primary key works fine
-  (but be sure to know why it works).
+Every model should include a unique id. For example, if your project
+has things that can be sold, there'll likely be an Items model that
+represents the things to be sold. Each Item should have a unique id
+that you can record, for example, when creating the lists of Items a
+user has bought or sold. Django's built-in auto primary key works fine
+(but be sure to know why it works).
 
-  You need to think through the relationships between
-  models. Continuing the example above, a single user may have bought
-  many items so there is what is called a "one-to-many" relationship
-  between Users and Items. On the other hand, if you have a user has
-  written a Review for an Item, the Review will reference the Item id
-  being reviewed. There will be exactly one Item that the Review
-  references. This is known as a "one-to-one" relation.
+You need to think through the relationships between
+models. Continuing the example above, a single user may have bought
+many items so there is what is called a "one-to-many" relationship
+between Users and Items. On the other hand, if you have a user has
+written a Review for an Item, the Review will reference the Item id
+being reviewed. There will be exactly one Item that the Review
+references. This is known as a "one-to-one" relation.
 
-  User and Picture models are generally handled specially in
-  Django. However, as we'll discuss in later classes, we're not
-  going to use the Django User class. You can use it as a placeholder,
-  but know that you'll change it in the next few projects.
-  Pictures are complicated by the fact that they tend to be large.
-  For now, I'd just ignore doing anything with pictures. 
+User and Picture models are generally handled specially in
+Django. However, as we'll discuss in later classes, we're not
+going to use the Django User class. You can use it as a placeholder,
+but know that you'll change it in the next few projects.
+Pictures are complicated by the fact that they tend to be large.
+For now, I'd just ignore doing anything with pictures.
 
 Docker
 --------
 
 For project 2, try and create a quick and simple pipeline for working with Docker. **An objective for project 2 is to show you that setting up to run code is just as important as writing the code.** Some of the key concepts you may want to look into are
-* docker-compose
-* docker volumes
-* docker port forwarding
-* modwsgi --reload-on-change flag
+
+- docker-compose
+- docker volumes
+- docker port forwarding
+- modwsgi --reload-on-change flag
 
 Services
 --------
 
 Each API will have its own url for accessing it. These are listed in
-your project's urls.py file. Each one will specify the view that is to
+your project's `urls.py` file. Each one will specify the view that is to
 be invoked to handle that url. They will look something like this:
 
     /api/v1/users/43 - GET to return info about user 43, POST to update the user's info.
@@ -213,18 +217,19 @@ The APIs should return JSON results. The POST methods should take either form-en
 sets of key-value parameters (preferred) or JSON encoded values. For example, a result
 from looking up a user might look like:
 
-    {
-     'ok':     True,
-     'result':
-     {
-      'username':    'tpinckney',
-      'first_name':  'Tom',
-      'last_name':   'Pinckney',
-      'date_created': 'Feb 12 2016'
-     }
+```py
+{
+    'ok': True,
+    'result': {
+        'username':     'tpinckney',
+        'first_name':   'Tom',
+        'last_name':    'Pinckney',
+        'date_created': 'Feb 12 2016'
     }
+}
+```
 
-For testing your APIs, you can use your browser to make sure GET requests behave as expected, but browsers cannot send POST requests if there is no form to submit. So, you have the option of rendering forms in your views which will send the desired POST requests, or you can use [Postman](https://www.getpostman.com/) (recommended) to test your APIs - this is what the graders will be using to test your APIs. Make sure you know the difference between sending parameters in the URL's query string (e.g. for GET requests), and sending parameters in the POST body. It can be easy to mix up the two while using Postman.
+For testing your APIs, you can use your browser to make sure GET requests behave as expected, but browsers cannot send POST requests if there is no form to submit. So, you have the option of rendering forms in your views which will send the desired POST requests, or you can use [Postman](https://www.getpostman.com/) (recommended) to test your APIs—this is what the graders will be using to test your APIs. Make sure you know the difference between sending parameters in the URL's query string (e.g. for GET requests), and sending parameters in the POST body. It can be easy to mix up the two while using Postman.
 
 Remember, this is a four-tier app we're building. The DB is the fourth
 / bottom tier. This layer of services you're building now is the
@@ -248,11 +253,11 @@ migration in Django is a set of schema changes that are required to move your DB
 and app from one version to the next.
 
 When you edit your models.py file(s), your DB will not immediately automatically
-reflect the changes. Instead, you'll need to use your Django manage.py to
+reflect the changes. Instead, you'll need to use your Django `manage.py` to
 generate a set of SQL commands needed to update your DB to match your new
 models. Then you can apply these commands to make them actually take affect.
 Django breaks this into two stages so that you can check the commands into git
-on your dev machine and then later apply them to many different db's -- in
+on your dev machine and then later apply them to many different db's—in
 theory you might have many dev db instances, some testing/qa instances and then
 prod db instances. See the Django getting started or model documentation for
 more on migrations and how to use them.
@@ -280,24 +285,26 @@ See Django documentation for the various options for dumpdata: https://docs.djan
 This is an example fixture. You can see it is basically Django model instances
 serialized into JSON format.
 
-	[
-	  {
-	    "model": "myapp.person",
-	    "pk": 1,
-	    "fields": {
-	      "first_name": "John",
-	      "last_name": "Lennon"
-	    }
-	  },
-	  {
-	    "model": "myapp.person",
-	    "pk": 2,
-	    "fields": {
-	      "first_name": "Paul",
-	      "last_name": "McCartney"
-	    }
-	  }
-	]
+```json
+[
+  {
+    "model": "myapp.person",
+    "pk": 1,
+    "fields": {
+      "first_name": "John",
+      "last_name": "Lennon"
+    }
+  },
+  {
+    "model": "myapp.person",
+    "pk": 2,
+    "fields": {
+      "first_name": "Paul",
+      "last_name": "McCartney"
+    }
+  }
+]
+```
 
 To use your fixture to pre-populate a **clean** database instance:
 
@@ -314,12 +321,12 @@ https://docs.djangoproject.com/en/2.1/howto/initial-data/
 Initial data should now be in db!
 
 To incorporate fixtures into your project submissions, add some data to your
-database and create a fixture before pushing to github and add “python manage.py
-loaddata” command to your docker-compose command to load the data before
+database and create a fixture before pushing to github and add `python manage.py
+loaddata` command to your `docker-compose` command to load the data before
 starting your server. This is how we can use every group's app without having to
 manually enter data every time.
 
-This should go without saying - make sure everyone in the group can flush their
+This should go without saying: make sure everyone in the group can flush their
 database and load a fixture. Sometimes, you'll have issues with contenttypes and
 permissions creating conflicts. Look into the flags you can use to exclude these
 from making it into the fixtures JSON. Ensure that everyone in your group can load
@@ -328,11 +335,11 @@ data because that's a good sign that the TA's will be able to as well.
 What to turn in
 ---------------
 
-First, the owner of the group's repository needs to make the project repo private and add the other group members and the grader (Github username: "Zakinator123", email: "zaf2xk@virginia.edu") as 'collaborators'. 
+First, the owner of the group's repository needs to make the project repo private and add the other group members and the grader (Github username: "Zakinator123", email: "zaf2xk@virginia.edu") as 'collaborators'.
 
-Second, once you are ready to submit, create a Github Release, and email Zakey (zaf2xk) and Tom (tp3ks) the link to the release - please make the subject of the email "ISA Project 2 Submission". A Github release will essentially make a snapshot commit of the repo that's labeled with a tag that I will use. See here for more details: https://help.github.com/articles/creating-releases/. 
+Second, once you are ready to submit, create a Github Release, and email Zakey (zaf2xk) and Tom (tp3ks) the link to the release - please make the subject of the email "ISA Project 2 Submission". A Github release will essentially make a snapshot commit of the repo that's labeled with a tag that I will use. See here for more details: https://help.github.com/articles/creating-releases/.
 
-We should be able to clone your repository, git check out the appropriate commit/release, and run docker-compose up without any problems.
+We should be able to clone your repository, git check out the appropriate commit/release, and run `docker-compose up` without any problems.
 
 Remember not to commit database files, migration files, or pycache files to Github. If you have already accidentally done so, figure out how to remove them.
 
@@ -342,13 +349,13 @@ For this project, we just expect your project to have APIs for each model for cr
 
 As a reminder, some things that need to be executed by the docker-compose.yml:
 
-* run makemigrations (I strongly discourage you from committing your migration files. Why? Come to office hours and we can discuss!)
-* run migrate
-* load fixtures
-* start the wsgi server
-* (You can do something like `command: bash -c "<command_1> && <command_2> && ..."`)
-* expose ports
-* link to the mysql db container
+- Run makemigrations (I strongly discourage you from committing your migration files. Why? Come to office hours and we can discuss!)
+- Run migrate
+- Load fixtures
+- Start the wsgi server
+- (You can do something like `command: bash -c "<command_1> && <command_2> && ..."`)
+- Expose ports
+- Link to the mysql db container
 
 Also note that you NEED to use relative path for your compose file to work on our machines (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path. We highly recommend that you do a final test of your system by checking out and running your code on a clean system and an empty database just like we will test.
 

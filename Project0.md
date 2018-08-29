@@ -18,9 +18,9 @@ Install Docker
 --------------
 Install Docker following the instructions:
 
- - Ubuntu: https://docs.docker.com/installation/ubuntulinux/
- - Mac: https://docs.docker.com/docker-for-mac/
- - Windows: https://docs.docker.com/docker-for-windows/
+- Ubuntu: https://docs.docker.com/installation/ubuntulinux/
+- Mac: https://docs.docker.com/docker-for-mac/
+- Windows: https://docs.docker.com/docker-for-windows/
 
 More OS options available: https://docs.docker.com/engine/installation/
 
@@ -28,27 +28,28 @@ Docker commands
 ---------------
 Now that you get your docker working, it's time for us to go over some Docker commands.
 
-###docker ps -a
+### `docker ps -a`
 This command is used to see the status of containers you created. If you follow the project description, the command will give you something like
 ```
-	zeizyy@zeizyy-thinkpad:~/cs4501_ta$ docker ps -a
-	CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                          PORTS               NAMES
-	ad3b71d8998e        tp33/django:1.2     "/bin/bash"              6 hours ago         Exited (0) About a minute ago                       web
+zeizyy@zeizyy-thinkpad:~/cs4501_ta$ docker ps -a
+CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                          PORTS               NAMES
+ad3b71d8998e        tp33/django:1.2     "/bin/bash"              6 hours ago         Exited (0) About a minute ago                       web
 ```
 
-###docker run IMAGE
+### `docker run IMAGE`
 This command is used to create and run a container (like we just did in the instruction).
 
 Some useful options (for now):
-- --name: specify the name of the container. The container will be named by a hash if no name is specified.
-- -it: connect to the container in an interactive command line.
+
+- `--name`: specify the name of the container. The container will be named by a hash if no name is specified.
+- `-it`: connect to the container in an interactive command line.
 
 Any commands specified after IMAGE will be interpreted as command to be executed inside the container when it is created.
 
-###docker start CONTAINER
+### `docker start CONTAINER`
 This is used to start a STOPPED container.
 
-###docker stop CONTAINER
+### `docker stop CONTAINER`
 This is used to stop a running container.
 
 Final Comment
