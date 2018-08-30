@@ -31,15 +31,20 @@ about them elsewhere, but they're like virtual machines but lighter
 weight. They're one component of treating infrastructure as
 software. You can define what kind of environment you need, install
 apps, define networking topologies, and then easily clone/start as
-many instances of that container as you like -- on your dev machine or
+many instances of that container as you like—on your dev machine or
 on public hosting providers like Amazon AWS or Digital Ocean.
 
-You'll be using two containers initially -- one that has Apache and Django pre-installed and built to work together easily, and another that contains MySQL.
+You'll be using two containers initially: one that has Apache and Django
+pre-installed and built to work together easily, and another that contains MySQL.
 
 The system for containers we're using requires Linux. If you're
 already running Linux on your laptop then you will likely need to just
 install Docker. If you're using a Mac or Windows, you will need to
-install Docker for Mac or Docker for Windows. If you have an older version of Docker, you may need to install Docker Toolbox. And lastly, if for some reason you cannot get any of those to work (rarely occurs), you could run Docker from within a Linux virtual box (Although it would seem like that defeats the purpose of using Docker, the experience you gain from dealing with containers is still invaluable).
+install Docker for Mac or Docker for Windows. If you have an older version of Docker,
+you may need to install Docker Toolbox. And lastly, if for some reason you cannot get
+any of those to work (rarely occurs), you could run Docker from within a Linux virtual box
+(Although it would seem like that defeats the purpose of using Docker, the experience you
+gain from dealing with containers is still invaluable).
 
 Note, when you're using the Docker for Mac or Docker for Windows
 packages you're still using Linux. These packages install a
@@ -51,7 +56,7 @@ Django
 ------
 
 You should already be familiar with Python and Django. If not, go read more
-here: https://docs.djangoproject.com/en/1.11. We highly recommend that you
+here: https://docs.djangoproject.com/en/2.1. We highly recommend that you
 work through the example application in the Django tutorial if this is your
 first experience with Django.
 
@@ -71,10 +76,10 @@ Install everything
 ===================
 
 - Install Docker following the instructions:
-  	  - Ubuntu: https://docs.docker.com/installation/ubuntulinux/
-	  - Mac: https://docs.docker.com/docker-for-mac/
-	  - Windows: https://docs.docker.com/docker-for-windows/
-	  - More OS options available: https://docs.docker.com/engine/installation/
+    - Ubuntu: https://docs.docker.com/installation/ubuntulinux/
+    - Mac: https://docs.docker.com/docker-for-mac/
+    - Windows: https://docs.docker.com/docker-for-windows/
+    - More OS options available: https://docs.docker.com/engine/installation/
 
 - Pull down the [Docker container image](https://hub.docker.com/r/tp33/django/~/dockerfile/) containing the Apache/Django installations:
 
@@ -82,7 +87,7 @@ Install everything
         latest: Pulling from tp33/django
         [...]
         f9d42c108fd8: Pull complete
-        Digest: sha256:90ff75c9817102fe0f5f5e59ff823bd0ea5ad05df24a87bd6def6c18f194da8a
+        Digest: sha256:77257e2e5894f2258b6cbb90d91d7a530ed1e6c5c194f119f7d6c979610bff72
         Status: Downloaded newer image for tp33/django:latest
 
 - And now pull a container image with MySQL installed:
@@ -100,12 +105,12 @@ Install everything
         tp@devel:~$ mkdir -p ~/cs4501/app
         tp@devel:~$ docker run -it --name web -v ~/cs4501/app:/app tp33/django
     	root@4b6cb96f80f3:/app# python
-        Python 3.5.1 (default, Aug 17 2016, 09:30:08)
+        Python 3.5.4 (default, Aug 17 2018, 09:30:08)
         [GCC 4.9.2] on linux
         Type "help", "copyright", "credits" or "license" for more information.
         >>> import django
         >>> django.VERSION
-        (1, 8, 14, 'final', 0)
+        (2, 1, 0, 'final', 0)
         >>>
         root@4b6cb96f80f3:/app# exit
         tp@devel:~$
@@ -116,16 +121,16 @@ Install everything
         tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.14
         79c856338ace5edc9df074e252fb16caedd0ed1b53f64eef613e84301482dd75
 
-- Note the status of your Docker containers. The one named web will be shown as
-  exited while the one named mysql will be running.
+- Note the status of your Docker containers. The one named *web* will be shown as
+  exited while the one named *mysql* will be running.
 
         tp@devel:~$ docker ps -a
         CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
         79c856338ace        mysql:5.7.14        "/entrypoint.sh mysql"   8 seconds ago        Up 8 seconds                    3306/tcp            mysql
-        4b6cb96f80f3        tp33/django		    "/bin/bash"              About a minute ago   Exited (0) About a minute ago                       web
+        a6e3ac9cd1b5        tp33/django		    "bash"                   About a minute ago   Exited (0) About a minute ago                       web
         tp@devel:~$
 
-Congratulations -- you now have two containers running, one for
+Congratulations—you now have two containers running, one for
 running Django web apps and the other for running MySQL.
 
 Setting up MySQL
@@ -175,7 +180,7 @@ required for this app and no other privileges.
 
 This will create a new MySQL user named `www` and a new database named
 `cs4501`. The user `www`'s password is
-'$3cureUS'. Finally, this gives `www` access to all tables in cs4501.
+`'$3cureUS'`. Finally, the user `www` is given access to all tables in the database `cs4501`.
 
 You can keep this container around for easy access to the MySQL
 command line.
@@ -183,19 +188,19 @@ command line.
 Working with containers
 -----------------------
 
-Run 'docker ps -a' and you'll see that you have two containers (the
-ones you started above when testing your install) named web and
-mysql. These are your dev environment containers. You'll do your
-coding and initial testing in these containers. Run 'docker rm web' to
-clean up the (stopped) web container you started earlier when testing
-your install. Go ahead and stop your mysql container with 'docker stop
-mysql'.
+Run `docker ps -a` and you'll see that you have two containers (the
+ones you started above when testing your install) named *web* and
+*mysql*. These are your dev environment containers. You'll do your
+coding and initial testing in these containers. Run `docker rm web` to
+clean up the (stopped) *web* container you started earlier when testing
+your install. Go ahead and stop your *mysql* container with `docker stop
+mysql`.
 
 Docker provides a simple way for containers to talk to each other via
 private networks. When you start a container you can tell Docker to
-create an /etc/hosts entry for another running container. We'll do
-this using the `--link` flag so that the web container can easily connect to the mysql
-container. Let's restart the web container this way:
+create an `/etc/hosts` entry for another running container. We'll do
+this using the `--link` flag so that the *web* container can easily connect to the *mysql*
+container. Let's restart the *web* container this way:
 
     tp@devel:~$ docker ps -a
     CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
@@ -220,18 +225,19 @@ container. Let's restart the web container this way:
 
 This tells Docker to create a new container from the tp33/django
 image and create a hosts entry named db that references the IP address
-used by the mysql container. It also exposes port 8000 on the container
+used by the *mysql* container. It also exposes port 8000 on the container
 to port 8000 on the host machine (so you can see the app on your browser
 just like you could any other web page). The concepts of port exposure and container
-networking has historically been often misunderstood by students. It's highly recommended to come to office hours if you do not fully understand this topic - it will save you a lot of time later on.
+networking has historically been often misunderstood by students. It's highly recommended
+to come to office hours if you do not fully understand this topic—it will save you a lot of time later on.
 
-When you exit a container, its disk image persists -- allowing you to
-restart it later. You can re-start your web container with 'docker
-start web' and then re-attach an interactive session to it with
-'docker attach web'.
+When you exit a container, its disk image persists, allowing you to
+restart it later. You can re-start your *web* container with `docker
+start web` and then re-attach an interactive session to it with
+`docker attach web`.
 
-If you want to remove a container, use 'docker rm'. If you want to
-remove an image, use 'docker rmi'. Once you remove a container, any
+If you want to remove a container, use `docker rm`. If you want to
+remove an image, use `docker rmi`. Once you remove a container, any
 changes that you made inside of it are gone.
 
 The way that you can persist data between container invocations in a way
@@ -240,28 +246,28 @@ store the data outside the container and then make the data accessible
 once the container starts. The simplest way to do this is to mount a
 directory from outside the containers to a point inside the container.
 
-The -v argument to 'docker run' does exactly this. It takes two paths,
+The `-v` argument to `docker run` does exactly this. It takes two paths,
 seperated by a colon. The first path is a directory on your
 Mac/Windows/Linux system and the second path is a directory inside the
 container. Any data stored or changed in this directory in the
 container will really be getting stored outside the container and so
 will persist beyond the container's lifetime.
 
-Notice that when we started the web and mysql containers above we used
-the -v argument to tell docker that we wanted to make data in our host
-system be mounted into the containers. We said that /app in the web
-container should access data stored in the host's ~/cs4501/app and the
-mysql container should store its /var/lib/mysql data under the host's
-~/cs4501/db.
+Notice that when we started the *web* and *mysql* containers above we used
+the `-v` argument to tell docker that we wanted to make data in our host
+system be mounted into the containers. We said that `/app` in the web
+container should access data stored in the host's `~/cs4501/app` and the
+*mysql* container should store its `/var/lib/mysql` data under the host's
+`~/cs4501/db`.
 
-Go ahead and try creating a file on your host in ~/cs4501/app and then
-verify that you can access that file inside your web container.
+Go ahead and try creating a file on your host in `~/cs4501/app` and then
+verify that you can access that file inside your *web* container.
 
-Knowing `curl` as a command line HTTP tool is important, but developing a 
-Django project by looking at raw HTML from the terminal is not the 
-best development experience. To see those HTML scripts in a browser on 
+Knowing `curl` as a command line HTTP tool is important, but developing a
+Django project by looking at raw HTML from the terminal is not the
+best development experience. To see those HTML scripts in a browser on
 your host machine, you need to expose a port inside the container to a port
-on your host machine. The -p argument to the 'docker run' command does that.
+on your host machine. The `-p` argument to the `docker run` command does that.
 It exposes port 8000 (the 8000 after colon) inside the container to port 8000
 on your host machine (the 8000 before the colon). Then the Django app can be
 reached on the host machine at http://localhost:8000. Note for students who are
@@ -279,18 +285,23 @@ You'll use GitHub for version control for this class. If you don't have a GitHub
 account already, go create one. There's good online help for using
 GitHub and Git.
 
-Creating a repo for Project 1 is not required since it is an individual project and it won't be checked/needed for project submission. However, if you are not experienced with Git/Github, it is highly recommended that you start to familiarize yourself with it now. You should be familiar with using a basic [Git Workflow](https://guides.github.com/introduction/flow/), and consider using it when you start Project 2 with your group. You should not be pushing pycache files, database files, or database migration files on Github.
-Learn to use .gitignore to enforce this, otherwise nasty merge conflicts and other issues will pop up later on.
+Creating a repo for Project 1 is not required since it is an individual project and
+it won't be checked/needed for project submission. However, if you are not experienced
+with Git/Github, it is highly recommended that you start to familiarize yourself with
+it now. You should be familiar with using a basic [Git Workflow](https://guides.github.com/introduction/flow/),
+and consider using it when you start Project 2 with your group. You should not be pushing pycache files,
+database files, or database migration files on Github.
+Learn to use `.gitignore` to enforce this, otherwise nasty merge conflicts and other issues will pop up later on.
 
 Dev process
 -------------
 
 Generally, you will be editing your code in the host directory
-~/cs4501/app, testing it inside your container and then when it's
+`~/cs4501/app`, testing it inside your container and then when it's
 complete you will check it into github from your host. This allows you
 to edit using whatever IDE / editor you prefer on your Mac/Windows
 laptop but run your code with a carefully configured system specified
-inside your web container.
+inside your *web* container.
 
 Making your own containers
 ---------------------------
@@ -315,32 +326,32 @@ If you are interested in learning more about this, come to office hours.
 Code layout
 -----------
 
-Your Django app will go in /app in the web container, which is mounted
-from ~/cs4501/app in your host environment.
+Your Django app will go in `/app` in the *web* container, which is mounted
+from `~/cs4501/app` in your host environment.
 
 Inside your web container, create a new Django project with
-'django-admin startproject foo' where foo is the name you want to give
+`django-admin startproject foo` where *foo* is the name you want to give
 your project.
 
-On your host environment, edit the ~/cs4501/app/foo/foo/settings.py file to point
+On your host environment, edit the `~/cs4501/app/foo/foo/settings.py` file to point
 to your database.
 
-The tp33/django image already has the MySQL Python Connector installed
-so use the engine 'mysql.connector.django'. The HOST setting is 'db'
-as that's what we tell Docker to expose the mysql container's IP
-address under in this container (via the --link command when we
-started this container). Set USER, PASSWORD, and NAME to 'www',
-'$3cureUS', and 'cs4501'. You must use these values in order to hook
+The tp33/django image already has mysqlclient installed
+so use the engine `'django.db.backends.mysql'`. The HOST setting is `'db'`
+as that's what we tell Docker to expose the *mysql* container's IP
+address under in this container (via the `--link` command when we
+started this container). Set USER, PASSWORD, and NAME to `'www'`,
+`'$3cureUS'`, and `'cs4501'`. You must use these values in order to hook
 into our grading systems later.
 
-Again, note, you're creating / editting your code outside the
-container in the host but running inside the container under /app.
+Again, note, you're creating / editing your code outside the
+container in the host but running inside the container under `/app`.
 
-Inside your web container:
+Inside your *web* container:
 
     root@4ee80653d2be:/app# django-admin startproject foo
 
-(but replace 'foo' with the name of your project)
+(but replace *foo* with the name of your project)
 
 Back on your Mac/Windows shell:
 
@@ -348,28 +359,28 @@ Back on your Mac/Windows shell:
     tp@devel:~/cs4501/app/foo/foo# vi settings.py
     tp@devel:~/cs4501/app/foo/foo# grep -A 10 -B 5 DATABASES settings.py
     # Database
-    # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+    # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
     DATABASES = {
-              'default': {
-              'ENGINE': 'django.db.backends.mysql',
-              'NAME': 'cs4501',
-              'USER': 'www',
-              'PASSWORD': '$3cureUS',
-              'HOST': 'db',
-              }
-          }
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'cs4501',
+            'USER': 'www',
+            'PASSWORD': '$3cureUS',
+            'HOST': 'db',
+        }
+    }
 
     # Internationalization
 
 Finally, commit and push your newly created Django app up to GitHub.
 
-You should create an ssh key pair ('ssh key-gen') and then upload your
+You should create an ssh key pair (`ssh key-gen`) and then upload your
 public key to GitHub so you can push/pull changes without typing your
 password each time. (Not required)
 
 In the future, when you want to deploy a test or production container
-you can just use 'docker run' to start an instance of tp33/django,
+you can just use `docker run` to start an instance of tp33/django,
 checkout your code from GitHub, and you're good to go.
 
 Trying it all out
@@ -398,11 +409,11 @@ Then apply database migrations:
 If the DATABASES section is not set up correctly, or if the database
 itself has a problem, you'll get an error here.
 
-Now try running Apache. Your web container has Apache and mod_wsgi
+Now try running Apache. Your *web* container has Apache and mod_wsgi
 installed already. Again, note 'foo' is my project name and you
 will need to replace that with your project's name.
 
-Inside your web container:
+Inside your *web* container:
 
     root@399bd9c4a2a5:/app# mod_wsgi-express start-server --reload-on-changes --working-directory /app/foo /app/foo/foo/wsgi.py &
     [1] 73
@@ -425,22 +436,22 @@ And test it out:
 You should get back the stock Django "It worked" page. If you get any
 other sort of response then something's not right.
 
-'mod_wsgi-express' is a handy tool which generates an Apache httpd.conf file
+`mod_wsgi-express` is a handy tool which generates an Apache httpd.conf file
 for you and then starts Apache using that httpd.conf file. It prints out
 some paths to where the conf file is and where the error log is. You
 can read more at
 http://blog.dscpl.com.au/2015/04/introducing-modwsgi-express.html.
 
-'curl' is another handy tool. It is a command line tool for issuing
+`curl` is another handy tool. It is a command line tool for issuing
 HTTP GET or POST commands. It's great for debugging web apps.
 
 If you have trouble and need to debug your code there are two ways:
 either use the Django development server or look in the Apache error
 logs.  The Django development server prints exceptions to standard out
 so it's easy to see when something is wrong. If you're using Apache,
-the mod_wsgi-express command above printed out the path to the error
-log -- it will be something like
-/tmp/mod_wsgi-localhost:8000:0/error_log. Look there for exceptions or
+the `mod_wsgi-express` command above printed out the path to the error
+log—it will be something like
+`/tmp/mod_wsgi-localhost:8000:0/error_log`. Look there for exceptions or
 other errors.
 
 Hello World
@@ -449,12 +460,11 @@ Hello World
 Next you're going to write a very simple
 Django app. This assumes you're already familiar with the basics of
 Django development. If not, now is a good time to review the Django
-tutorial and docs. We're using version 1.10, but using 1.11 documentation should be
-fine for everything you do.
+tutorial and docs.
 
 Create a very simple home page for your app. You should add an entry
-to your urls.py that points to a view that you create in a new file
-named home.py. You can return whatever you want, but whatever it is
+to your `urls.py` that points to a view that you create in a new file
+named `home.py`. You can return whatever you want, but whatever it is
 should be rendered in an html file using the `render` keyword.
 
 Later on in the course we're going to be using the Bootstrap CSS
@@ -464,5 +474,5 @@ up your page a bit.
 What to turn in
 ---------------
 
-Turn in screenshots of 'docker ps' showing your running containers
+Turn in screenshots of `docker ps` showing your running containers
 along with a screenshot of your "Hello World" output from curl. Submit this to tp3ks@virginia.edu and zaf2xk@virginia.edu.
