@@ -202,7 +202,7 @@ link to the experience service container:
 web:
   image: tp33/django
   links:
-   - exp:exp-api
+    - exp:exp-api
 ```
 
 I do a few other things to ease my development:
@@ -295,10 +295,10 @@ This results in my running container set looking like:
 
     tp@devel:~$ docker ps
     CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                    NAMES
-    5d4da12058de        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute 0.0.0.0:8000->8000/tcp   web
-    e9f08748b67f        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute 0.0.0.0:8002->8000/tcp   exp
+    5d4da12058de        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute   0.0.0.0:8000->8000/tcp   web
+    e9f08748b67f        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute   0.0.0.0:8002->8000/tcp   exp
     5ef6412cc321        tp33/django:1.2     "mod_wsgi-express sta"   About a minute ago   Up About a minute   0.0.0.0:8001->8000/tcp   models
-    5b18a2deae1a        mysql:5.7.8         "/entrypoint.sh mysql"   4 weeks ago          Up 40 minutes       3306/tcp                 mysql
+    249e7f18b767        mysql:5.7.23        "docker-entrypoint.s…"   4 weeks ago          Up 40 minutes       3306/tcp, 33060/tcp      mysql
 
 - My low level API is running in a container called 'models' and is listening on port 8000 (which is exposed as port 8001).
 - My experience service API is running in a container called 'exp' and is listening on port 8000 (which is exposed as port 8002).

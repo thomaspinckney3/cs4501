@@ -46,8 +46,6 @@ DATABASES = {
 }
 ```
 
-The latest stable MySQL release (5.7.17) has also been tested to be compatible with future projects in the class. To use the updated MySQL image, use the image name "mysql:5.7.17".
-
 A note on code layout: it should look something like this. This is the same directory structure you get when when you use the standard Django `startproject`, `startapp` commands.
 
 
@@ -190,10 +188,10 @@ Docker
 
 For project 2, try and create a quick and simple pipeline for working with Docker. **An objective for project 2 is to show you that setting up to run code is just as important as writing the code.** Some of the key concepts you may want to look into are
 
-- docker-compose
-- docker volumes
-- docker port forwarding
-- modwsgi --reload-on-change flag
+- `docker-compose`
+- `docker volumes`
+- `docker port forwarding`
+- `modwsgi --reload-on-change flag`
 
 Services
 --------
