@@ -92,12 +92,11 @@ Install everything
 
 - And now pull a container image with MySQL installed:
 
-        tp@devel:~$ docker pull mysql:5.7.14
-        5.7.14: Pulling from library/mysql
+        tp@devel:~$ docker pull mysql:5.7.23
+        5.7.23: Pulling from library/mysql
         [...]
-        library/mysql:5.7.14: The image you are pulling has been verified. Important: image verification is a tech preview feature and should not be relied on to provide security.
-        Digest: sha256:22d2c6e4bff13ccb4b3c156bdaa97e4fbf6f15ee0467233714f51540c64ad6b6
-        Status: Downloaded newer image for mysql:5.7.14
+        Digest: sha256:e25e2768e910223db3095c1560aa2255371986b24fbebf4b015bae3cc60b9b34
+        Status: Downloaded newer image for mysql:5.7.23
         tp@devel:~$
 
 - Start up the container with Apache/Django using the image you just pulled:
@@ -118,16 +117,16 @@ Install everything
 - Initialize the MySQL db container (NOTE: You MUST use the password specified here!):
 
         tp@devel:~$ mkdir ~/cs4501/db
-        tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.14
-        79c856338ace5edc9df074e252fb16caedd0ed1b53f64eef613e84301482dd75
+        tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.23
+        249e7f18b7679879197b49199de97a2a9f6705d99a7510086f51e30d830ca108
 
 - Note the status of your Docker containers. The one named *web* will be shown as
   exited while the one named *mysql* will be running.
 
         tp@devel:~$ docker ps -a
-        CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS               NAMES
-        79c856338ace        mysql:5.7.14        "/entrypoint.sh mysql"   8 seconds ago        Up 8 seconds                    3306/tcp            mysql
-        a6e3ac9cd1b5        tp33/django		    "bash"                   About a minute ago   Exited (0) About a minute ago                       web
+        CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS                 NAMES
+        249e7f18b767        mysql:5.7.23        "docker-entrypoint.s…"   8 seconds ago        Up 8 seconds                    3306/tcp, 33060/tcp   mysql
+        4b6cb96f80f3        tp33/django		    "/bin/bash"              About a minute ago   Exited (0) About a minute ago                         web
         tp@devel:~$
 
 Congratulations—you now have two containers running, one for
@@ -143,14 +142,14 @@ got. You'll just need to start a NEW container running that image and
 use the MySQL client in that container to connect to the first MySQL container image you're already
 running.
 
-    tp@devel:~$ docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.14 bash
-    # mysql -uroot -p'$3cureUS' -h db
+    tp@devel:~$ docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.23 bash
+    root@31617162d0de:/# mysql -uroot -p'$3cureUS' -h db
     mysql: [Warning] Using a password on the command line interface can be insecure.
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 2
-    Server version: 5.7.14-rc MySQL Community Server (GPL)
+    Server version: 5.7.23 MySQL Community Server (GPL)
 
-    Copyright (c) 2000, 2015, Oracle and/or its affiliates. All rights reserved.
+    Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
 
     Oracle is a registered trademark of Oracle Corporation and/or its
     affiliates. Other names may be trademarks of their respective
@@ -203,14 +202,14 @@ this using the `--link` flag so that the *web* container can easily connect to t
 container. Let's restart the *web* container this way:
 
     tp@devel:~$ docker ps -a
-    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS               NAMES
-    f34a25b95ffa        mysql:5.7.14         "/entrypoint.sh mysql"   23 seconds ago      Up 22 seconds               3306/tcp            mysql
-    f1e282544b7b        tp33/django          "/bin/bash"              44 seconds ago      Exited (0) 41 seconds ago                       web
+    CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS                 NAMES
+    249e7f18b767        mysql:5.7.23        "docker-entrypoint.s…"   23 seconds ago      Up 22 seconds               3306/tcp, 33060/tcp   mysql
+    f1e282544b7b        tp33/django         "/bin/bash"              44 seconds ago      Exited (0) 41 seconds ago                         web
     tp@devel:~$ docker rm web
     web
     tp@devel:~$ docker ps -a
-    CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS               NAMES
-    f34a25b95ffa        mysql:5.7.14         "/entrypoint.sh mysql"   About a minute ago   Up About a minute   3306/tcp            mysql
+    CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                 NAMES
+    249e7f18b767        mysql:5.7.23        "docker-entrypoint.s…"   About a minute ago   Up About a minute   3306/tcp, 33060/tcp   mysql
     tp@devel:~$ docker run -it --name web -p 8000:8000 --link mysql:db -v ~/cs4501/app:/app tp33/django
     root@1c359b81b84f:/app# ping db
     PING db (172.17.0.5): 56 data bytes
@@ -389,7 +388,7 @@ Trying it all out
 If everything is working correctly, you can now go back to your web
 container and try out some Django commands.
 
-Attach to your web container
+Attach to your *web* container
 
     tp@devel:~$ docker exec -it web bash
 
