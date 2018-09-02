@@ -177,15 +177,17 @@ Office Hours
 The teaching staff for this semester are:
 
 - Tom Pinckney (Lecturer): tp3ks@virginia.edu
-- Zakey Faieq (Head TA and Grader): zaf2xk@virginia.edu
+- Dion Niazi (TA): dn3gy@virginia.edu
+- Nate Olsen (TA): nso4wg@virginia.edu
+- Ellis Tsung (TA): et5ab@virginia.edu
 
 There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
 
 - Office Hours, Project Review, Help, and Demo Hours (led by TAs):
-
-	- Monday: 5-6pm, Rice 414
-	- Tuesday: 7:30-9:30pm, Rice 204
-	- Thursday: 5-6pm, Rice 404
+  - Dion Niazi (dn3gy)
+    - Tuesday: 12:30 - 1:30 PM                   Room TBA on Slack
+    - Wednesday: 10:00 - 11:00 AM                Room TBA on Slack
+    - Thursday: 5:00 - 6:00 PM                   Room TBA on Slack
 
 - General Q&A (led by Tom): Times TBD but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
 
