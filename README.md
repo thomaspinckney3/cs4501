@@ -185,9 +185,9 @@ There will be one set of office hours for project questions and demos and anothe
 
 - Office Hours, Project Review, Help, and Demo Hours (led by TAs):
   - Dion Niazi (dn3gy)
-    - Tuesday: 12:30 - 1:30 PM &npsp; &npsp; &npsp; Room TBA on Slack
-    - Wednesday: 10:00 - 11:00 AM &npsp; &npsp; &npsp; Room TBA on Slack
-    - Thursday: 5:00 - 6:00 PM &npsp; &npsp; &npsp; Room TBA on Slack
+    - Tuesday: 12:30 - 1:30 PM   Room TBA on Slack
+    - Wednesday: 10:00 - 11:00 AM   Room TBA on Slack
+    - Thursday: 5:00 - 6:00 PM   Room TBA on Slack
 
 - General Q&A (led by Tom): Times TBD but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
 
