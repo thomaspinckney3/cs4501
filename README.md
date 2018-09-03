@@ -188,6 +188,9 @@ There will be one set of office hours for project questions and demos and anothe
     - Tuesday: 12:30 - 1:30 PM   Room TBA on Slack
     - Wednesday: 10:00 - 11:00 AM   Room TBA on Slack
     - Thursday: 5:00 - 6:00 PM   Room TBA on Slack
+  - Nate Olsen (nso4wg)
+    - Monday: 1:30 - 3:00 PM    Rice 436
+    - Wednesday: 5:00 - 6:30 PM Rice 436
 
 - General Q&A (led by Tom): Times TBD but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
 
