@@ -13,7 +13,7 @@ A course project will be developed using Python, Django, MySQL, and Docker conta
 Project Overview
 -----------------
 
-You will work in a team of three to four students to build a working marketplace website. Marketplaces such as Airbnb, Uber, DonorsChoose, eBay, Etsy and Watsi are both highly profitable when they succeed and technically challenging to build. It's up to you to decide what kind of marketplace your team will build. Specific instructions for each project will be posted and linked below thoughtout the semester.
+You will work in a team of three students to build a working marketplace website. Marketplaces such as Airbnb, Uber, DonorsChoose, eBay, Etsy and Watsi are both highly profitable when they succeed and technically challenging to build. It's up to you to decide what kind of marketplace your team will build. Specific instructions for each project will be posted and linked below thoughtout the semester.
 
 Due dates are listed below for each part of the project. These may be revised as the term goes on based on how everyone is doing. You will be graded as a team (unless unusual conditions warrant giving different grades). Grades will be based on: completeness of solution, correctness of solution, and being on time completing each assignment.
 
@@ -195,7 +195,7 @@ There will be one set of office hours for project questions and demos and anothe
   	- Tuesday: 3:30 - 5:00 PM Room TBA on Slack
   	- Wednesday: 1:00 - 2:00 PM Room TBA on Slack
 
-- General Q&A (led by Tom): Times TBD but please email/slack me to reserve a time first. If you don't make an appointment, I may not be in my office.
+- General Q&A (led by Tom): Tuesday 2:30-3:15 but please email/slack me to reserve a time first. If you don't make an appointment, I may not be available. Location TBD.
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
