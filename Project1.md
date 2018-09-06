@@ -474,4 +474,4 @@ What to turn in
 ---------------
 
 Turn in screenshots of `docker ps` showing your running containers
-along with a screenshot of your "Hello World" output from curl. Submit this to tp3ks@virginia.edu and zaf2xk@virginia.edu.
+along with a screenshot of your "Hello World" output from curl. Submit this to tp3ks@virginia.edu.
