@@ -185,9 +185,9 @@ There will be one set of office hours for project questions and demos and anothe
 
 - Office Hours, Project Review, Help, and Demo Hours (led by TAs):
   - Dion Niazi (dn3gy)
-    - Tuesday: 12:30 - 1:30 PM   Room TBA on Slack
-    - Wednesday: 10:00 - 11:00 AM   Room TBA on Slack
-    - Thursday: 5:00 - 6:00 PM   Room TBA on Slack
+    - Tuesday: 12:30 - 1:30 PM   Rice 436
+    - Wednesday: 10:00 - 11:00 AM   Rice 436
+    - Thursday: 5:00 - 6:00 PM   Rice 436
   - Nate Olsen (nso4wg)
     - Monday: 1:30 - 3:00 PM    Rice 436
     - Wednesday: 5:00 - 6:30 PM Rice 436
