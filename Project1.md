@@ -117,7 +117,7 @@ Install everything
 - Initialize the MySQL db container (NOTE: You MUST use the password specified here!):
 
         tp@devel:~$ mkdir ~/cs4501/db
-        tp@devel:~$ docker run --name mysql -d -e MYSQL\_ROOT\_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.23
+        tp@devel:~$ docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.23
         249e7f18b7679879197b49199de97a2a9f6705d99a7510086f51e30d830ca108
 
 - Note the status of your Docker containers. The one named *web* will be shown as
