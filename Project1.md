@@ -115,10 +115,11 @@ Install everything
         tp@devel:~$
 
 - Initialize the MySQL db container (NOTE: You MUST use the password specified here!):
-
+        
         tp@devel:~$ mkdir ~/cs4501/db
         tp@devel:~$ docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.23
         249e7f18b7679879197b49199de97a2a9f6705d99a7510086f51e30d830ca108
+    - If you are running this on a Linux Subsystem in Windows 10 add --innodb_use_native_aio=0 to the end of the docker run command
 
 - Note the status of your Docker containers. The one named *web* will be shown as
   exited while the one named *mysql* will be running.
