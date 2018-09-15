@@ -333,13 +333,13 @@ data because that's a good sign that the TA's will be able to as well.
 What to turn in
 ---------------
 
-First, the owner of the group's repository needs to make the project repo private and add the other group members and the grader (Github username: "Zakinator123", email: "zaf2xk@virginia.edu") as 'collaborators'.
+First, the owner of the group's repository needs to make the project repo private and add the other group members, the grader / primary TA for your team, and Tom as 'collaborators'.
 
-Second, once you are ready to submit, create a Github Release, and email Zakey (zaf2xk) and Tom (tp3ks) the link to the release - please make the subject of the email "ISA Project 2 Submission". A Github release will essentially make a snapshot commit of the repo that's labeled with a tag that I will use. See here for more details: https://help.github.com/articles/creating-releases/.
+Second, once you are ready to submit, create a Github Release, and email your grader / primary TA and Tom the link to the release - please make the subject of the email "ISA Project 2 Submission". A Github release will essentially make a snapshot commit of the repo that's labeled with a tag that I will use. See here for more details: https://help.github.com/articles/creating-releases/.
 
-We should be able to clone your repository, git check out the appropriate commit/release, and run `docker-compose up` without any problems.
+The only thing we should need to do to test your project is clone your repository, git check out the appropriate commit/release, and run `docker-compose up`. We should not have to debug issues, change your code etc -- if anything is required to get your project working we will deem it "not working" and deduct one full letter grade off whatever your grade otherwise would have been for this project. 
 
-Remember not to commit database files, migration files, or pycache files to Github. If you have already accidentally done so, figure out how to remove them.
+Remember not to commit database files pycache (.pyc) files to Github. If you have already accidentally done so, figure out how to remove them. You can use a .gitignore to help.
 
 You can assume we have a clean mysql database called 'cs4501' with user 'www' of password '$3cureUS' (as we configured in project1) for your models container to hook up to.
 
@@ -355,6 +355,8 @@ As a reminder, some things that need to be executed by the docker-compose.yml:
 - Expose ports
 - Link to the mysql db container
 
-Also note that you NEED to use relative path for your compose file to work on our machines (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path. We highly recommend that you do a final test of your system by checking out and running your code on a clean system and an empty database just like we will test.
+Also note that you NEED to use relative path for your compose file to work on our machines (we won't have the same absolute path as yours)! Be extremely careful when you set up the relative path.
 
-Again, we strongly encourage you to take time to demo in the office hours. We want to make sure not only you are writing code that works but also code that is of best practices.
+We highly recommend that you do a final test of your system by checking out and running your code on a clean system and an empty database just like we will test.
+
+Finally, we strongly encourage you to take time to demo in the office hours. We want to make sure not only you are writing code that works but also code that is of best practices.
