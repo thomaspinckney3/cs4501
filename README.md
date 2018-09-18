@@ -192,8 +192,8 @@ There will be one set of office hours for project questions and demos and anothe
     - Monday: 1:30 - 3:00 PM    Rice 436
     - Wednesday: 5:00 - 6:30 PM Rice 436
   - Ellis Tsung (et5ab)
-  	- Tuesday: 3:30 - 5:00 PM Room TBA on Slack
-  	- Wednesday: 1:00 - 2:00 PM Room TBA on Slack
+  	- Tuesday: 5:00 - 6:00 PM   Rice 240
+  	- Wednesday: 3:00 - 5:00 PM Rice 436
 
 - General Q&A (led by Tom): Tuesday 2:30-3:15 but please email/slack me to reserve a time first. If you don't make an appointment, I may not be available. Location TBD.
 
