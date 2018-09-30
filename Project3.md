@@ -262,6 +262,7 @@ A sample docker-compose.yml (you will have to modify the code accordingly to mat
 ```YAML
 models:
   image: tp33/django
+  container_name: models
   external_links:
     - mysql:db
   ports:
@@ -272,6 +273,7 @@ models:
 
 exp:
   image: tp33/django
+  container_name: exp
   links:
     - models:models-api
   ports:
@@ -282,6 +284,7 @@ exp:
 
 web:
   image: tp33/django
+  container_name: web
   links:
     - exp:exp-api
   ports:
@@ -396,7 +399,7 @@ print(resp)
 
 ### What to turn in
 
-once you are ready to submit, create a Github Release, and email Zakey (zaf2xk) the link to the release—please make the subject of the email "ISA Project 3 Submission". Make sure you've tested
+Once you are ready to submit, create a Github Release, and email your TA the link to the release—please make the subject of the email "ISA Project 3 Submission". Make sure you've tested
 your code thoroughly and haven't forgotten to commit anything. Also make sure to
 test your full stack from a clean/empty/new database so that you're not
 accidentally depending on anything already in your system.
