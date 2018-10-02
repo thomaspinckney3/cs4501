@@ -347,7 +347,6 @@ For this project, we just expect your project to have APIs for each model for cr
 
 As a reminder, some things that need to be executed by the docker-compose.yml:
 
-- Run makemigrations (I strongly discourage you from committing your migration files. Why? Come to office hours and we can discuss!)
 - Run migrate
 - Load fixtures
 - Start the wsgi server
