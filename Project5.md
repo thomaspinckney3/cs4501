@@ -183,3 +183,8 @@ actually receive a message you'll need to open two shells, run the producer and 
 and then should see the consumer receive messages from the sender.
 
 Use the code snippets above to implement the python scripts that sits in the batch container. Again, all that script does is just pulling messages from Kafka and index the message in ES!
+
+### GitHub ###
+
+Please turn in a tag to your GitHub repository (e.g. "project5") to your assigned TA when your team has completed the assignment.
+
