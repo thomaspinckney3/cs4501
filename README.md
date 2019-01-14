@@ -150,8 +150,14 @@ Grades will be computed approximately as follows:
 50% two quizzes
 50% class project
 
-More detailed project grading guidelines can be found at https://docs.google.com/document/d/1nZrh3uvwQFh3wf3mE8kuH8LL12j5WbLh42-j6AJwr38/edit
 Note, these are guidelines and teaching staff may deviate as they believe the situation requires.
+
+### Project grading policies ###
+- 10 points off for being late
+- 10 points off minimum if project doesn't work
+- 1-5 points off for not folowing "best practices" such as poor code design, lack of abstraction etc
+
+Each team may get ONE project extension. You must ask for it via email at least 72 hours (3 days) before the project is due. You must email your primary TA and Tom to ask for it. 
 
 Academic Honor Code
 -------------------
@@ -178,24 +184,14 @@ The teaching staff for this semester are:
 
 - Tom Pinckney (Lecturer): tp3ks@virginia.edu
 - Dion Niazi (TA): dn3gy@virginia.edu
-- Nate Olsen (TA): nso4wg@virginia.edu
-- Ellis Tsung (TA): et5ab@virginia.edu
-
-There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
+- William Wong (TA): ww5zf@virginia.edu
+- Winston Frick (TA): wsf2ar@virginia.edu
+- Sai Konuri (TA): skk3gd@virginia.edu
 
 - Office Hours, Project Review, Help, and Demo Hours (led by TAs):
-  - Dion Niazi (dn3gy)
-    - Tuesday: 12:30 - 1:30 PM   Rice 436
-    - Wednesday: 10:00 - 11:00 AM   Rice 436
-    - Thursday: 5:00 - 6:00 PM   Rice 436
-  - Nate Olsen (nso4wg)
-    - Monday: 1:30 - 3:00 PM    Rice 436
-    - Wednesday: 5:00 - 6:30 PM Rice 436
-  - Ellis Tsung (et5ab)
-  	- Tuesday: 5:00 - 6:00 PM   Rice 240
-  	- Wednesday: 3:00 - 5:00 PM Rice 436
+  TBD
 
-- General Q&A (led by Tom): Tuesday 2:30-3:15 but please email/slack me to reserve a time first. If you don't make an appointment, I may not be available. Location TBD.
+- Tom's office hours: Monday 1:00-2:00PM but please email/slack me to reserve a time first. If you don't make an appointment, I may not be available. Location TBD.
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
