@@ -192,7 +192,7 @@ Office Hours, Project Review, Help, and Demo Hours (led by TAs):
 
 - Sai 10-11:30am Weds (Rice 340) and Fri (Olsson 001)
 - William 12-1:30pm Mon and Weds (Rice 436)
-- Winston 1-2pm Tues (Rice 436)
+- Winston 11:30-12:30pm Weds (Rice 340)
 - Dion TBD
 - Tom 1:00-2:00pm Mon (location TBD). Please email/slack me first to reserve a time. If you don't make an appointment, I may not be available.
 
