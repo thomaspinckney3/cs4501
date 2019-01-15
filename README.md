@@ -156,7 +156,7 @@ Note, these are guidelines and teaching staff may deviate as they believe the si
 - 10 points off for being late
 - 10 points off minimum if project doesn't work
 - 1-5 points off for not folowing "best practices" such as poor code design, lack of abstraction etc
-
+TBD
 Each team may get ONE project extension. You must ask for it via email at least 72 hours (3 days) before the project is due. You must email your primary TA and Tom to ask for it. 
 
 Academic Honor Code
@@ -188,10 +188,13 @@ The teaching staff for this semester are:
 - Winston Frick (TA): wsf2ar@virginia.edu
 - Sai Konuri (TA): skk3gd@virginia.edu
 
-- Office Hours, Project Review, Help, and Demo Hours (led by TAs):
-  TBD
+Office Hours, Project Review, Help, and Demo Hours (led by TAs):
 
-- Tom's office hours: Monday 1:00-2:00PM but please email/slack me to reserve a time first. If you don't make an appointment, I may not be available. Location TBD.
+- Sai 10-11:30am Weds (Rice 340) and Fri (Olsson 001)
+- William 12-1:30pm Mon and Weds (Rice 436)
+- Winston 1-2pm Tues (Rice 436)
+- Dion TBD
+- Tom 1:00-2:00pm Mon (location TBD). Please email/slack me first to reserve a time. If you don't make an appointment, I may not be available.
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
