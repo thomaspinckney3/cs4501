@@ -40,11 +40,12 @@ pre-installed and built to work together easily, and another that contains MySQL
 The system for containers we're using requires Linux. If you're
 already running Linux on your laptop then you will likely need to just
 install Docker. If you're using a Mac or Windows, you will need to
-install Docker for Mac or Docker for Windows. If you have an older version of Docker,
-you may need to install Docker Toolbox. And lastly, if for some reason you cannot get
-any of those to work (rarely occurs), you could run Docker from within a Linux virtual box
-(Although it would seem like that defeats the purpose of using Docker, the experience you
-gain from dealing with containers is still invaluable).
+install Docker for Mac or Docker for Windows. 
+
+Note, if you're using Windows, you must be using Windows Pro or Windows Education (both of which support Hyper-V based virtual machines) in order to use Docker for Windows. Docker Home will not work. UVa has free access to Windows Education so that's the recommended upgrade if you're using Windows Home. 
+
+And lastly, if for some reason you cannot get
+any of those to work, you could install VirtualBox and run Docker from within a Linux virtual machine
 
 Note, when you're using the Docker for Mac or Docker for Windows
 packages you're still using Linux. These packages install a
