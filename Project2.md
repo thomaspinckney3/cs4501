@@ -183,15 +183,36 @@ but know that you'll change it in the next few projects.
 Pictures are complicated by the fact that they tend to be large.
 For now, I'd just ignore doing anything with pictures.
 
+Model Migrations
+----------------
+
+Django includes a feature called database migrations. This is a way for you to automatically keep your database tables/schemas
+in sync with what your models.py requires. If your models.py refers to a model named 'Cars' but your database doesn't have a
+table for that model, then your application won't work.
+
+The way migreations work is that when you change your models.py, you ALWAYS need to also check-in a migration that will make
+the corresponding change to you (and your teammates DB's). You do this with the `python manage.py makemigrations` command.
+This will create a Python file in your `migrations/` directory that will, when run, update your DB. 
+
+The second step, is that WHENEVER you start your application, you need to run migrations. You do this with 
+`python manage.py runmigrations`. This will check what the last migration run against your DB is, see if there are newer
+migrations in `migrations/`, and run the new ones.
+
+A common mistake is that team member 1 changes their models.py but forgets to make and check in a corresponding migration. 
+Then when team meber 2 checks out the updated models.py and tries to use it, they get an error because their DB doesn't
+have the tables needed. 
+
+You can read more in the Django documentation here https://docs.djangoproject.com/en/2.1/topics/migrations/
+
 Docker
 --------
 
 For project 2, try and create a quick and simple pipeline for working with Docker. **An objective for project 2 is to show you that setting up to run code is just as important as writing the code.** Some of the key concepts you may want to look into are
 
-- `docker-compose`
-- `docker volumes`
-- `docker port forwarding`
-- `modwsgi --reload-on-change flag`
+- docker-compose
+- docker volumes
+- docker port forwarding
+- modwsgi --reload-on-change flag
 
 Services
 --------
@@ -227,7 +248,7 @@ from looking up a user might look like:
 }
 ```
 
-For testing your APIs, you can use your browser to make sure GET requests behave as expected, but browsers cannot send POST requests if there is no form to submit. So, you have the option of rendering forms in your views which will send the desired POST requests, or you can use [Postman](https://www.getpostman.com/) (recommended) to test your APIs—this is what the graders will be using to test your APIs. Make sure you know the difference between sending parameters in the URL's query string (e.g. for GET requests), and sending parameters in the POST body. It can be easy to mix up the two while using Postman.
+For testing your APIs, you can use your browser to make sure GET requests behave as expected, but browsers cannot send POST requests if there is no form to submit. I recommend your use `curl` or you can use [Postman](https://www.getpostman.com/) to test your APIs—this is what the graders will be using to test your APIs. Make sure you know the difference between sending parameters in the URL's query string (e.g. for GET requests), and sending parameters in the POST body. It can be easy to mix up the two while using Postman.
 
 Remember, this is a four-tier app we're building. The DB is the fourth
 / bottom tier. This layer of services you're building now is the
@@ -262,7 +283,7 @@ more on migrations and how to use them.
 
 Fixtures
 --------
-Final thing before we call it a day, you need to add fixtures. You can think of
+You can think of
 fixtures as initial data provided to an empty database. It’s sometimes (e.g. when
 testing, grading) useful to pre-populate your database with hard-coded data when
 you’re first setting up an app so that you can use the app directly. To avoid
@@ -339,16 +360,15 @@ Second, once you are ready to submit, create a Github Release, and email your gr
 
 The only thing we should need to do to test your project is clone your repository, git check out the appropriate commit/release, and run `docker-compose up`. We should not have to debug issues, change your code etc -- if anything is required to get your project working we will deem it "not working" and deduct one full letter grade off whatever your grade otherwise would have been for this project. 
 
-Remember not to commit database files pycache (.pyc) files to Github. If you have already accidentally done so, figure out how to remove them. You can use a .gitignore to help.
+Remember not to commit database files (the files in your ~/cs4501/db/ dir) or pycache (*.pyc) files to Github. If you have already accidentally done so, figure out how to remove them. You can use a .gitignore to help.
 
 You can assume we have a clean mysql database called 'cs4501' with user 'www' of password '$3cureUS' (as we configured in project1) for your models container to hook up to.
 
-For this project, we just expect your project to have APIs for each model for creating, reading, updating and deleting (basic CRUD operations). Make sure you do not omit error checking.
+For this project, we just expect your project to have at least two models and HTTP/JSON APIs for creating, reading, updating and deleting entries in those models. Make sure you do not omit error checking.
 
 As a reminder, some things that need to be executed by the docker-compose.yml:
 
-- Run makemigrations (I strongly discourage you from committing your migration files. Why? Come to office hours and we can discuss!)
-- Run migrate
+- Run migrations
 - Load fixtures
 - Start the wsgi server
 - (You can do something like `command: bash -c "<command_1> && <command_2> && ..."`)
