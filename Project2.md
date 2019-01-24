@@ -195,7 +195,7 @@ the corresponding change to you (and your teammates DB's). You do this with the 
 This will create a Python file in your `migrations/` directory that will, when run, update your DB. 
 
 The second step, is that WHENEVER you start your application, you need to run migrations. You do this with 
-`python manage.py runmigrations`. This will check what the last migration run against your DB is, see if there are newer
+`python manage.py migrate`. This will check what the last migration run against your DB is, see if there are newer
 migrations in `migrations/`, and run the new ones.
 
 A common mistake is that team member 1 changes their models.py but forgets to make and check in a corresponding migration. 
