@@ -11,20 +11,17 @@ The detailed topic descriptions are listed as follows:
 # Required Topics
 - Continuous Integration
 
-    Use a continuous integration (CI) tool such as Travis CI to automate builds of your marketplace project. Your CI build should also automatically run unit tests or integration tests that your team has written and verify that they all pass.
+    Use a continuous integration (CI) tool such as Travis CI to automate builds of your marketplace project. Your CI build should also automatically run unit tests and integration tests that your team has written and verify that they all pass.
 
 - Integration tests
 
-    Write integration tests using [Selenium](http://www.seleniumhq.org) to test your web front end.
+    Write integration tests using [Selenium](http://www.seleniumhq.org) to test your web front end. Focus on testing the "happy paths" through key flows like signing up, logging in, and using search. 
     To create Selenium tests in python, you'll need to install the selenium package from PyPi. This package will enable to use Selenium's python API to interact with the Selenium WebDriver. 
       
    From [Selenium's documentation](http://www.seleniumhq.org/docs/03_webdriver.jsp#introducing-webdriver):
       ` WebDriver’s goal is to supply a well-designed object-oriented API that provides improved support for modern advanced web-app testing problems. Selenium-WebDriver makes direct calls to the browser using each browser’s native support for automation. How these direct calls are made, and the features they support depends on the browser you are using. ` 
       
-    For this class, we only expect you to create tests for Google Chrome. To interface with Google Chrome, the Selenium WebDriver needs to use ChromeDriver ([info](http://www.seleniumhq.org/docs/03_webdriver.jsp#chromedriver))
-      
-     In the past, we've had students download the [chrome driver](https://sites.google.com/a/chromium.org/chromedriver/home) locally. But many people had problems with their python code not finding the local driver in their PATH. As a result, we've transitioned to a new solution using, you guessed it, containers! Selenium has created a [docker container image](https://hub.docker.com/r/selenium/standalone-chrome/) with Google Chrome, ChromeDriver, and the Selenium WebDriver already installed. The Selenium WebDriver in this container can be accessed via the 'Selenium Server' that is also included in the container (and is started upon container instantiation). From Selenium's documentation: 
-      `You may, or may not, need the Selenium Server, depending on how you intend to use Selenium-WebDriver. If your browser and tests will all run on the same machine, and your tests only use the WebDriver API, then you do not need to run the Selenium-Server; WebDriver will run the browser directly... use the Selenium-Server... (if) you want to connect to a remote machine... `
+Selenium has created a [docker container image](https://hub.docker.com/r/selenium/standalone-chrome/) with Google Chrome, ChromeDriver, and the Selenium WebDriver already installed. The Selenium WebDriver in this container can be accessed via the 'Selenium Server' that is also included in the container (and is started upon container instantiation).
 
     To set up containers for Selenium and for the test script, your docker-compose should include a section that looks something like this:
     ```
@@ -73,8 +70,7 @@ The detailed topic descriptions are listed as follows:
 
 - Hosting on DigitalOcean
     
-     Email me (Professor Pinckney) for an invite if you you'd like to do this. Do this within the first week this project is assigned so that I have time to get invites to everyone that needs one.
-
+     Email me (Professor Pinckney) for an invite if you you'd like to do this. Do this within the first week this project is assigned so that I have time to get invites to everyone that needs one. Make sure to "harden" your application for running on the internet -- do things like set Django's DEBUG=False in settings.py, don't use the Django development web server, select a secure password for your Droplet etc. 
 
 - Caching with Redis
    
@@ -82,9 +78,7 @@ The detailed topic descriptions are listed as follows:
       start a Redis docker image such as https://hub.docker.com/_/redis/ .
       
      You can't use Django's caching interfaces to configure whole page caching with Redis without using additonal packages (Look into https://github.com/niwinz/django-redis if you want to set Redis as Django's caching backend). Instead just directly call the Redis python client to store pages and later look them up. Think about how and when
-      to invalidate the cache'd content (after a certain amount of time? when the DB changes? something else?).
-   
-    
+      to invalidate the cache'd content (after a certain amount of time? when the DB changes? something else?) 
 
     
 - Performance testing
