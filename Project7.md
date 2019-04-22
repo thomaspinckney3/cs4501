@@ -192,32 +192,9 @@ item_id  | recommended_items
 3        |  4, 2, 1, 5,
 ```
 
+You will need to create a new model for your recommendations and create additional services in your models api application for creating, updating and reading the recommendations. Your Spark job will have to call these services to populate the recommendations at the end of the Spark job.
 
-To create the recommendations table, simply create another model in your models.py with the appropriate fields corresponding to the columns described above.
-
-To populate this recommendations table, you will interface with the MySQL database directly with a [python MySQL client](https://github.com/PyMySQL/mysqlclient-python) rather than Django's ORM like you have been doing. Population of the table will occur during the Pyspark job. Within your Pyspark program, you will need to:
-
-1. Initiate a connection with the database using PyMySQL.
-2. Reset/Clear the recommendations table to remove any outdated data if there is any.
-3. Make appropriate INSERT queries while iterating through co-view results after the ```collect``` call, making sure to account for items that already have rows in the table, as well as those that don't.
-
-The spark containers that will contain your Pyspark program don't come with everything needed for PyMySQL right off the bat, so some package installation must be taken care of. After 'docker-composing up' but before running your spark job for the first time, manually enter the two spark containers and run the following commands (either individually by hand, or in script form like below):
-
-```
-#!/usr/bin/env bash
-apt-get update &&
-apt-get install python3-dev libmysqlclient-dev -y &&
-apt-get install python-pip -y &&
-pip install mysqlclient &&
-apt-get install python-mysqldb
-```
-
-You should now be ready to get your hands dirty with some raw SQL queries! There's plenty of [helpful documentation](https://www.tutorialspoint.com/python/python_database_access.htm) all over the web to get you started, but here are some tips that may be of use:
-* To see what your SQL queries are actually doing to the database, you can access MySQL through the mysql-cmdline container and see what's exactly in the recommendations table with the commands ```USE cs4501;``` and ```SELECT * FROM recommendations;```
-* Some SQL syntax you might want to consider looking into is ```ON DUPLICATE KEY UPDATE```, ```CONCAT()```, and ```TRUNCATE```.
-* With all the containers you have running at this point, Spark may not have enough RAM to work properly. The errors aren't too helpful when this happens, so just be aware when facing obscure problems that you may need to just increase the amount of RAM your computer allocates to Docker.
-
-Once you have correctly populated the database with Sparks output for the recommendation service, you can now move on to implementing the service itself. In every item detail page, you must now display a few of it's recommended items if it has any. To retrieve recommendations, just augment your current set of APIs in the models layer so that you can read recommended item-ids from the database using Django's ORM as well. Then pass those on to your experience layer recommendations service, etc.
+Once you have correctly populated the database with Sparks output for the recommendation service, you can now move on to implementing the experience service and web front end updates. In every item detail page, you must now display a few of the recommended items there are any. The experience service should retrieve these using the models api services and your web front end should render them into the page's HTML.
 
 
 Automated Spark Job (and dependency installation)
