@@ -197,9 +197,9 @@ You will need to create a new model for your recommendations and create addition
 Once you have correctly populated the database with Sparks output for the recommendation service, you can now move on to implementing the experience service and web front end updates. In every item detail page, you must now display a few of the recommended items there are any. The experience service should retrieve these using the models api services and your web front end should render them into the page's HTML.
 
 
-Automated Spark Job (and dependency installation)
--------------------------------------------------
-The last step is to automate the Spark job so that it executes on regular intervals to keep the recommendations up to date and accurate. You should create a simple bash script that triggers the job around every minute or two so that you have time to test the effect of co-views on an item's recommendations. This script will be separate from docker compose and should be started only after you've already 'docker-composed up'. This script must also contain the commands that installs the necessary packages needed for the python mysqlclient in the pyspark file.
+Automated Spark Job
+-------------------
+The last step is to automate the Spark job so that it executes on regular intervals to keep the recommendations up to date and accurate. You should create a simple bash script that triggers the job around every minute or two so that you have time to test the effect of co-views on an item's recommendations. This script will be separate from docker compose and should be started only after you've already 'docker-composed up'. 
 
 Since we don't have a real stream of data, you can just run the Spark job on the entirety of the same single access log file every time, the idea being that as the log is appended to and expanded over time, the generated recommendations are keeping up right alongside it (hence why you should erase the recommendations table every time the job is run)
 
