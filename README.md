@@ -79,7 +79,6 @@ Course Topics (subject to revision as course progresses)
 - Integrating online and offline processing / Sync vs async
 - Queueing systems
 - Reading: Kafka at LinkedIn https://engineering.linkedin.com/kafka/kafka-linkedin-current-and-future and
-- Quiz #1
 
 ### 8. Search
 - Basics of information retrieval and search engines
@@ -140,15 +139,12 @@ Course Topics (subject to revision as course progresses)
 - Case study: BuzzFeed
 - Reading: https://hbr.org/2007/05/viral-marketing-for-the-real-world
 
-### 17. TBD
-- Quiz #2
-
 Grading
 -------
 
 Grades will be computed approximately as follows:
-50% two quizzes
-50% class project
+45% three quizzes
+55% class project
 
 Note, these are guidelines and teaching staff may deviate as they believe the situation requires.
 
@@ -182,19 +178,16 @@ Office Hours
 
 The teaching staff for this semester are:
 
-- Tom Pinckney (Lecturer): tp3ks@virginia.edu
-- Dion Niazi (TA): dn3gy@virginia.edu
-- William Wong (TA): ww5zf@virginia.edu
-- Winston Frick (TA): wsf2ar@virginia.edu
-- Sai Konuri (TA): skk3gd@virginia.edu
+- Tom Pinckney (Lecturer) tp3ks@virginia.edu
+- Handley, Tyler M (tmh6de) and Head TA <tmh6de@virginia.edu>
+- Yennu, Ankith Gopikrishna (agy8gc) <agy8gc@virginia.edu>
+- Lasker, Rashid E (rel3en) <rel3en@virginia.edu>
+- Hector, Selwyn N (snh3fa) <snh3fa@virginia.edu>
+- Wong, William (ww5zf) <ww5zf@virginia.edu>
 
-Office Hours, Project Review, Help, and Demo Hours (led by TAs):
+Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 
-- Sai 10-11:30am Weds (Rice 340) and Fri (Olsson 001)
-- William 12-1:30pm Mon and Weds (Rice 436)
-- Winston 11:30-12:30pm Weds (Rice 340)
-- Dion TBD
-- Tom 1:00-2:00pm Mon (location TBD). Please email/slack me first to reserve a time. If you don't make an appointment, I may not be available.
+TBD
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
