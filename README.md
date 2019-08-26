@@ -187,6 +187,7 @@ The teaching staff for this semester are:
 
 Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 
+- Ankith Yennu (agy8gc): Tues, Fri: 12pm-1pm Thurs: 10:30am-11:30am
 - Wong, William (ww5zf): 3:30-4:30pm Monday
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
