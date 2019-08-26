@@ -1,4 +1,4 @@
-CS4501 - Internet Scale Applications
+CS 4260 (formerly CS4501) - Internet Scale Applications
 ===========================
 
 This course will provide a survey of methods for building large-scale internet websites and mobile apps. The intent is to build upon prior classes by explaining how theory meets practice. Topics covered will include scaling, security, large team software engineering, etc. There will be a series of cumulative course projects resulting in students building a working marketplace website. Weekly readings from industry and academic sources will complement the weekly lecture.
@@ -79,7 +79,6 @@ Course Topics (subject to revision as course progresses)
 - Integrating online and offline processing / Sync vs async
 - Queueing systems
 - Reading: Kafka at LinkedIn https://engineering.linkedin.com/kafka/kafka-linkedin-current-and-future and
-- Quiz #1
 
 ### 8. Search
 - Basics of information retrieval and search engines
@@ -140,18 +139,21 @@ Course Topics (subject to revision as course progresses)
 - Case study: BuzzFeed
 - Reading: https://hbr.org/2007/05/viral-marketing-for-the-real-world
 
-### 17. TBD
-- Quiz #2
-
 Grading
 -------
 
 Grades will be computed approximately as follows:
-50% two quizzes
-50% class project
+45% three quizzes
+55% class project
 
-More detailed project grading guidelines can be found at https://docs.google.com/document/d/1nZrh3uvwQFh3wf3mE8kuH8LL12j5WbLh42-j6AJwr38/edit
 Note, these are guidelines and teaching staff may deviate as they believe the situation requires.
+
+### Project grading policies ###
+- 10 points off for being late
+- 10 points off minimum if project doesn't work
+- 1-5 points off for not folowing "best practices" such as poor code design, lack of abstraction etc
+TBD
+Each team may get ONE project extension. You must ask for it via email at least 72 hours (3 days) before the project is due. You must email your primary TA and Tom to ask for it. 
 
 Academic Honor Code
 -------------------
@@ -176,26 +178,16 @@ Office Hours
 
 The teaching staff for this semester are:
 
-- Tom Pinckney (Lecturer): tp3ks@virginia.edu
-- Dion Niazi (TA): dn3gy@virginia.edu
-- Nate Olsen (TA): nso4wg@virginia.edu
-- Ellis Tsung (TA): et5ab@virginia.edu
+- Tom Pinckney (Lecturer) tp3ks@virginia.edu
+- Handley, Tyler M (tmh6de) and Head TA <tmh6de@virginia.edu>
+- Yennu, Ankith Gopikrishna (agy8gc) <agy8gc@virginia.edu>
+- Lasker, Rashid E (rel3en) <rel3en@virginia.edu>
+- Hector, Selwyn N (snh3fa) <snh3fa@virginia.edu>
+- Wong, William (ww5zf) <ww5zf@virginia.edu>
 
-There will be one set of office hours for project questions and demos and another time for general class questions. Each project is two weeks. During the first week a project is assigned, the project review hours will be about how to do the project. During the second week that each project is assigned, the project hours will include mandatory demos of your team's progress. If you are unable to make the demo hours, please contact the teaching staff to arrange an alternative time.
+Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 
-- Office Hours, Project Review, Help, and Demo Hours (led by TAs):
-  - Dion Niazi (dn3gy)
-    - Tuesday: 12:30 - 1:30 PM   Rice 436
-    - Wednesday: 10:00 - 11:00 AM   Rice 436
-    - Thursday: 5:00 - 6:00 PM   Rice 436
-  - Nate Olsen (nso4wg)
-    - Monday: 1:30 - 3:00 PM    Rice 436
-    - Wednesday: 5:00 - 6:30 PM Rice 436
-  - Ellis Tsung (et5ab)
-  	- Tuesday: 5:00 - 6:00 PM   Rice 240
-  	- Wednesday: 3:00 - 5:00 PM Rice 436
-
-- General Q&A (led by Tom): Tuesday 2:30-3:15 but please email/slack me to reserve a time first. If you don't make an appointment, I may not be available. Location TBD.
+- Wong, William (ww5zf): 3:30-4:30pm Monday
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
