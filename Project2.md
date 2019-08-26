@@ -368,7 +368,7 @@ For this project, we just expect your project to have at least two models and HT
 
 As a reminder, some things that need to be executed by the docker-compose.yml:
 
-- Run migrations
+- Run migrate
 - Load fixtures
 - Start the wsgi server
 - (You can do something like `command: bash -c "<command_1> && <command_2> && ..."`)
