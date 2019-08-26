@@ -57,7 +57,7 @@ Django
 ------
 
 You should already be familiar with Python and Django. If not, go read more
-here: https://docs.djangoproject.com/en/2.1. We highly recommend that you
+here: https://docs.djangoproject.com/en/2.2. We highly recommend that you
 work through the example application in the Django tutorial if this is your
 first experience with Django.
 
@@ -66,7 +66,7 @@ MySQL
 
 The database used in this class will be MySQL. It's a very common SQL
 database. You can read more at
-http://dev.mysql.com/doc/refman/5.7/en/index.html.
+http://dev.mysql.com/doc/refman/8.0/en/index.html.
 
 You will not need detailed knowledge of SQL for most of the class, but you
 should be familiar with the concepts involved of tables, queries,
@@ -93,11 +93,11 @@ Install everything
 
 - And now pull a container image with MySQL installed:
 
-        tp@devel:~$ docker pull mysql:5.7.23
+        tp@devel:~$ docker pull mysql:latest
         5.7.23: Pulling from library/mysql
         [...]
         Digest: sha256:e25e2768e910223db3095c1560aa2255371986b24fbebf4b015bae3cc60b9b34
-        Status: Downloaded newer image for mysql:5.7.23
+        Status: Downloaded newer image for mysql:8.0.4
         tp@devel:~$
 
 - Start up the container with Apache/Django using the image you just pulled:
@@ -110,7 +110,7 @@ Install everything
         Type "help", "copyright", "credits" or "license" for more information.
         >>> import django
         >>> django.VERSION
-        (2, 1, 0, 'final', 0)
+        (2, 2, 4, 'final', 0)
         >>>
         root@4b6cb96f80f3:/app# exit
         tp@devel:~$
@@ -118,7 +118,7 @@ Install everything
 - Initialize the MySQL db container (NOTE: You MUST use the password specified here!):
         
         tp@devel:~$ mkdir ~/cs4501/db
-        tp@devel:~$ docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:5.7.23
+        tp@devel:~$ docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:latest
         249e7f18b7679879197b49199de97a2a9f6705d99a7510086f51e30d830ca108
     - If you are running this on a Linux Subsystem in Windows 10 add --innodb_use_native_aio=0 to the end of the docker run command
 
@@ -127,7 +127,7 @@ Install everything
 
         tp@devel:~$ docker ps -a
         CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS                          PORTS                 NAMES
-        249e7f18b767        mysql:5.7.23        "docker-entrypoint.s…"   8 seconds ago        Up 8 seconds                    3306/tcp, 33060/tcp   mysql
+        249e7f18b767        mysql:8.0.4        "docker-entrypoint.s…"   8 seconds ago        Up 8 seconds                    3306/tcp, 33060/tcp   mysql
         4b6cb96f80f3        tp33/django		    "/bin/bash"              About a minute ago   Exited (0) About a minute ago                         web
         tp@devel:~$
 
@@ -144,12 +144,12 @@ got. You'll just need to start a NEW container running that image and
 use the MySQL client in that container to connect to the first MySQL container image you're already
 running.
 
-    tp@devel:~$ docker run -it --name mysql-cmdline --link mysql:db mysql:5.7.23 bash
+    tp@devel:~$ docker run -it --name mysql-cmdline --link mysql:db mysql:latest bash
     root@31617162d0de:/# mysql -uroot -p'$3cureUS' -h db
     mysql: [Warning] Using a password on the command line interface can be insecure.
     Welcome to the MySQL monitor.  Commands end with ; or \g.
     Your MySQL connection id is 2
-    Server version: 5.7.23 MySQL Community Server (GPL)
+    Server version: 8.0.4 MySQL Community Server (GPL)
 
     Copyright (c) 2000, 2018, Oracle and/or its affiliates. All rights reserved.
 
@@ -166,7 +166,7 @@ your app will use. It's always best to use the least privileges
 possible, so we'll only give this new user access to the tables
 required for this app and no other privileges.
 
-    mysql> create user 'www'@'%' identified by '$3cureUS';
+    mysql> create user 'www'@'%' identified with mysql_native_password by '$3cureUS';
     Query OK, 0 rows affected (0.01 sec)
 
     mysql> create database cs4501 character set utf8;
@@ -205,13 +205,13 @@ container. Let's restart the *web* container this way:
 
     tp@devel:~$ docker ps -a
     CONTAINER ID        IMAGE               COMMAND                  CREATED             STATUS                      PORTS                 NAMES
-    249e7f18b767        mysql:5.7.23        "docker-entrypoint.s…"   23 seconds ago      Up 22 seconds               3306/tcp, 33060/tcp   mysql
+    249e7f18b767        mysql:8.0.4        "docker-entrypoint.s…"   23 seconds ago      Up 22 seconds               3306/tcp, 33060/tcp   mysql
     f1e282544b7b        tp33/django         "/bin/bash"              44 seconds ago      Exited (0) 41 seconds ago                         web
     tp@devel:~$ docker rm web
     web
     tp@devel:~$ docker ps -a
     CONTAINER ID        IMAGE               COMMAND                  CREATED              STATUS              PORTS                 NAMES
-    249e7f18b767        mysql:5.7.23        "docker-entrypoint.s…"   About a minute ago   Up About a minute   3306/tcp, 33060/tcp   mysql
+    249e7f18b767        mysql:8.0.4        "docker-entrypoint.s…"   About a minute ago   Up About a minute   3306/tcp, 33060/tcp   mysql
     tp@devel:~$ docker run -it --name web -p 8000:8000 --link mysql:db -v ~/cs4501/app:/app tp33/django
     root@1c359b81b84f:/app# ping db
     PING db (172.17.0.5): 56 data bytes
