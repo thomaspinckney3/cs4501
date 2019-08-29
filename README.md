@@ -188,6 +188,7 @@ The teaching staff for this semester are:
 Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 
 - Yennu, Ankith (agy8gc): Tues, Fri: 12pm-1pm Thurs: 10:30am-11:30am
+- Lasker, Rashid (rel3en): Tue, Thurs: 2pm-3pm in Olsson 001
 - Hector, Selwyn (snh3fa): Tue, Thurs: 2pm-3pm in Rice 442
 - Wong, William (ww5zf): Mon, Wed: 3:30-4:30pm in Rice 442
 
