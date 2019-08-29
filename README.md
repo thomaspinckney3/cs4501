@@ -187,7 +187,8 @@ The teaching staff for this semester are:
 
 Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 
-- Ankith Yennu (agy8gc): Tues, Fri: 12pm-1pm Thurs: 10:30am-11:30am
+- Yennu, Ankith (agy8gc): Tues, Fri: 12pm-1pm Thurs: 10:30am-11:30am
+- Hector, Selwyn (snh3fa): Tue, Thurs: 2pm-3pm in Rice 442
 - Wong, William (ww5zf): Mon, Wed: 3:30-4:30pm in Rice 442
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
