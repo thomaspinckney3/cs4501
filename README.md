@@ -193,6 +193,16 @@ Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 - Hector, Selwyn (snh3fa): Tue, Thurs: 2pm-3pm in Rice 442
 - Wong, William (ww5zf): Mon, Wed: 3:30-4:30pm in Rice 442
 
+|      | Monday | Tuesday | Wednesday       | Thursday | Friday |
+| ---- | ------ | ------- | --------------- | -------- | ------ |
+|10:30 ||||Ankith||
+| 11:30 ||||||
+| 12:00 |        | Ankith  |                 |          | Ankith |
+| 1:00 |        |         |                 |          |        |
+| 2:00 |        | Rashid, Olsson 001<br />Selwyn, Rice 442 | Tyler, Rice 442 | Rashid, Olsson 001<br />Selwyn, Rice 442 |        |
+| 3:30 | William, Rice 442 |  | William, Rice 442 |          |        |
+| 4:30 |        |         |                 |          |        |
+
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
 We will use Collab announcements when I need to email everyone in the class for announcements, project assignments etc. I'll send a Welcome announcement after the first class. If you don't receive it, check with me or the TA's to figure out what's wrong. If you added the class after the first day then please make sure to review the archive of announcements on Collab.
