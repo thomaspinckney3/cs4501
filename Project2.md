@@ -98,8 +98,8 @@ This should install Docker Compose Version 3 which is the version our documentat
 When you've got Compose installed, go ahead and create a new file, docker-compose.yml, in the project root 
 directory (you need to name the file exactly as docker-compose.yml). Docker Compose uses these files, called 
 YAML (pronounced "yeah-mull") files, to automatically set up or start a group of containers. This is handy, 
-much easier than managing each container individually. You can specify a lot of different 
-options here, but for now we're merely going to define our entity service and a network. You 
+much easier than managing each container individually. You can specify a lot of different options here, 
+but for now we're merely going to define our entity service and a network then link it to our mysql database. You 
 need to make sure the mysql container we created from last time is started.
 
 You can tell compose to create a new container by giving it a name and an image to use. 
@@ -118,11 +118,11 @@ services:
     ports:
       - "8001:8000"
     networks:
-      - <my-network-name>
+      - backend
     command: bash -c "mod_wsgi-express start-server --working-directory <project_root_dir> --reload-on-changes <path_to_wsgi.py>/wsgi.py"
 
 networks:
-  <my-network-name>:
+  backend:
 ```
 
 Notice the difference between external_links and links. We use links to link to
