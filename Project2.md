@@ -90,26 +90,39 @@ terminal.
 
 If you don't, install it:
 
-	$ sudo curl -L https://github.com/docker/compose/releases/download/1.22.0/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-	$ chmod +x /usr/local/bin/docker-compose
+	$ sudo curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
+	$ sudo chmod +x /usr/local/bin/docker-compose
 
 
-When you've got Compose installed, go ahead and create a new file,
-docker-compose.yml, in the project root directory (you need to name the file
-exactly as docker-compose.yml). Docker Compose uses these files, called YAML (pronounced "yeah-mull") files, to automatically set up or start a group of containers. This is handy, much easier than managing each container individually. You can specify a lot of different options here, but for now we're merely going to create our entity layer and then link it to our mysql database. You need to make sure the mysql container we created from last time is started.
+This should install Docker Compose Version 3 which is the version our documentation will be referencing. 
+When you've got Compose installed, go ahead and create a new file, docker-compose.yml, in the project root 
+directory (you need to name the file exactly as docker-compose.yml). Docker Compose uses these files, called 
+YAML (pronounced "yeah-mull") files, to automatically set up or start a group of containers. This is handy, 
+much easier than managing each container individually. You can specify a lot of different 
+options here, but for now we're merely going to define our entity service and a network. You 
+need to make sure the mysql container we created from last time is started.
 
-You can tell compose to create a new container by giving it a name and an image to use.
+You can tell compose to create a new container by giving it a name and an image to use. 
+We also define a network name that other services will reference. 
 
 ```YAML
-models:
-  image: tp33/django
-  external_links:
-    - mysql:db
-  volumes:
-    - <project_root_dir>:/app
-  ports:
-    - "8001:8000"
-  command: bash -c "mod_wsgi-express start-server --working-directory <project_root_dir> --reload-on-changes <path_to_wsgi.py>/wsgi.py"
+version: "3"
+services:
+
+  models:
+    image: tp33/django
+    external_links:
+      - mysql:db
+    volumes:
+      - <project_root_dir>:/app
+    ports:
+      - "8001:8000"
+    networks:
+      - <my-network-name>
+    command: bash -c "mod_wsgi-express start-server --working-directory <project_root_dir> --reload-on-changes <path_to_wsgi.py>/wsgi.py"
+
+networks:
+  <my-network-name>:
 ```
 
 Notice the difference between external_links and links. We use links to link to
@@ -131,6 +144,13 @@ machine. By exposing the ports, you can access your Django app in the browser on
 your host machine by going to localhost:8001 if you use a native Docker app or
 <your_docker_ip>:8001 if you use Docker Machine/Toolbox.
 
+Networks simply links the container to one of the networks specified in the 
+compose. All services on the same network are able to communicate and so this 
+is how we will isolate our services. Note this is different than prior semesters 
+where links were used. Over the course of the semester we will set up multiple networks. 
+You can read more about networks in docker compose here: 
+https://docs.docker.com/compose/networking/
+
 Command specifies the command that will be run when the container starts up. In
 this case it will start the mod_wsgi server.
 
@@ -139,6 +159,8 @@ Also note you NEED to use relatvie paths in your docker compose file or it won't
 Now that we've got this, save docker-compose.yml. Having Compose create and run our container is as simple as running
 
 	docker-compose up
+
+In order to stop all the containers running press Ctrl+C and wait for each to finish. 
 
 NOTE: for the command to run successfully, you need to have your mysql
 container running (since our containers depend on the database to be up)
