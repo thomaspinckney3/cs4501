@@ -193,15 +193,16 @@ Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 - Hector, Selwyn (snh3fa): Tue, Thurs: 2pm-3pm in Rice 442
 - Wong, William (ww5zf): Mon, Wed: 3:30-4:30pm in Rice 442
 
-|      | Monday | Tuesday | Wednesday       | Thursday | Friday |
-| ---- | ------ | ------- | --------------- | -------- | ------ |
-|10:30 ||||Ankith||
-| 11:30 ||||||
-| 12:00 |        | Ankith  |                 |          | Ankith |
-| 1:00 |        |         |                 |          |        |
-| 2:00 |        | Rashid, Olsson 001<br />Selwyn, Rice 442 | Tyler, Rice 442 | Rashid, Olsson 001<br />Selwyn, Rice 442 |        |
+|       | Monday | Tuesday | Wednesday       | Thursday | Friday |
+| ----- | ------ | ------- | --------------- | -------- | ------ |
+| 10:30 |        |        |        |Ankith, Olsson 001|        |
+| 11:30 |        |        |        |        |        |
+| 12:00 |        | Ankith, Olsson 001  |                 |          | Ankith, Olsson 001 |
+| 1:00 |         |         |                 |          |        |
+| 2:00 |         | Rashid, Olsson 001<br />Selwyn, Rice 442 | Tyler, Rice 442 | Rashid, Olsson 001<br />Selwyn, Rice 442 |        |
+| 3:00 |         |        |        |        |        |
 | 3:30 | William, Rice 442 |  | William, Rice 442 |          |        |
-| 4:30 |        |         |                 |          |        |
+| 4:30 |         |         |                 |          |        |
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
 
