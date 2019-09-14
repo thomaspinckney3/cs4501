@@ -330,7 +330,7 @@ Code layout
 Your Django app will go in `/app` in the *web* container, which is mounted
 from `~/cs4501/app` in your host environment.
 
-Inside your web container, create a new Django project with
+Inside your *web* container, create a new Django project with
 `django-admin startproject foo` where *foo* is the name you want to give
 your project.
 
@@ -347,12 +347,6 @@ into our grading systems later.
 
 Again, note, you're creating / editing your code outside the
 container in the host but running inside the container under `/app`.
-
-Inside your *web* container:
-
-    root@4ee80653d2be:/app# django-admin startproject foo
-
-(but replace *foo* with the name of your project)
 
 Back on your Mac/Windows shell:
 
