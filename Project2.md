@@ -169,6 +169,9 @@ container running (since our containers depend on the database to be up)
 
 will remove all the container instances specified by the docker-compose file.
 
+Note the mysql container you are running will not be inside the newly created network. After running docker compose up and with the 
+mysql container running use the command `docker network connect <network_name> mysql` to connect the container to the network. 
+
 One other thing about docker compose. If for some reason (run makemigrations/migrate, etc.) you need to attach to a container created by docker compose, instead of using `docker attach <container_name>`(it will hang), use `docker exec -it <container_name> bash`.
 
 You can do a lot more with Docker Compose, including building new images straight from a Dockerfile, configuring ports, and defining shared volumes for containers. These are all things that may be helpful to you later in the course, so keep your compose file updated as you go about your project. There are great examples at https://docs.docker.com/compose/install/ and https://www.digitalocean.com/community/tutorials/how-to-install-and-use-docker-compose-on-ubuntu-14-04.
