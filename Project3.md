@@ -150,11 +150,11 @@ the container named "models".
 
 In terms of grading, since you can assume we have a MySQL container
 `mysql` running, you only need to start up three containers in the
-docker-compose.yml, all of which link to the MySQL container.
+docker-compose.yml, where only the models container links to the MySQL container.
 
 Docker assigns a unique IP address to every container running. We'll
-use container linking to make sure each container knows the IP address
-of the other containers to talk to. In addition, we want to link to a container
+use container linking, via Docker networks, to make sure each container knows the IP address
+of the other containers to be able to communicate. In addition, we want to link to a container
 that is not created by the compose. This is accomplished via adding
 the `external_links` or `links` option to the docker compose file:
 
@@ -163,46 +163,61 @@ models:
   image: tp33/django
   external_links:
     - mysql:db
+  networks:
+    - backend
+    - service_mesh
 ```
 
-As a reminder: Notice the difference between `external_links` and `links`. We use `links` to link to a
+As a reminder: Notice the difference between `external_links` and `links`. `links` are the depricated way to link to a
 container created by the `docker-compose.yml`. On the other hand, `external_links` is used to
 link to a container outside `docker-compose`. In this case, since we are linking to a container outside
 `docker-compose`, we use `external_links`.
 
 That option will create a hostname called `db` and make sure it's
 always pointing to the IP address for the container named
-`mysql` in `models` container. Thus, your app in this container can always connect to the
+`mysql` in the `models` container. Thus, your app in this container can always connect to the
 host `db` instead of having to know which IP address your MySQL
 container is actually running as. This is how you set up your
-project's `settings.py` so far.
+project's `settings.py` so far. Be sure to remember to connect your `mysql` container to the `backend` network
+so your `models` container can connect to it.
+
+We add the `models` container to another network here known as the `service_mesh` network. 
+This is where your experience container and all other service related containers will reside. 
+The reason your `models` container needs to be on this network 
+is so that your experience container will be able to communicate with by sending HTML requests.
 
 Similarly, you'll add another container for your experience service
-and link it to your low-level API (notice the change from `external_links` to `links`):
+and link it to two networks as well.
 
 ```YAML
 exp:
   image: tp33/django
-  links:
-    - models:models-api
+  networks:
+    - service_mesh
+    - public
 ```
 
-In this case we are linking to a container created by docker compose, so
-we use `links`. Then the app running in this container can make HTTP requests to the
-host model-api in order to connect to your model-api container by making a request like so:
+Since the `exp` container forms the backbone of our services, it makes sense for it to be on the service network,
+but why is it on another new network named `public`? The first reason is that it will need to be able to communicate 
+with the `web` container that we make in the next step. The second reason is if you as a developer wanted to create a 
+mobile application for your users, that app would also need access to the experience service. Don't worry though, that 
+is outside the scope of this course.
 
-`req = urllib.request.Request('http://models-api:8000/')`
+Now that `exp` is on the same network as the `models` container, an app inside this container can make HTML requests 
+to the CRUD apis you created in Project 2 like so:
 
-Note: You can only use the url 'http://models-api:8000' in code run in a container that links to the model container using 'models-api' like in the example above. If you are testing outside the container (like in a browser), you will have to use 'http://localhost:port'.
+`req = urllib.request.Request('http://models:8000/')`
+
+Note: You can only use the url 'http://models:8000' in code run in a container that connects to the same network as the model container using 'models' like in the example above. If you are testing outside the container (like in a browser), you will have to use 'http://localhost:port'.
 
 And finally, your third container for running the HTML front-end will
-link to the experience service container:
+connect to the `public` network as well:
 
 ```YAML
 web:
   image: tp33/django
-  links:
-    - exp:exp-api
+  networks:
+    - public
 ```
 
 I do a few other things to ease my development:
@@ -214,6 +229,9 @@ I do a few other things to ease my development:
     image: tp33/django
     external_links:
       - mysql:db
+    networks:
+      - backend
+      - service_mesh
     ports:
       - "8001:8000"
   ```
@@ -229,6 +247,9 @@ I do a few other things to ease my development:
     image: tp33/django
     external_links:
       - mysql:db
+    networks:
+      - backend
+      - service_mesh
     ports:
       - "8001:8000"
     volumes:
@@ -248,6 +269,9 @@ I do a few other things to ease my development:
     image: tp33/django
     external_links:
       - mysql:db
+    networks:
+      - backend
+      - service_mesh
     ports:
       - "8001:8000"
     volumes:
@@ -265,6 +289,9 @@ models:
   container_name: models
   external_links:
     - mysql:db
+  networks:
+      - backend
+      - service_mesh
   ports:
     - "8001:8000"
   volumes:
@@ -274,8 +301,9 @@ models:
 exp:
   image: tp33/django
   container_name: exp
-  links:
-    - models:models-api
+  networks:
+    - service_mesh
+    - public
   ports:
     - "8002:8000"
   volumes:
@@ -285,8 +313,8 @@ exp:
 web:
   image: tp33/django
   container_name: web
-  links:
-    - exp:exp-api
+  networks:
+    - public
   ports:
     - "8000:8000"
   volumes:
