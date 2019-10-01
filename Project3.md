@@ -94,7 +94,7 @@ Each feature that you code from this project onwards should correspond to a user
 
 ### Unit Testing
 
-[Django's unit tests](https://docs.djangoproject.com/en/2.1/topics/testing/overview/) use the Python unit testing framework `unitest`. To run your unit tests, execute `python manage.py test` from the command line. By default, this will run all files in your project named `test*.py` where * is a wildcard (ex. test_users.py).
+[Django's unit tests](https://docs.djangoproject.com/en/2.1/topics/testing/overview/) use the Python unit testing framework `unitest`. To run your unit tests, execute `python manage.py test` from the command line. By default, this will run all files in your project named `test*.py` where * is a wildcard (ex. test_users.py). Test methods inside your test class must start with the keyword `test` to run. 
 
 Django creates and destroys a temporary test database every test run. To be able to grant the user access to the database, we will need to grant permission for user 'www' like in Project 1. Permission can be granted without the database existing yet.
 
@@ -112,7 +112,7 @@ class GetOrderDetailsTestCase(TestCase):
     def setUp(self):
         pass #nothing to set up
 
-    def success_response(self):
+    def test_success_response(self):
         #assumes user with id 1 is stored in db
         response = self.client.get(reverse('all_orders_list', kwargs={'user_id':1}))
 
@@ -121,7 +121,7 @@ class GetOrderDetailsTestCase(TestCase):
         self.assertContains(response, 'order_list')
 
     #user_id not given in url, so error
-    def fails_invalid(self):
+    def test_fails_invalid(self):
         response = self.client.get(reverse('all_orders_list'))
         self.assertEquals(response.status_code, 404)
 
