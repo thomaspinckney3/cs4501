@@ -65,7 +65,12 @@ The only required pages for this project are a home page and an item
 detail page. The detail page should show details about whatever it is
 your marketplace is about: rides, books, tickets—whatever relevant
 models your app uses. The home page should show links to the detail
-pages—maybe the newest content, the most popular content, etc.
+pages—maybe the newest content, the most popular content, etc. To show
+the usefulness of the experience layer, the home page should call at least two
+different microservices. Using the previous example, one would return the 
+newest content while another would return the most popular. The results would then
+be packaged together in the experience layer before being passed up to the web
+layer. 
 
 Note: These are read-only pages for showing data in the db. To simplify
 this project we're ignoring how users or things in your marketplace are

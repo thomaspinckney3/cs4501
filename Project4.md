@@ -324,6 +324,20 @@ via a `GET` and then be `POST`'ed upon submission. The `POST` handler will eithe
 and return the same rendered form (plus some helpful errors), or it will succeed and return
 the user to wherever they're supposed to go next.
 
+Extra Credit Opportunities
+----------------
+As mentioned before, extra credit can be earned by going above and beyond on the assignments. This may be from very efficient and well done code or using best practices, but the most reliable way to get extra credit is by implementing extra, non-trivial features. Two examples of extra credit features are listed below.
+ 
+### Profile Page: 25 Points ###
+
+This would be a page that allows a logged in user to see information related to their account have a variety of settings or other information that could be updated. The settings or other information that can be updated is likely to be dependant on your particular project, but some general examples are the user’s email address, street address, or password. 
+
+### Password Resetting: 25 Points ###
+
+This is going to be the standard "I forgot my password" page. A user should be able to submit a password reset request by providing the email address or username. The user should then receive an email with a link back to your site that allows that user to reset their password. The password should be replaced in the database and the user should now be able to log in with the new password.  
+
+If your team manages to implement either of the two features, make sure that somewhere in your github you inform your TA that you implemented an extra credit feature. This could be in the form of an extra section of the README or as an additional page in your repositories wiki. Remember that these are just two examples of potential features. If your group wishes to propose a different feature, contact a TA or the professor with a description of your idea. If the idea is sufficient, teaching staff will come up with requirements and worth of that feature addition. 
+
 What to turn in
 ----------------
 
