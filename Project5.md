@@ -4,7 +4,7 @@ Overview
 In this project you will add the ability for users to search your
 site. When they add new listings, the listings will be added to a
 search engine. You'll add a search page that users can use to query
-the search engine.
+the search engine using a custom ranking function based on popularity.
 
 Architecture
 ------------
@@ -41,7 +41,7 @@ in the db, etc) into the Kafka topic.
 We could directly add the new listing to ES instead of going through
 Kafka. However, using Kafka gives us two things. First, it's
 potentially faster than waiting for ES to index the new
-listings. Second, it allows us to ingest LOTS of new listintgs even if
+listings. Second, it allows us to ingest LOTS of new listings even if
 ES can't keep up (or is down). Effecitvely Kafka acts like a buffer
 between creating listings and indexing listings.
 
@@ -52,6 +52,11 @@ source Lucene text indexing and retrieval system. ES provides two APIs
 we'll be using: one for adding a document to the search index (in our
 case the documents are listings) and another for querying for
 documents (how we look up documents that match a user query).
+
+Another thing to note is that Elasticsearch 7 offers a new clustering 
+methodology, and this may require modifying some system variables. If
+the Elasticsearch container prematurely shuts down, please review the
+set-up docs [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html).
 
 ### Search Indexer ###
 
@@ -80,15 +85,27 @@ allows a user to enter a query.
 Note, using Django template inheritance is a good way to define a common
 header in one place that all pages can share (search 'Django template extends').
 
+### Custom Ranking Function ###
+
+In addition to performing queries by text matching, you will also add the ability
+to perform queries using a custom metric. An example would be having the option to
+view "hot" or "relevant" listings by having a scoring function that takes in the popularity
+of the item into account.
+
+### Access Log ###
+
+To keep track of the number of views each item has, we will create a log file that keeps track of which users view which item. The access log should be in the form of a file with two columns of values where each row consists of a user-id and an item-id representing an item page view by a logged in user. Similar to the new listing implementation, every time a page view occurs you will need to push the two relevant values (user-id and item-id) to Kafka from the experience layer and have another batch container/script consume the page-view and write/append it to the aforementioned running log file. To get this data into Elasticsearch, you will have a python file within your batch container that periodically parses the access log, counts the number of views for each listing, and updates the view count for each listing in Elasticsearch.
+
+
 Implementation
 --------------
 
 You will be adding three new containers to your application:
 
-   - ElasticSearch based on the 'elasticsearch:2.0' image on Dockerhub
+   - ElasticSearch based on the 'elasticsearch:7.4.0' image on Dockerhub
    - Kafka based on the 'spotify/kafka' image on Dockerhub. Keep in mind that despite the name
    the image is really Kafka, ZooKeeper and all the configurations to make them work together.
-   - The backend search indexer called batch based on tp33/django image on Dockerhub (kafka-python upgraded) whose only job is to run a python script that pulls messages from Kafka and indexes that in ES.
+   - The backend search indexer called batch based on tp33/django image on Dockerhub (kafka-python upgraded) whose only job is to run a python script that pulls new listing messages from Kafka and indexes them in ES, a python script that pulls item viewing messages from Kafka and appends them to a log, and a python script that periodically parses the log and updates the view counts in ES.
 
 You can download and run the new Kafka and ES containers like:
 
@@ -96,24 +113,31 @@ You can download and run the new Kafka and ES containers like:
 kafka:
    image: spotify/kafka
    container_name: kafka
+   networks:
+      - batch_network
+      - service_mesh
    environment:
       ADVERTISED_HOST: kafka
       ADVERTISED_PORT: 9092
    hostname: kafka
    
 es:
-   image: elasticsearch:2.0
+   image: elasticsearch:7.4.0
    container_name: es
+   environment:
+      - discovery.type=single-node
+   networks:
+      - service_mesh
+      - mod_exp_network
    ports:
       - "9200:9200"
 
 batch:
    image: tp33/django
    container_name: batch
-   links:
-      - kafka:kafka
-      - es:es
-   command: <run a python script that pulls messages from Kafka and indexs that in ES>
+   networks:
+      - batch_network
+   command: <run python scripts>
 ```
 
 These images may take a few minutes to download as you're pulling down different Java versions for each, dependent apps like Zookeeper, and the main ES and Kafka apps themselves. Still, a lot easier than building and installing all the tools and depencies from source!
@@ -124,7 +148,7 @@ configuration :)
 
 And let's start a container to try out ES and Kafka:
 
-    docker run -it --name batch_test --link kafka:kafka --link es:es tp33/django
+    docker run -it --name batch_test --network <your_batch_network> tp33/django
     root@d806ea9af85a:/app#
 
 And in that container you can try some simple tests of ES:
@@ -142,14 +166,19 @@ Type "help", "copyright", "credits" or "license" for more information.
 >>> es.indices.refresh(index="listing_index")
 >>> es.search(index='listing_index', body={'query': {'query_string': {'query': 'macbook air'}}, 'size': 10})
 {'timed_out': False, 'hits': {'total': 1, 'hits': [{'_score': 0.10848885, '_index': 'listing_index', '_source': {'id': 42, 'description': 'This is a used Macbook Air in great condition', 'title': 'Used MacbookAir 13"'}, '_id': '42', '_type': 'listing'}], 'max_score': 0.10848885}, '_shards': {'successful': 5, 'total': 5, 'failed': 0}, 'took': 21}
->>> 
+>>> es.update(index='listing_index', doc_type='listing', id=some_new_listing['id'] , body={ 'script' : 'ctx._source.visits = 0'})
+>>> es.update(index='listing_index', doc_type='listing', id=some_new_listing['id'] , body={ 'script' : 'ctx._source.visits += 1'})
+>>> es.search(index='listing_index', body={"query": {"function_score": {"query": {"query_string": {"query": "macbook air"}},"field_value_factor": {"field": "visits","modifier": "log1p","missing": 0.1}}}})
+{'_shards': {'successful': 1, 'failed': 0, 'total': 1, 'skipped': 0}, 'hits': {'hits': [{'_index': 'listing_index', '_type': 'listing', '_score': 0.2745185, '_source': {'title': 'Used MacbookAir 13"', 'description': 'This is a used Macbook Air in great condition', 'id': 42, 'visits': 1}, '_id': '42'}], 'max_score': 0.2745185, 'total': {'relation': 'eq', 'value': 1}}, 'took': 62, 'timed_out': False}
 ```
    
 In the example above with ES, we are indexing a JSON document with a title, description and listing id field. ES will by default index whatever fields in whatever documents we give it. The `es.index()` call is specifying that we index the documents using an index called 'listing_index'. Since this index doesn't exist, ES will create it.
 
 Then we call `es.indices.refresh()` on listing_index. Until this is done, ES hasn't actually comitted the changes to the index files and thus queries won't 'see' the new documents. This is a speed optimization ES does allowing many new documents to be added and then the index files only updated once.
 
-Finally, there's an example of calling `es.search()` to query the listing_index for documents that match the query 'macbook air'. We're also specifying that we only want the top 10 results returned. The matches, if any, are returned in the response's `['hits']['hits']` array. Note that the 'id' of each hit matches the id we passed in when indexing the document. We're using the DB assigned primary key id when indexing and so this allows our experience code to quickly look up the corresponding listing from the db by it's primary key at query time.
+Next, there's an example of calling `es.search()` to query the listing_index for documents that match the query 'macbook air'. We're also specifying that we only want the top 10 results returned. The matches, if any, are returned in the response's `['hits']['hits']` array. Note that the 'id' of each hit matches the id we passed in when indexing the document. We're using the DB assigned primary key id when indexing and so this allows our experience code to quickly look up the corresponding listing from the db by it's primary key at query time.
+
+Finally, we use `es.update()` to add the `visits` field into the document and increment it. We then call `es.search()` with a custom ranking function. In our example, the `query` and `field_value_factor` both return scores, which are then multiplied by each other to return the overall score. As you can see, the score for the listing retreived by the second search is different from the first. You can see more function examples [here](https://www.elastic.co/guide/en/elasticsearch/reference/current/query-dsl-function-score-query.html). 
 
 And test out adding messages to a Kafka queue via 'KafkaProducer':
 
