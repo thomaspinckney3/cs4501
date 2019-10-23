@@ -14,6 +14,7 @@ There are four components to this project:
 1. Adding newly created listings to a Kafka queue
 2. A search indexer that takes new listings out of Kafka and indexing them into Elastic Search (ES)
 3. Extend the web front end and experience services to add a search result page (SRP) that queries ES
+4. Create a custom sesrch ranking function based on popularity of items.
 
 This project will also introduce the first part of your system that
 runs code outside of the context of a web request. Step two above,
