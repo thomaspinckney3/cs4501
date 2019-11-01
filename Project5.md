@@ -198,6 +198,7 @@ And test our receiving messages from Kafka (To see messages sent, you need to st
    
 ``` PYTHON
 >>> from kafka import KafkaConsumer
+>>> import json
 >>> consumer = KafkaConsumer('new-listings-topic', group_id='listing-indexer', bootstrap_servers=['kafka:9092'])
 >>> for message in consumer:
 ...   print(json.loads((message.value).decode('utf-8')))
