@@ -28,17 +28,17 @@ Selenium has created a [docker container image](https://hub.docker.com/r/seleniu
     selenium-chrome:
       image: selenium/standalone-chrome
       container_name: selenium-chrome
-      links:
-        - web:web
+      networks:
+        - service_mesh
+        - public
       ports:
         - "4444:4444"
 
     selenium-test:
       image: tp33/django
       container_name: selenium-test
-      links:
-        - selenium-chrome:selenium-chrome
-        - web:web
+      networks:
+        - service_mesh
       volumes:
         - ./app/selenium:/app
       command: bash -c "pip install selenium==<some version number> && python <your_selenium_test_script>.py"
@@ -66,6 +66,11 @@ Selenium has created a [docker container image](https://hub.docker.com/r/seleniu
       server logs. The logs don't just show up in the terminal though - a separate server must be set up to receive logs.
       [papertrail](https://papertrailapp.com/) is a great cloud-hosted free log manager/server - you can arrange to
       have the server logs be sent to a papertrail account by following the directions [here](http://help.papertrailapp.com/kb/configuration/haproxy/)
+      
+      Consider how to update your networks in docker-compose. What should be public and what should be on internal networks
+      once you add the load balancer? Update your network setup to minimize the number of publicly exposed containers. 
+      This is especially important if you decide to pursue the DigitalOcean optional assignment below. 
+      
 # Optional Topics (Choose One)
 
 - Hosting on DigitalOcean

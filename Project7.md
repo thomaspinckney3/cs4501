@@ -24,10 +24,10 @@ A pseudocode map-reduce style algorithm for computing co-views is something like
 Implementation
 ==============
 
-Producing the Access Log
+Using the Access Log
 ------------------------
 
-The access log that your Spark job will use should be in the form of a file with two columns of values where each row consists of a user-id and an item-id representing an item page view by a logged in user. Similar to project 5's implementation, every time a page view occurs you will need to push the two relevant values (user-id and item-id) to Kafka from the experience layer and have another batch container/script consume the page-view and write/append it to the aforementioned running log file that will be used by Spark as input. You can use Docker volumes to allow Spark to see the log file produced by the batch script. Whenever you decide to mount a volume, follow the general security principle of least privilege by making sure that containers don't needlessly have access to important files they don't need.
+In Project 5 you created an access log file to record which users viewed which items. This will serve as the input to your Spark map/reduce job. You can use Docker volumes to allow Spark to see the log file. Whenever you decide to mount a volume, follow the general security principle of least privilege by making sure that containers don't needlessly have access to important files they don't need.
 
 Spark Setup
 -----------
