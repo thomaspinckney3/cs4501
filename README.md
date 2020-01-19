@@ -190,16 +190,17 @@ Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 - Handley, Tyler M (tmh6de) Wed: 2pm-3pm in Rice 442
 - Yennu, Ankith (agy8gc): Tues, Fri: 12pm-1pm Thurs: 10:30am-11:30am
 - Lasker, Rashid (rel3en): Tue, Thurs: 2pm-3pm in Olsson 001
-- Hector, Selwyn (snh3fa): Tue, Thurs: 2pm-3pm in Rice 442
+- Hector, Selwyn (snh3fa): Tue, Thurs: 9:30am-11am in Rice 442
 - Wong, William (ww5zf): Mon, Wed: 3:30-4:30pm in Rice 442
 
 |      | Monday | Tuesday | Wednesday       | Thursday | Friday |
 | ---- | ------ | ------- | --------------- | -------- | ------ |
-|10:30 ||||Ankith||
+| 9:30  |        | Selwyn, Rice 442        |                 | Selwyn, Rice 442   |        |
+| 10:30 ||||Ankith||
 | 11:30 ||||||
 | 12:00 |        | Ankith  |                 |          | Ankith |
 | 1:00 |        |         |                 |          |        |
-| 2:00 |        | Rashid, Olsson 001<br />Selwyn, Rice 442 | Tyler, Rice 442 | Rashid, Olsson 001<br />Selwyn, Rice 442 |        |
+| 2:00 |        | Rashid, Olsson 001<br />| Tyler, Rice 442 | Rashid, Olsson 001<br /> |        |
 | 3:30 | William, Rice 442 |  | William, Rice 442 |          |        |
 | 4:30 |        |         |                 |          |        |
 
