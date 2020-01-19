@@ -187,7 +187,7 @@ The teaching staff for this semester are:
 
 Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 
-- Handley, Tyler M (tmh6de) Wed: 2pm-3pm in Rice 442
+- Handley, Tyler M (tmh6de) Wed: 11am-3pm in Olsson 001
 - Yennu, Ankith (agy8gc): Tues, Fri: 12pm-1pm Thurs: 10:30am-11:30am in Olsson 001
 - Lasker, Rashid (rel3en): Tue, Thurs: 2pm-3pm in Olsson 001
 - Hector, Selwyn (snh3fa): Tue, Thurs: 2pm-3pm in Rice 442
@@ -196,10 +196,10 @@ Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 |      | Monday | Tuesday | Wednesday       | Thursday | Friday |
 | ---- | ------ | ------- | --------------- | -------- | ------ |
 |10:30 ||||Ankith||
-| 11:30 ||||||
-| 12:00 |        | Ankith  |                 |          | Ankith |
-| 1:00 |        |         |                 |          |        |
-| 2:00 |        | Rashid, Olsson 001<br />Selwyn, Rice 442 | Tyler, Rice 442 | Rashid, Olsson 001<br />Selwyn, Rice 442 |        |
+| 11:00 |||Tyler, Olsson 001|||
+| 12:00 |        | Ankith  | |          | Ankith |
+| 1:00 |        |         | |          |        |
+| 2:00 |        | Rashid, Olsson 001<br />Selwyn, Rice 442 | | Rashid, Olsson 001<br />Selwyn, Rice 442 |        |
 | 3:30 | William, Rice 442 |  | William, Rice 442 |          |        |
 | 4:30 |        |         |                 |          |        |
 
