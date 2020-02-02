@@ -72,6 +72,18 @@ You will not need detailed knowledge of SQL for most of the class, but you
 should be familiar with the concepts involved of tables, queries,
 updates etc.
 
+Tips for Windows Users
+-----
+Windows and Docker have an interesting relationship which has lead to difficulties for many students. Below are some tips that have helped students in the past successfully get their development environment setup on Windows. There are two ways to setup Docker on Windows depending on if you would like to use Windows Subsystem for Linux (WSL) or not. The Windows Subsystem for Linux is a very helpful tool that allows you to access an Ubuntu Terminal on your Windows machine, so if you are already using WSL or would like to, you may want to set up Docker to work with it. However, if you feel that is too much work, we have tips for regular Windows users as well!
+- With Windows Subsystem for Linux (WSL)
+    - Install [WSL](https://docs.microsoft.com/en-us/windows/wsl/install-win10)
+    - [Follow this tutorial](https://nickjanetakis.com/blog/setting-up-docker-for-windows-and-wsl-to-work-flawlessly) a student used in the past to connect Docker with WSL system.
+    - When setting up volumes in docker, you will still need to use the Windows file paths, but you will need to change the backslashes to forward slashes for the terminal to understand the path
+    - If you have issues, you may need to join the Windows Insider Program to get a newer version of WSL
+- Without Windows Subsystem for Linux (WSL)
+    - **Use PowerShell instead of Command Prompt.** Many students have had issues from using Command Prompt, that were alleviated by using PowerShell. 
+    - Make sure you do not set your volumes to be in a write protected location such as Program Files or Program Files (x86)
+
 
 Install everything
 ===================
@@ -121,6 +133,7 @@ Install everything
         tp@devel:~$ docker run --name mysql -d -e MYSQL_ROOT_PASSWORD='$3cureUS' -v ~/cs4501/db:/var/lib/mysql  mysql:latest
         249e7f18b7679879197b49199de97a2a9f6705d99a7510086f51e30d830ca108
     - If you are running this on a Linux Subsystem in Windows 10 add --innodb_use_native_aio=0 to the end of the docker run command
+    - If you have issues later related to the password being incorrect, try removing the quotes around the password in the above command
 
 - Note the status of your Docker containers. The one named *web* will be shown as
   exited while the one named *mysql* will be running.
@@ -469,5 +482,6 @@ up your page a bit.
 What to turn in
 ---------------
 
-Turn in screenshots of `docker ps` showing your running containers
-along with a screenshot of your "Hello World" output from curl.
+Turn in screenshots of `docker ps` showing your running containers 
+(at least web and mysql should still be running) along with a 
+screenshot of your "Hello World" output from curl.
