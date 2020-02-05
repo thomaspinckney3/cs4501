@@ -224,7 +224,7 @@ The second step, is that WHENEVER you start your application, you need to run mi
 migrations in `migrations/`, and run the new ones.
 
 A common mistake is that team member 1 changes their models.py but forgets to make and check in a corresponding migration. 
-Then when team meber 2 checks out the updated models.py and tries to use it, they get an error because their DB doesn't
+Then when team member 2 checks out the updated models.py and tries to use it, they get an error because their DB doesn't
 have the tables needed. 
 
 You can read more in the Django documentation here https://docs.djangoproject.com/en/2.1/topics/migrations/
