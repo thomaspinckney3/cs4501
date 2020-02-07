@@ -189,7 +189,7 @@ Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 
 - Handley, Tyler M (tmh6de) Mon: 11:30-12:30 in Rice 442
 - Yennu, Ankith (agy8gc): Wed: 1:00pm-3:00pm in TBD
-- Lasker, Rashid (rel3en): Mon, Wed: 3:30pm-4:45pm in Thornton Stacks
+- Lasker, Rashid (rel3en): Mon, Wed: 3:00pm-4:50pm in Thornton Stacks
 - Hector, Selwyn (snh3fa): Tue, Thurs: 9:30am-11am in Rice 442
 
 |      | Monday | Tuesday | Wednesday       | Thursday | Friday |
@@ -200,7 +200,7 @@ Office Hours for Project Review, Help, and Demo Hours (led by TAs):
 | 12:00 |        |   |                 |          | |
 | 1:00 |        |         |       Ankith, TBD          |          |        |
 | 2:00 |        ||  |   |        |
-| 3:30 | Rashid, Stacks |  | Rashid,Stacks |          |        |
+| 3:00 | Rashid, Stacks |  | Rashid,Stacks |          |        |
 | 4:30 |        |         |                 |          |        |
 
 There is also always help from the teaching staff and your fellow classmates through slack at https://cs4501-isa.slack.com.
