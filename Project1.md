@@ -317,7 +317,7 @@ packages.
 Each container's image is built according to instructions stored in a
 Dockerfile. This is the list of commands required to install software
 and configure your image. You can read more about the syntax of
-Dockeriles on the Docker website.
+Dockerfiles on the Docker website.
 
 The Dockerfile I used to create tp33/django is at
 https:/github.com/thomaspinckney3/django-docker.
