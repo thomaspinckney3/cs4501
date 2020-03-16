@@ -181,12 +181,14 @@ form in sync, since you only need to change the form definition.
 Django supplies well-tested code for hashing and checking
 passwords. You should use this code rather than trying to create your
 own versions. Use the `django.contrib.auth.hashers` module's
-`make_password` and `check_password`. Read more about password hashing in
-the official Django documentation:
+`make_password` and `check_password`. You should also add salts as 
+discussed in lecture to make dictionary attacks on your system more difficult. 
+`make_password` allows for an optional salt argument to make this process quite
+simple. Read more about password hashing in the official Django documentation:
 
 <https://docs.djangoproject.com/en/2.1/topics/auth/passwords/#module-django.contrib.auth.hashers>
 
-There is additional reading on salting, hashing, and password-cracking at:
+ There is additional reading on salting, hashing, and password-cracking at:
 
 <https://crackstation.net/hashing-security.htm>
 
