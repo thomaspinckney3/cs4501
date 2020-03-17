@@ -94,6 +94,14 @@ Selenium has created a [docker container image](https://hub.docker.com/r/seleniu
       a Docker image at https://hub.docker.com/r/hauptmedia/jmeter/ .
       
       
+ - Image hosting and uploading 
+ 
+    For this we expect the usage of an AWS S3 bucket to allow for image hosting and uploading for things such as item
+    listings on your site. An example of what we expect is a user is able to upload a image of the item they are selling
+    and then go see it on the site. We will not be providing the buckets or AWS accounts, instead we expect students who
+    wish to implement this feature to create student AWS accounts. This requires the use of your UVA email and should give
+    you plenty of free credits to complete this assignment. 
+    
       
 Deliverable
 ===========
