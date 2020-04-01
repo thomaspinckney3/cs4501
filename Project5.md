@@ -129,7 +129,6 @@ es:
       - discovery.type=single-node
    networks:
       - service_mesh
-      - mod_exp_network
    ports:
       - "9200:9200"
 
