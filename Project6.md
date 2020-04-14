@@ -72,6 +72,9 @@ Selenium has created a [docker container image](https://hub.docker.com/r/seleniu
       This is especially important if you decide to pursue the DigitalOcean optional assignment below. 
       
 # Optional Topics (Choose One)
+You are required to complete **only one** of the following topics. *However*, more can be completed for extra credit. Each additional 
+topic completed will be worth 15 points of extra credit. Please include a list of which optional topics you have completed in your 
+submission to ensure they are properly counted. 
 
 - Hosting on DigitalOcean
     
