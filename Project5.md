@@ -9,7 +9,7 @@ the search engine using a custom ranking function based on popularity.
 Architecture
 ------------
 
-There are four components to this project:
+There are three components to this project:
 
 1. Adding newly created listings to a Kafka queue
 2. A search indexer that takes new listings out of Kafka and indexing them into Elastic Search (ES)
@@ -129,7 +129,7 @@ es:
       - discovery.type=single-node
    networks:
       - service_mesh
-      - mod_exp_network
+      - batch_network
    ports:
       - "9200:9200"
 

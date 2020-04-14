@@ -134,7 +134,7 @@ container simply by "db" instead of refer to it by its IP Address.
 
 Volumes is like the -v tag we use when executing docker run in the previous
 project. It mounts the app directory in the container onto the <your_file_path>
-directory on the host machine (your Mac/PC). By specifing that, you can code in
+directory on the host machine (your Mac/PC). By specifying that, you can code in
 your text editor/IDE on your host machine and any change you make will be picked
 up by the container. It is handy in terms of the development workflow.
 
@@ -215,8 +215,8 @@ Django includes a feature called database migrations. This is a way for you to a
 in sync with what your models.py requires. If your models.py refers to a model named 'Cars' but your database doesn't have a
 table for that model, then your application won't work.
 
-The way migreations work is that when you change your models.py, you ALWAYS need to also check-in a migration that will make
-the corresponding change to you (and your teammates DB's). You do this with the `python manage.py makemigrations` command.
+The way migrations work is that when you change your models.py, you ALWAYS need to also check-in a migration that will make
+the corresponding change to you (and your teammates' DBs). You do this with the `python manage.py makemigrations` command.
 This will create a Python file in your `migrations/` directory that will, when run, update your DB. 
 
 The second step, is that WHENEVER you start your application, you need to run migrations. You do this with 
@@ -224,7 +224,7 @@ The second step, is that WHENEVER you start your application, you need to run mi
 migrations in `migrations/`, and run the new ones.
 
 A common mistake is that team member 1 changes their models.py but forgets to make and check in a corresponding migration. 
-Then when team meber 2 checks out the updated models.py and tries to use it, they get an error because their DB doesn't
+Then when team member 2 checks out the updated models.py and tries to use it, they get an error because their DB doesn't
 have the tables needed. 
 
 You can read more in the Django documentation here https://docs.djangoproject.com/en/2.1/topics/migrations/
